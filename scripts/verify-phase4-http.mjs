@@ -27,12 +27,22 @@ assert.match(video, /RPXnSvabsGY/);
 assert.match(video, /27 October 2026/);
 assert.match(video, /16:30–18:00/);
 assert.match(video, /60 seconds/);
-assert.match(video, /Pending verification/);
+assert.match(video, /Owner approved 2026-11-03/);
+assert.match(video, /Representative version/);
+assert.match(video, /Scientific review pending/);
 assert.match(video, /Load YouTube player/);
 assert.ok(!video.includes("<iframe"), "No YouTube connection before user request");
-assert.match(video, /href="\/questions\/theory-and-modelling"/);
-assert.match(pages.get("/questions/theory-and-modelling"), /href="\/actions\/theory-and-modelling"/);
-assert.match(pages.get("/actions/theory-and-modelling"), /not a commitment/);
+assert.match(video, /href="\/questions\/themes\/q01"/);
+assert.match(video, /href="\/actions\/q01"/);
+const legacyQ = await fetch(origin + "/questions/theory-and-modelling", { redirect: "follow" });
+assert.equal(legacyQ.status, 200);
+assert.match(await legacyQ.text(), /q01|Personal workshop report|distinguish competing/i);
+const actionPage = await fetch(origin + "/actions/theory-and-modelling", { redirect: "follow" });
+assert.equal(actionPage.status, 200);
+const actionHtml = await actionPage.text();
+assert.match(actionHtml, /not a commitment|Illustrative|Personal workshop report/i);
+assert.match(pages.get("/questions"), /q01|Personal synthesis/);
+assert.match(pages.get("/diverging-perspectives"), /Personal synthesis|diverging/);
 for (const path of ["/videos/unknown", "/questions/unknown", "/actions/unknown", "/topics/unknown"]) {
   assert.equal((await fetch(origin + path)).status, 404, path);
 }

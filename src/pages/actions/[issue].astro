@@ -1,0 +1,37 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageIntro from "../../components/PageIntro.astro";
+import Journey from "../../components/Journey.astro";
+import { getAction, loadThemeReview } from "../../science/theme-review";
+import { SITE_STANCE } from "../../data/portal";
+const review = loadThemeReview();
+const action = getAction(Astro.params.issue ?? "");
+const issue = review?.issues.find(i => i.id === Astro.params.issue);
+if (!action || !issue) return Astro.rewrite("/404");
+---
+<Base title={action.title} description={action.rationale}>
+  <PageIntro title={action.title} eyebrow={`Research action / ${action.issue_id}`} description="An illustrative AI-agent workflow derived from a personal reading of workshop minutes." />
+  <Journey current="action" />
+  <div class="notice" data-theme-review="personal-report"><strong>Illustrative workflow · {SITE_STANCE.shortLabel}.</strong> This is not a workshop commitment, assignment, deadline tracker or claim that the work has been done.</div>
+  <div class="content-columns">
+    <div class="reading">
+      <section><h2>Starting point</h2><p><a href={`/questions/themes/${issue.id}`}>{issue.title}</a></p><p>{issue.question}</p><p>{action.rationale}</p></section>
+      <section><h2>Illustrative workflow</h2>
+        <ol class="workflow-list">
+          {action.steps.map((step, index) => <li><div><h3>Step {index + 1}</h3><p>{step}</p></div></li>)}
+        </ol>
+      </section>
+      {action.expected_outputs.length > 0 && <section><h2>Expected outputs</h2><ul>{action.expected_outputs.map(o => <li>{o}</li>)}</ul></section>}
+      {action.limitations.length > 0 && <section><h2>Limitations</h2><ul>{action.limitations.map(o => <li>{o}</li>)}</ul></section>}
+    </div>
+    <aside>
+      <h2>Trace the context</h2>
+      <dl class="metadata">
+        <dt>Question</dt><dd><a href={`/questions/themes/${issue.id}`}>{issue.id}</a></dd>
+        <dt>Classification</dt><dd>{issue.classification}</dd>
+        <dt>Highlight</dt><dd><a href="/videos/breakout-themes-3-4">Themes 3 + 4 · 1:00</a></dd>
+        <dt>Nature of this page</dt><dd>Illustrative personal synthesis</dd>
+      </dl>
+    </aside>
+  </div>
+</Base>

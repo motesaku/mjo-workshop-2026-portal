@@ -2,13 +2,33 @@
 import Base from "../layouts/Base.astro";
 import PageIntro from "./PageIntro.astro";
 import ScienceNavigation from "./ScienceNavigation.astro";
-import { editorialPages } from "../data/portal";
-interface Props { page: keyof typeof editorialPages }
+import { editorialPages, SITE_STANCE } from "../data/portal";
+import { issuesByClassification } from "../science/theme-review";
+interface Props { page: keyof typeof editorialPages; classification: string }
 const page = editorialPages[Astro.props.page];
+const issues = issuesByClassification(Astro.props.classification);
 ---
 <Base title={page.title} description={page.description}>
   <PageIntro title={page.title} eyebrow={page.eyebrow} description={page.description} />
   <ScienceNavigation />
-  <section class="empty-state"><span class="badge draft">Awaiting scientific review</span><h2 style="margin-top:1rem">{page.emptyTitle}</h2><p>{page.emptyText}</p><a href="/about">Read the editorial method →</a></section>
-  <section><h2>Keep exploring</h2><div class="card-grid"><article class="card"><p class="eyebrow">By date</p><h3><a href="/program">Return to the workshop program</a></h3><p>Browse the verified session schedule across all five days.</p></article><article class="card"><p class="eyebrow">By discussion</p><h3><a href="/videos">Explore video highlights</a></h3><p>One supplied highlight is available. Reviewed scientific connections are in preparation.</p></article><article class="card"><p class="eyebrow">From questions to methods</p><h3><a href="/actions">Research Action Roadmap</a></h3><p>Explore the interface for illustrative research workflows.</p></article></div></section>
+  <div class="notice" data-theme-review="personal-report"><strong>{SITE_STANCE.shortLabel}.</strong><p>Issues listed here are a provisional personal classification from converted minutes. They are not a workshop vote or formal consensus.</p></div>
+  {issues.length === 0 ? (
+    <section class="empty-state"><span class="badge draft">No items in this class yet</span><h2 style="margin-top:1rem">{page.emptyTitle}</h2><p>{page.emptyText}</p></section>
+  ) : (
+    <section aria-label={page.title}>
+      <div class="card-grid">
+        {issues.map(issue => (
+          <article class="card">
+            <p class="eyebrow">{issue.id} · {issue.classification}</p>
+            <span class="badge draft">Personal synthesis</span>
+            <h2 style="margin-top:1rem"><a href={`/questions/themes/${issue.id}`}>{issue.title}</a></h2>
+            <p>{issue.question}</p>
+            <p class="small">Coverage: {issue.coverage}</p>
+            <a href={`/questions/themes/${issue.id}`}>Read the issue →</a>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+  <section><h2>Keep exploring</h2><div class="card-grid"><article class="card"><p class="eyebrow">By date</p><h3><a href="/program">Return to the workshop program</a></h3><p>Browse the verified session schedule across all five days.</p></article><article class="card"><p class="eyebrow">By discussion</p><h3><a href="/videos">Explore video highlights</a></h3><p>One supplied highlight is available for orientation.</p></article><article class="card"><p class="eyebrow">From questions to methods</p><h3><a href="/actions">Research Action Roadmap</a></h3><p>Illustrative workflows linked to these questions.</p></article></div></section>
 </Base>

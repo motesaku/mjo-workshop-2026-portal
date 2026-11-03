@@ -1,10 +1,10 @@
 # Project Brief
 
-Status: Phase 2 local foundation, 2026-11-01. No scientific import or external publication.
+Status: Updated 2026-11-03. Local prototype with a decided **public personal-report** stance. Cloudflare public hosting not yet authorized.
 
 ## Purpose and audience
 
-An English-only Knowledge & Action Portal for final participants of MJO Workshop 2026. It will collect reviewed workshop context and illustrate possible AI agent workflows. It must not imply official workshop endorsement or consensus without evidence.
+An English-only Knowledge & Action Portal about MJO Workshop 2026 (ICTP, Trieste). From 2026-11-03 the owner publishes it as a **personal workshop participation report** by Qoosaku Moteki: one participant’s learning and present understanding. It is not an official ICTP or multi-author consensus product, and it does not manage other participants’ accounts. See `docs/OWNER_ACCESS_POLICY.md`.
 
 ## System boundaries
 

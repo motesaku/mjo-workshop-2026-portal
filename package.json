@@ -17,7 +17,10 @@
     "test:science": "node --test tests/science.test.mjs",
     "science:validate": "node scripts/science.mjs validate",
     "science:plan": "node scripts/science.mjs plan",
-    "science:check": "node scripts/science.mjs check-generated"
+    "science:check": "node scripts/science.mjs check-generated",
+    "science:build-synthesis": "node scripts/build-personal-synthesis.mjs",
+    "verify:phase4": "node scripts/verify-phase4-http.mjs",
+    "verify:phase6": "node scripts/verify-phase6.mjs"
   },
   "dependencies": {
     "@astrojs/node": "^11.1.5",

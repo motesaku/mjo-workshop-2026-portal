@@ -5,7 +5,7 @@ const mode = process.argv[2] ?? 'dev';
 assert.ok(['dev', 'production'].includes(mode));
 const origin = mode === 'dev' ? 'http://127.0.0.1:4321' : 'http://127.0.0.1:4322';
 const themePaths = ['/ai-for-mjo-research', '/mjo-indices-and-diagnostics'];
-const pkg = JSON.parse(await readFile('exports/phase6-20261103-v1/themes.en.json', 'utf8'));
+const pkg = JSON.parse(await readFile('src/data/personal-synthesis.json', 'utf8'));
 const evidence = new Map(pkg.evidence.map(e => [e.evidence_id, e]));
 const sources = new Map(pkg.sources.map(s => [s.source_id, s]));
 const referenceIds = new Set(pkg.references.map(r => r.id));
@@ -15,10 +15,12 @@ for (const t of pkg.themes) for (const s of t.sections) for (const c of s.items)
   for (const id of c.refs) assert.ok(evidence.has(id) || referenceIds.has(id), id);
   assert.ok(['Workshop record', 'Editorial synthesis', 'External definition', 'New research proposal'].includes(c.origin));
 }
-assert.equal(pkg.scientific_review, 'pending');
-assert.equal(pkg.publication_approval, 'pending');
+assert.equal(pkg.format, 'personal-workshop-synthesis');
 assert.equal(pkg.formal_consensus, 'not_established');
+assert.equal(pkg.issues.length, 12);
+assert.equal(pkg.actions.length, 12);
 assert.doesNotMatch(JSON.stringify(pkg), /\/Users\/|file:\/\/|researcher_os|"path":/);
+assert.doesNotMatch(JSON.stringify(pkg), /[\u3040-\u30ff\u3400-\u9fff]/);
 for (const path of ['/', ...themePaths]) {
   const r = await fetch(origin + path); const html = await r.text();
   assert.equal(r.status, 200, path);
@@ -32,25 +34,23 @@ for (const path of ['/', ...themePaths]) {
     assert.doesNotMatch(html, /[\u3040-\u30ff\u3400-\u9fff]/, 'English-only rendered page');
     assert.doesNotMatch(html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? '', /\/Users\/|researcher_os|provenance\.private/);
     assert.doesNotMatch(html, /href="[^"<>]*\.(?:pdf|docx?|pptx?|mp4)(?:"|\?)/i);
-    if (mode === 'dev') {
-      assert.match(html, /data-theme-review="local-only"/);
-      assert.match(html, /New research proposal/); assert.match(html, /Source review:/);
-      assert.match(html, /href="\/videos\/breakout-themes-3-4"/);
-      const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]));
-      for (const match of html.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.has(match[1]), `${path}: anchor ${match[1]}`);
-    } else {
-      assert.match(html, /data-theme-withheld/);
-      assert.doesNotMatch(html, /data-theme-review|A1 ·|B1 ·|e-final-/);
-    }
+    assert.match(html, /data-theme-review="personal-report"/);
+    assert.match(html, /New research proposal|personal synthesis|Personal workshop report/);
+    assert.match(html, /href="\/videos\/breakout-themes-3-4"/);
+    const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]));
+    for (const match of html.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.has(match[1]), `${path}: anchor ${match[1]}`);
   }
   console.log(`PASS ${mode} ${path}`);
 }
 for (const q of pkg.issues) {
   const r = await fetch(origin + '/questions/themes/' + q.id); const html = await r.text();
-  assert.equal(r.status, mode === 'dev' ? 200 : 404, q.id);
-  if (mode === 'dev') { assert.match(html, /data-theme-review/); assert.doesNotMatch(html, /[\u3040-\u30ff\u3400-\u9fff]/); }
+  assert.equal(r.status, 200, q.id);
+  assert.match(html, /data-theme-review="personal-report"/);
+  assert.doesNotMatch(html, /[\u3040-\u30ff\u3400-\u9fff]/);
 }
 assert.equal((await fetch(origin + '/questions/themes/unknown')).status, 404);
+assert.equal((await fetch(origin + '/actions/q01')).status, 200);
+assert.equal((await fetch(origin + '/actions/unknown')).status, 404);
 const admin = await fetch(origin + '/_emdash/admin/', { redirect: 'manual' });
 assert.ok([200, 302, 303, 307, 308].includes(admin.status), 'admin reachable');
 for (const path of ['/exports/phase6-20261103-v1/themes.en.json', '/exports/phase6-20261103-v1/provenance.private.json', '/backups/phase6-20261103-v1/src/layouts/Base.astro', '/.env', '/data.db']) {
@@ -61,7 +61,10 @@ if (mode === 'production') {
   for (const file of await walk('dist')) {
     if (!/\.(m?js|json|html|map)$/.test(file)) continue;
     const text = await readFile(file, 'utf8');
-    assert.doesNotMatch(text, /A1 · A frozen|B1 · Build an index|e-final-148-157|<withheld-sha256>/, `draft excluded: ${file}`);
+    // Astro embeds absolute component source paths; the import contract may name researcher_os as producer.
+    // Fail only on private export material or absolute filesystem path fields.
+    assert.doesNotMatch(text, /provenance\.private|exports\/phase[56]|editorial-drafts\.en\.json|themes\.jp\.json/, `private export excluded: ${file}`);
+    assert.doesNotMatch(text, /"path"\s*:\s*"(?:\/Users\/|file:\/\/)/, `filesystem path field excluded: ${file}`);
   }
 }
-console.log(`PASS ${mode}: provenance closure, cross-links, private-file denial, admin and publication boundary`);
+console.log(`PASS ${mode}: personal synthesis visible, provenance closed, private files denied`);

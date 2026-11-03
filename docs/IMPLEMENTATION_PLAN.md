@@ -27,13 +27,14 @@ Updated 2026-11-03. Phase 1 decisions were read from the preceding audit/plannin
 - [x] Build English day/theme indexes, detail views, highlight embeds and illustrative workflow pages.
 - [x] Keep record-gap labels visible; do not turn workflow examples into project-management records.
 - [x] Prepare Phase 5 editorial issue/workflow drafts under ignored `exports/` (not CMS imports).
-- [ ] Confirm remaining YouTube highlight mappings, representative versions and publication permissions.
+- [x] Confirm embed permission and representative version for `RPXnSvabsGY` (owner, 2026-11-03; Unlisted retained).
+- [ ] Confirm any further YouTube highlight mappings (indices / prediction / other sessions).
 
 ## Phase 6: dedicated scientific themes
 
 - [x] Deliver independent `/ai-for-mjo-research` and `/mjo-indices-and-diagnostics` sections in primary navigation.
 - [x] Author local English theme review package and Japanese scientific synthesis under ignored `exports/`.
-- [x] Withhold draft theme/issue bodies from normal builds; expose them only in local development.
+- [x] Promote English personal synthesis into committed `src/data/personal-synthesis.json` for DEV and production (raw minutes and private provenance remain gitignored).
 - [x] Record mechanical verification in `docs/PHASE6_IMPLEMENTATION.md`.
 - [ ] Complete scientific sign-off, language review, publication approval and any additional video mappings.
 
@@ -58,9 +59,12 @@ Follow the current official [EmDash Cloudflare guide](https://docs.emdashcms.com
 
 No active Wrangler configuration/deploy script is included now. Local Node build success does not establish Workers/D1/R2 compatibility.
 
-## Outstanding owner actions
+## Access and authorship (2026-11-03)
 
-- Register the local admin email/passkey in the setup wizard.
-- Complete scientific/language/publication review for Phase 5–6 editorial packages before any CMS import.
-- Specify remaining video mappings, participant access policy and approved import samples.
-- Authorize Cloudflare provisioning/deployment separately when ready.
+- [x] Local admin email/passkey registered.
+- [x] Access model: **public personal report** by Qoosaku Moteki (one participant); no shared participant accounts (`docs/OWNER_ACCESS_POLICY.md`).
+- [x] Stance shown on home, top bar, footer and About.
+- [x] Fill scientific theme/issue/action pages as personal synthesis from converted minutes (12 issues, 2 themes, 12 actions; uncertainty and non-consensus labels retained).
+- [x] Bundle personal synthesis for production as well as development (no runtime dependence on `exports/`).
+- [ ] Confirm any further YouTube highlight mappings.
+- [ ] Authorize Cloudflare provisioning/public hosting separately when ready (`noindex` until then).

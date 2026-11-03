@@ -13,9 +13,7 @@ Implemented and checked on 3 November 2026 (Asia/Tokyo).
 
 ## Publication boundary
 
-Scientific sign-off, language review and publication approval are pending. The current work is a local editorial review, not an approved CMS import. `loadThemeReview()` reads only the edited portal-local derivative in development mode. It never reads `researcher_os` during runtime or build. Normal builds display review-pending theme pages and return 404 for the six issue drafts. Missing review packages also fail closed. Existing CMS publication controls remain in place.
-
-The review JSON, Japanese report and private provenance live in the ignored and HTTP-denied `exports/` directory. Preserve this package separately when moving the project; it is intentionally not included in Git or deployed assets. The private authoring helper is not a runtime dependency.
+Scientific sign-off, language review and formal workshop publication approval remain pending. Owner policy (2026-11-03) treats the site as a **personal public report**. English paraphrases from converted minutes are therefore bundled as `src/data/personal-synthesis.json` (12 issues, 2 themes, 12 illustrative actions, 32 sources, 82 evidence locators) and rendered in both development and production via `loadThemeReview()`. Labels retain personal-synthesis / non-consensus framing. Raw Phase 5/6 exports, Japanese drafts and private provenance stay gitignored under `exports/` and are never a runtime input. Rebuild the bundle with `npm run science:build-synthesis` when those private drafts change. The loader never reads `researcher_os`. Existing CMS publication controls remain in place.
 
 Three pre-existing files were backed up after explicit approval to `backups/phase6-20261103-v1/src/`: the two theme routes and `layouts/Base.astro`. These were untracked at the initial inspection; retain their backups. No packages were installed, and this task performed no commit, push, CMS publication or deployment.
 
@@ -32,7 +30,7 @@ RMM was checked against Wheeler & Hendon (2004); OMI/ROMI against Kiladis et al.
 - `npm run science:check`: generated schema matches the contract.
 - `npm run build`: passed using Node 24.22.2 and the existing loopback helper; existing large-chunk warning only.
 - `node scripts/verify-phase6.mjs dev`: both themes, six issue pages, unknown-issue 404, direct navigation, source-reference closure, English rendering, anchor targets, private-file protection and admin reachability passed.
-- `node scripts/verify-phase6.mjs production`: normal build at `127.0.0.1:4322`; themes withheld, issue drafts 404, draft text/fingerprints excluded from generated assets, private-file protection and admin checks passed.
+- `node scripts/verify-phase6.mjs production` (rechecked 2026-11-03 after personal-synthesis wiring): themes and issues visible from the committed package; private export paths excluded from `dist`; private-file HTTP denial and admin reachability passed.
 - `node scripts/verify-phase4-http.mjs`: all 14 existing routes and detail-miss checks passed.
 - `npm run verify:local`: homepage, posts, admin and private-file checks passed.
 - Real browser inspection: desktop AI page, narrow-screen index definitions, direct primary links, related q06 issue, keyboard navigation and both themes at actual 320 CSS px without horizontal overflow. Temporary viewport override reset.

@@ -1,10 +1,23 @@
 ---
 import Base from "../../layouts/Base.astro";
 import PageIntro from "../../components/PageIntro.astro";
+import { loadThemeReview } from "../../science/theme-review";
+import { SITE_STANCE } from "../../data/portal";
+const actions = loadThemeReview()?.actions ?? [];
 ---
 <Base title="Research Action Roadmap">
-  <PageIntro title="Research Action Roadmap" eyebrow="From questions to possible methods" description="Explore how future reviewed questions could inform illustrative AI agent workflows for MJO research." />
-  <div class="notice">These pages illustrate possible workflows. They are not assignments, formal workshop commitments or evidence of completed research. There are no owners, deadlines or progress trackers.</div>
-  <article class="card"><p class="eyebrow">Workflow interface / 01</p><span class="badge draft">Illustrative draft</span><h2 style="margin-top:1rem"><a href="/actions/theory-and-modelling">From a reviewed question to an evidence-led workflow</a></h2><p>A generic example showing where the scientific question, source material, methods, outputs and limitations would connect. Its scientific relationship to the breakout remains unverified.</p><a href="/actions/theory-and-modelling">Explore the workflow →</a></article>
-  <section><h2>Start with a question</h2><p>Research actions will retain the question, rationale and evidence on which they depend. An AI-generated suggestion will be clearly distinguished from a reviewed workshop proposal.</p><a href="/questions">Explore Scientific Questions →</a></section>
+  <PageIntro title="Research Action Roadmap" eyebrow="From questions to possible methods" description="Illustrative AI-agent workflows suggested by a personal reading of the workshop questions. They are sketches for future research design, not assignments." />
+  <div class="notice" data-theme-review="personal-report"><strong>{SITE_STANCE.shortLabel}.</strong> These pages illustrate possible workflows. They are not formal workshop commitments, owners, deadlines or evidence of completed research.</div>
+  <div class="card-grid">
+    {actions.map(action => (
+      <article class="card">
+        <p class="eyebrow">{action.issue_id} · Illustrative workflow</p>
+        <span class="badge draft">Not a commitment</span>
+        <h2 style="margin-top:1rem"><a href={`/actions/${action.issue_id}`}>{action.title}</a></h2>
+        <p>{action.rationale}</p>
+        <a href={`/actions/${action.issue_id}`}>Explore the workflow →</a>
+      </article>
+    ))}
+  </div>
+  <section><h2>Start with a question</h2><p>Each action retains the scientific question on which it depends. An AI-assisted sketch is distinguished from a workshop decision.</p><a href="/questions">Explore Scientific Questions →</a></section>
 </Base>

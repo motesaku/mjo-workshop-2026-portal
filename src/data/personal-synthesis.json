@@ -1,0 +1,4067 @@
+{
+  "format": "personal-workshop-synthesis",
+  "version": "1.0.0",
+  "created_on": "2026-11-03",
+  "language": "en",
+  "authorship": {
+    "author": "Qoosaku Moteki",
+    "role": "individual workshop participant",
+    "stance": "personal_learning_and_present_understanding",
+    "access_model": "public_personal_report",
+    "not_claimed": [
+      "official ICTP publication",
+      "workshop multi-author consensus",
+      "shared participant CMS"
+    ]
+  },
+  "scientific_review": "personal_synthesis_from_minutes",
+  "publication_approval": "owner_personal_report",
+  "language_review": "author_english",
+  "formal_consensus": "not_established",
+  "coverage": "partial",
+  "themes": [
+    {
+      "id": "ai",
+      "title": "AI for MJO Research",
+      "description": "Compare forecasting success, physical explanations and testable routes toward better MJO models.",
+      "sections": [
+        {
+          "id": "forecast-and-understanding",
+          "title": "Forecast skill is not a mechanism",
+          "intro": "Three questions require different evidence: does a forecast work, does it reproduce physical structure, and does its explanation survive a test?",
+          "items": [
+            {
+              "title": "AI-based MJO forecasting",
+              "text": "The prediction minutes describe studies with competitive or higher RMM skill for AI, while warning that test periods, seasons, index processing and ensembles differ. They also report an example of improved moisture ahead of convection. These are reported results, not a verified ranking or causal attribution.",
+              "refs": [
+                "e-hkim-43-48"
+              ],
+              "origin": "Workshop record"
+            },
+            {
+              "title": "Skill and predictability limits",
+              "text": "The predictability minutes distinguish observation-based forecast skill from potential predictability estimated with a model ensemble member as truth. Member quality and the signal–error definition affect the estimate; it is not a measured universal limit of the atmosphere. No headline day count is adopted here.",
+              "refs": [
+                "e-hera-13-17",
+                "e-hera-22-28",
+                "e-hera-33-36"
+              ],
+              "origin": "Workshop record"
+            },
+            {
+              "title": "A genuine disagreement, with different objectives",
+              "text": "The final discussion records support for using rigorously validated AI without every user understanding its architecture, alongside demands to explain physical mechanisms and failures. It also distinguishes network-level understanding from explaining a particular forecast. Practical usefulness and scientific explanation overlap, but answer different questions.",
+              "refs": [
+                "e-final-169-185"
+              ],
+              "origin": "Workshop record"
+            }
+          ]
+        },
+        {
+          "id": "method-comparison",
+          "title": "Competing, complementary, or converging?",
+          "intro": "The relationships below are editorial classifications of recorded proposals. No architecture was selected by workshop consensus.",
+          "items": [
+            {
+              "title": "Competing — end-to-end AI and dynamical forecasts",
+              "text": "For the same target, initialization date and information cutoff, these are alternative predictors whose skill can be compared. The final discussion left open whether observation-to-impact AI, hybrid models or multiple approaches should be pursued. A single index score cannot select a universally superior architecture.",
+              "refs": [
+                "e-final-159-166",
+                "e-hkim-43-48"
+              ],
+              "origin": "Editorial synthesis"
+            },
+            {
+              "title": "Complementary — AI-assisted initialization and parameterization",
+              "text": "The theory record proposes AI-improved initial states for dynamical prediction and learned improvements to uncertain physical parameterizations. These uses can strengthen a dynamical system rather than replace it. Their added value still requires matched control experiments.",
+              "refs": [
+                "e-g34-18-25",
+                "e-g34-42-50"
+              ],
+              "origin": "Editorial synthesis"
+            },
+            {
+              "title": "Potentially converging — physics-informed and hybrid AI",
+              "text": "Here, physics-informed means adding physical structure or constraints to learning; hybrid means coupling learned components with a physical model. These labels overlap but are not synonyms. NeuralGCM is a published example combining a dynamical core with learned physics; this external example does not verify any workshop claim of MJO superiority.",
+              "refs": [
+                "neuralgcm",
+                "e-g34-18-25"
+              ],
+              "origin": "Editorial synthesis"
+            },
+            {
+              "title": "Complementary — explainability, equation discovery and interventions",
+              "text": "Feature attribution can locate model sensitivities; sparse equation discovery can propose compact descriptions; controlled interventions can test their necessity in a specified model. The breakout proposed starting with known systems and stressed non-unique equations and dependence on candidate terms. Feature importance alone is not physical causation.",
+              "refs": [
+                "e-g3-170-201",
+                "e-g3-202-251"
+              ],
+              "origin": "Editorial synthesis"
+            }
+          ]
+        },
+        {
+          "id": "physical-processes",
+          "title": "Physical consistency, initiation and three-dimensional structure",
+          "intro": "The evaluation target must extend beyond two index components.",
+          "items": [
+            {
+              "title": "Conservation is an explicit test",
+              "text": "The theory minutes call for mass and moisture constraints. Our proposed evaluation also reports energy and water budget residuals, boundary fluxes, sources and sinks, and drift. A penalty in a training loss does not establish exact conservation; specify the discretized budget and tolerance. Energy-budget auditing is an editorial extension, not an adopted workshop requirement.",
+              "refs": [
+                "e-g34-18-25",
+                "e-g34-42-50"
+              ],
+              "origin": "Editorial synthesis"
+            },
+            {
+              "title": "Initiation and propagation need separate definitions",
+              "text": "The theory discussion distinguishes new convection, organization into clusters and growth of an MJO envelope. The prediction record lists stalled, jumping, slow and fast evolution. Our comparison would score onset, displacement, amplitude and termination separately; successful RMM phase prediction would not establish correct initiation physics.",
+              "refs": [
+                "e-g34-53-60",
+                "e-hkim-31-36"
+              ],
+              "origin": "Editorial synthesis"
+            },
+            {
+              "title": "Represent the evolving volume",
+              "text": "The minutes question whether observations alone resolve the independent information needed for winds and humidity, especially vertical structure. Our proposed three-dimensional diagnostics compare longitude–latitude–pressure evolution of moisture, temperature, circulation and heating, including their phase relationships. Where tendencies or heating are unavailable, mark the process unassessed rather than infer it from index skill.",
+              "refs": [
+                "e-g34-42-50",
+                "e-hkim-25-30",
+                "e-closing-202-219"
+              ],
+              "origin": "Editorial synthesis"
+            }
+          ]
+        },
+        {
+          "id": "alignment-and-questions",
+          "title": "Emerging alignment and unresolved questions",
+          "intro": "Repeated reports can describe the same discussion; they are not independent votes.",
+          "items": [
+            {
+              "title": "A shared evaluation direction, without formal consensus",
+              "text": "The closing record proposes common test periods, separation from training data, probabilistic verification and process diagnostics. It also records disagreement about AI-specific metrics versus shared physical and forecast metrics. Limited AI output variables remain a practical obstacle.",
+              "refs": [
+                "e-closing-202-219"
+              ],
+              "origin": "Workshop record"
+            },
+            {
+              "title": "Hindcasts and current forecasts can complement each other",
+              "text": "The final record proposes continuous real-time comparisons as a complement to reforecasts, whose larger samples support conditional verification. Rapid model updates complicate version comparisons. It does not record an agreement to abandon reforecasts.",
+              "refs": [
+                "e-final-186-201"
+              ],
+              "origin": "Workshop record"
+            },
+            {
+              "title": "Questions that remain open",
+              "text": "Which independent observations constrain a sufficiently complete atmospheric state? Can an explanation survive physically plausible perturbations and unfamiliar climates? Which diagnostics can be computed fairly for every model, and which need additional outputs? Does an apparent gain survive changes in index, season and event type?",
+              "refs": [
+                "e-g34-42-50",
+                "e-g3-170-201",
+                "e-closing-202-219",
+                "e-hkim-49-69"
+              ],
+              "origin": "Editorial synthesis"
+            }
+          ]
+        },
+        {
+          "id": "testable-actions",
+          "title": "Testable future actions",
+          "intro": "New editorial proposals motivated by the minutes. No experiment, assignment or commitment is claimed.",
+          "items": [
+            {
+              "title": "A1 · A frozen, matched forecast benchmark",
+              "text": "Freeze model versions, training cutoffs, initialization dates, climatologies and ensemble sizes. Evaluate independent seasons and event types using RMM, convective fields, event tracks and reliability. Bootstrap by event or time block, not by treating overlapping forecast days as independent. A claimed AI advantage is challenged if it disappears under these matched conditions. Deliver reproducible scores, uncertainty intervals and a leakage audit.",
+              "refs": [
+                "e-hkim-43-48",
+                "e-hkim-49-69",
+                "e-final-186-201"
+              ],
+              "origin": "New research proposal"
+            },
+            {
+              "title": "A2 · A constraint and structure ablation",
+              "text": "Compare an unconstrained learner, a constrained counterpart and a hybrid model under matched data and compute budgets. Predefine acceptable water, energy and mass residuals and three-dimensional phase errors; account for changing mean states and boundary fluxes. If constraints reduce drift but degrade convection or propagation, report the tradeoff rather than declare physical success. Deliver lead-time curves and budget residuals.",
+              "refs": [
+                "e-g34-18-25",
+                "e-g34-42-50",
+                "e-closing-202-219"
+              ],
+              "origin": "New research proposal"
+            },
+            {
+              "title": "A3 · Test an explanation before applying it to MJO",
+              "text": "First recover known dynamics from withheld noisy toy-system trajectories. Then test a proposed moisture or circulation dependence using physically plausible perturbations, independent observations and more than one model. Failure to predict the sign or timing of the response challenges the candidate explanation; success in a toy system alone does not establish an atmospheric MJO mechanism. Deliver candidate equations, negative results and sensitivity to term selection.",
+              "refs": [
+                "e-g3-170-201",
+                "e-g3-202-251"
+              ],
+              "origin": "New research proposal"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        "q07",
+        "q08",
+        "q02",
+        "q09"
+      ],
+      "video_context": "Related to explainability and equation discovery. This short derivative does not cover all AI positions or verify claims.",
+      "video_gap": "Additional prediction and predictability highlight mappings are not verified in this package."
+    },
+    {
+      "id": "indices",
+      "title": "MJO Indices and Diagnostics",
+      "description": "Define what is being measured before comparing forecasts, events and physical processes.",
+      "sections": [
+        {
+          "id": "definitions",
+          "title": "RMM, OMI and ROMI: verified definitions",
+          "intro": "External definitions were checked on 3 November 2026. They are reference material, not workshop statements. EOF means empirical orthogonal function; OLR means outgoing longwave radiation, a proxy for deep convection.",
+          "items": [
+            {
+              "title": "RMM · Real-time Multivariate MJO index",
+              "text": "The Wheeler–Hendon index projects anomalies of OLR and zonal winds at 850 and 200 hPa, averaged over 15°S–15°N, onto a combined pair of EOFs. Annual and slow variability are removed without a conventional intraseasonal bandpass. RMM is multivariate, not purely a circulation index. Its two components summarize phase and amplitude.",
+              "refs": [
+                "wh2004"
+              ],
+              "origin": "External definition"
+            },
+            {
+              "title": "OMI · OLR MJO Index",
+              "text": "NOAA PSL describes projection of 20–96-day filtered OLR (eastward and westward wavenumbers) onto daily spatial EOFs derived from 30–96-day eastward-filtered OLR. This retrospective convective index retains seasonal spatial variation.",
+              "refs": [
+                "noaa-indices"
+              ],
+              "origin": "External definition"
+            },
+            {
+              "title": "ROMI · Real-time OLR MJO Index",
+              "text": "ROMI uses OLR anomalies with the previous 40-day mean removed and a 9-day running average tapered toward the target date, projected onto the daily OMI spatial patterns. This endpoint treatment is different from retrospective OMI filtering; ROMI and OMI are not interchangeable.",
+              "refs": [
+                "noaa-indices"
+              ],
+              "origin": "External definition"
+            },
+            {
+              "title": "Names, versions and phase conventions matter",
+              "text": "NOAA lists OOMI, OMI, ROMI, REOMI and ERA5 OMI separately. Its current OMI uses CPC blended OLR. When aligning raw OMI components with RMM phase convention, use (OMI PC2, −OMI PC1); check whether a supplied product has already applied this transformation. Record the provider, version and retrieval date.",
+              "refs": [
+                "noaa-indices"
+              ],
+              "origin": "External definition"
+            }
+          ]
+        },
+        {
+          "id": "diagnostic-comparison",
+          "title": "What each diagnostic reveals—and misses",
+          "intro": "The following strengths and limitations are an editorial comparison grounded in the cited definitions and records. There is no universal winning index.",
+          "items": [
+            {
+              "title": "RMM · Compact common reference",
+              "text": "Useful for comparing broad convective–circulation evolution across forecast systems. Its compact structure can miss regional rainfall and event-specific geometry; the circulation can dominate a useful score even when convection differs. Latitude averaging limits information about north–south displacement. Retain separate field diagnostics when those features are the target.",
+              "refs": [
+                "wh2004",
+                "kiladis2014",
+                "e-closing-238-249"
+              ],
+              "origin": "Editorial synthesis"
+            },
+            {
+              "title": "OMI · Retrospective convection",
+              "text": "Useful when the convective envelope and seasonally varying spatial patterns are central. OLR is noisy and requires processing; the index does not directly describe the full circulation or vertical structure. Retrospective filtering is appropriate for a declared verification target, but must not leak future observations into forecast inputs or initial event selection.",
+              "refs": [
+                "kiladis2014"
+              ],
+              "origin": "Editorial synthesis"
+            },
+            {
+              "title": "ROMI · Convective monitoring near the endpoint",
+              "text": "Useful for evaluating what a convective index could show at issue time. Endpoint smoothing can change timing and amplitude relative to OMI. An equal numeric threshold or nominal phase need not select the same event population. Compare versioned series before interpreting a skill difference as model improvement.",
+              "refs": [
+                "kiladis2014",
+                "noaa-indices"
+              ],
+              "origin": "Editorial synthesis"
+            },
+            {
+              "title": "Event-based tracking · Location, lifespan and diversity",
+              "text": "The Janiga minutes describe tracking filtered precipitation objects, with a 20-day persistence criterion for the observed climatology and 15 days for forecasts. This exposes trajectories and event types but introduces dependence on filtering, thresholds, tracking and record length. These particular rules are not a universal MJO definition and are not assumed equivalent to the precipitation-tracking method in the Chen minutes.",
+              "refs": [
+                "e-janiga-17-22",
+                "e-janiga-47-52",
+                "e-chen-32-41"
+              ],
+              "origin": "Editorial synthesis"
+            },
+            {
+              "title": "Propagation diagnostics · Inspect evolution explicitly",
+              "text": "Our proposed complement is a longitude–time plot plus latitude-aware tracks, displacement and phase-speed estimates, with intensity scored separately. Split, merge, stalled and jumping events require explicit tracking rules. Motion of a composite envelope or a sequence of events is not automatically the phase or group velocity of an individual disturbance.",
+              "refs": [
+                "e-janiga-35-42",
+                "e-janiga-47-52",
+                "e-hkim-31-36"
+              ],
+              "origin": "Editorial synthesis"
+            }
+          ]
+        },
+        {
+          "id": "workshop-perspectives",
+          "title": "Workshop perspectives: alignment and differences",
+          "intro": "The minutes support comparison of diagnostic purposes, not an endorsed replacement for RMM.",
+          "items": [
+            {
+              "title": "Emerging alignment: supplement the common language",
+              "text": "The closing record values RMM for simplicity and comparability while proposing supplementary descriptors for structure and impacts. The prediction minutes call for precipitation, vertical structure and regional verification. This is an editorial reading of a recurring direction, not a formal consensus or independent vote count.",
+              "refs": [
+                "e-closing-238-249",
+                "e-hkim-25-30"
+              ],
+              "origin": "Editorial synthesis"
+            },
+            {
+              "title": "ROMI was proposed, not selected",
+              "text": "The final-day record explicitly proposes assessing ROMI and tracking convective systems. It does not establish that ROMI is identical to OMI or that one should replace the other. The authoritative definitions above resolve the terminology; they do not retroactively strengthen the workshop evidence.",
+              "refs": [
+                "e-final-148-157"
+              ],
+              "origin": "Workshop record"
+            },
+            {
+              "title": "Different diagnostic outcomes are not automatically contradictory",
+              "text": "The Chen minutes report precipitation-object changes that were not apparent in RMM and call for checking data periods and quality. The prediction minutes report shorter skill for a particular OMI-based evaluation. These different targets do not establish a universally superior index, a universal skill horizon or a verified climate trend.",
+              "refs": [
+                "e-chen-32-41",
+                "e-chen-48-54",
+                "e-hkim-25-30"
+              ],
+              "origin": "Editorial synthesis"
+            },
+            {
+              "title": "Disagreement and tradeoff: no recorded RMM–OMI–ROMI vote",
+              "text": "The available records do not establish opposing camps advocating one of these three indices. They do expose a methodological tension between a simple common measure and richer regional or structural descriptions. The separate debate about AI-specific versus shared metrics also affects index-based forecast verification.",
+              "refs": [
+                "e-closing-238-249",
+                "e-closing-202-219"
+              ],
+              "origin": "Editorial synthesis"
+            }
+          ]
+        },
+        {
+          "id": "sensitivity-and-verification",
+          "title": "Season, region and noncanonical events",
+          "intro": "An index-defined sample is a methodological choice, not the complete population of MJO behaviour.",
+          "items": [
+            {
+              "title": "Seasonal and regional sensitivity",
+              "text": "Seasonally varying patterns and latitude averaging encode different information. Our proposed evaluation stratifies by season, region and background state, including ENSO, and records sample sizes. A result for Indian Ocean initiation or Maritime Continent propagation must not be generalized globally without testing.",
+              "refs": [
+                "kiladis2014",
+                "e-janiga-47-52",
+                "e-hkim-31-36"
+              ],
+              "origin": "Editorial synthesis"
+            },
+            {
+              "title": "Noncanonical MJO events",
+              "text": "The prediction record includes stalling, jumping and slow or fast propagation. Treat these as explicitly defined classes for analysis, not a single standardized index category. Retain disagreement cases—for example strong circulation with weak convection—and examine full fields instead of removing them to improve agreement.",
+              "refs": [
+                "e-hkim-31-36",
+                "e-closing-238-249"
+              ],
+              "origin": "Editorial synthesis"
+            },
+            {
+              "title": "Implications for forecast verification",
+              "text": "Lock the index algorithm, EOF basis, climatology, sign convention, anomaly calculation and information cutoff. Separate phase, amplitude, event hits and false alarms, location and rainfall skill. Different predictands can produce different skill horizons without contradiction. Observed and forecast event-duration rules must be reconciled or evaluated as separate protocols.",
+              "refs": [
+                "e-hkim-25-30",
+                "e-janiga-17-22",
+                "e-janiga-35-42"
+              ],
+              "origin": "Editorial synthesis"
+            },
+            {
+              "title": "Unresolved methodological questions",
+              "text": "How should event onset be defined when convection and circulation disagree? How much of a rank change comes from preprocessing rather than physics? Can a real-time tracker retain noncanonical cases without excessive false alarms? Which extra structural variables improve regional verification on held-out cases while preserving interpretability?",
+              "refs": [
+                "e-g34-53-60",
+                "e-closing-238-249",
+                "e-janiga-47-52"
+              ],
+              "origin": "Editorial synthesis"
+            }
+          ]
+        },
+        {
+          "id": "testable-actions",
+          "title": "Testable future actions",
+          "intro": "New editorial proposals. No data analysis has been performed and no workshop commitment is implied.",
+          "items": [
+            {
+              "title": "B1 · Build an index disagreement catalogue",
+              "text": "Freeze RMM, OMI and ROMI versions, align phase conventions once, and document both retrospective and issue-time data availability. Compare common dates and missing-data masks; tabulate amplitude, phase and event disagreement by season and region. Inspect OLR, precipitation and winds for disagreement cases. Deliver a reproducible catalogue; a stable discrepancy in full fields argues against treating the indices as equivalent.",
+              "refs": [
+                "noaa-indices",
+                "e-hkim-25-30",
+                "e-closing-238-249"
+              ],
+              "origin": "New research proposal"
+            },
+            {
+              "title": "B2 · Stress-test tracking and propagation",
+              "text": "Predeclare observed and forecast duration rules, thresholds, filtering and split/merge handling. Repeat tracking over plausible parameter choices and classify initiation, passage, stalling and termination. If the apparent model advantage reverses with reasonable settings or vanishes under matched duration rules, report it as definition-sensitive. Deliver tracks, sensitivity matrices and event-level uncertainty.",
+              "refs": [
+                "e-janiga-17-22",
+                "e-janiga-47-52",
+                "e-g34-53-60"
+              ],
+              "origin": "New research proposal"
+            },
+            {
+              "title": "B3 · Test whether richer diagnostics improve useful forecasts",
+              "text": "On held-out events compare a baseline using RMM alone with descriptors adding convective location, latitude and structure for a predefined regional rainfall target. Use reliability, proper probabilistic scores, event hit/false-alarm rates and event-block uncertainty. No out-of-sample improvement would challenge the proposed added value; improved index fit alone would not support it.",
+              "refs": [
+                "e-closing-238-249",
+                "e-hkim-25-30",
+                "e-chen-48-54"
+              ],
+              "origin": "New research proposal"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        "q06",
+        "q02",
+        "q08",
+        "q11"
+      ],
+      "video_context": "Process-research context only: termination and process observations. This is not an RMM, OMI or ROMI definitions video.",
+      "video_gap": "No index-specific highlight mapping has been verified. A process-context link is provided; it must not be presented as an index comparison highlight."
+    }
+  ],
+  "issues": [
+    {
+      "id": "q01",
+      "title": "What would distinguish competing MJO mechanisms?",
+      "question": "Is reproducing MJO structure and separating better-performing models sufficient evidence for a mechanism, or must the assumptions and necessary processes also survive targeted tests?",
+      "classification": "diverging perspectives",
+      "records": [
+        {
+          "text": "The theory keynote reviewed mechanisms that can produce similar large-scale signals while differing in circulation structure and parameter dependence.",
+          "evidence_ids": [
+            "e-khouider-19-25"
+          ],
+          "claim_id": "q01-c01",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "The theory plenary contrasted the usefulness of moisture-mode diagnostics for discriminating model performance with tests that manipulate the processes required by a theory.",
+          "evidence_ids": [
+            "e-p34-36-56",
+            "e-g34-146-152"
+          ],
+          "claim_id": "q01-c02",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "The closing record retained both a desire for a unified account and the view that distinct theories can explain different aspects; it did not endorse a particular model-hierarchy initiative.",
+          "evidence_ids": [
+            "e-closing-148-161",
+            "e-closing-162-171"
+          ],
+          "claim_id": "q01-c03",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "coverage": "partial",
+      "status": "Personal synthesis from converted minutes · not workshop consensus",
+      "proposed_research": {
+        "title": "Build a falsifiable theory-comparison matrix",
+        "rationale": {
+          "text": "The records motivate tests of assumptions rather than a ranking by a single score.",
+          "evidence_ids": [
+            "e-p34-36-56",
+            "e-g3-284-341"
+          ],
+          "claim_id": "q01-c11",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "steps": [
+          {
+            "text": "Have an agent assemble a researcher-reviewed matrix of assumptions, parameter ranges, predicted signs or phase relations, and observations that would contradict each prediction.",
+            "evidence_ids": [
+              "e-closing-148-161"
+            ],
+            "claim_id": "q01-c12",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          },
+          {
+            "text": "Pilot matched control and process-suppression experiments in a simple nonlinear model and an independent comprehensive model; diagnose the induced mean-state change as well as the targeted tendency.",
+            "evidence_ids": [
+              "e-g3-284-341",
+              "e-closing-162-171"
+            ],
+            "claim_id": "q01-c13",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          }
+        ],
+        "expected_outputs": {
+          "text": "Deliver an executable experiment specification, provenance table, budget-residual report and a record of both confirming and contradicting outcomes.",
+          "evidence_ids": [
+            "e-g3-284-341"
+          ],
+          "claim_id": "q01-c14",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "discriminating_result": {
+          "text": "If removing a purportedly necessary process preserves the specified phenomenon within the theory’s stated domain, that necessity claim is challenged in the tested model. Agreement across independent observations and models strengthens, but does not prove, atmospheric attribution.",
+          "evidence_ids": [
+            "e-g34-146-152",
+            "e-g3-284-341"
+          ],
+          "claim_id": "q01-c15",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "limitations": {
+          "text": "Process removal may produce an unrealistic climate. No conclusion is warranted without a credible control and quantified mean-state effects.",
+          "evidence_ids": [
+            "e-g3-284-341"
+          ],
+          "claim_id": "q01-c16",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "agent_role": "An AI coding agent may prepare auditable scripts and provenance; researchers define physics, approve experiments and interpret results. No experiment has been executed.",
+        "action_id": "a01",
+        "action_kind": "illustrative_ai_workflow",
+        "commitment": "not_a_commitment"
+      },
+      "positions": [
+        {
+          "text": "One position values diagnostics that relate theoretical expectations to differences in model skill; their ability to identify model weaknesses is scientifically useful.",
+          "evidence_ids": [
+            "e-p34-36-56",
+            "e-g34-146-152"
+          ],
+          "claim_id": "q01-c04",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "A competing standard requires explicit assumptions, falsifying observations and process interventions before inferring that the same mechanism operates in nature.",
+          "evidence_ids": [
+            "e-p34-36-56",
+            "e-g34-146-152"
+          ],
+          "claim_id": "q01-c05",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Pluralism may be appropriate when theories have different domains of validity; a unified explanation remains desirable to others. These are not equivalent to accepting mutually inconsistent predictions.",
+          "evidence_ids": [
+            "e-closing-148-161"
+          ],
+          "claim_id": "q01-c06",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "comparison": {
+        "text": "The strongest recorded disagreement concerns the evidential standard for a mechanism. A useful predictor of model performance does not by itself identify a necessary process, while an intervention in one model does not settle the mechanism in the atmosphere.",
+        "evidence_ids": [
+          "e-p34-36-56",
+          "e-g34-146-152",
+          "e-g3-284-341"
+        ],
+        "claim_id": "q01-c07",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "emerging_alignment": {
+        "text": "Several records favor making assumptions and observational tests explicit. This is a recurring methodological direction, not agreement on a winning theory or a community experiment.",
+        "evidence_ids": [
+          "e-khouider-19-25",
+          "e-closing-148-161",
+          "e-g3-284-341"
+        ],
+        "claim_id": "q01-c08",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "unresolved_questions": [
+        {
+          "text": "Which observables yield incompatible predictions under shared boundary conditions, and which models are suitable for those tests?",
+          "evidence_ids": [
+            "e-closing-148-161",
+            "e-g3-284-341"
+          ],
+          "claim_id": "q01-c09",
+          "origin": "evidence_based_editorial_synthesis",
+          "verification": "unverified"
+        }
+      ],
+      "limitations": {
+        "text": "Parameter tuning, compensating errors and changes in the mean state can confound interventions. A plenary report may repeat a breakout contribution and is not an additional independent vote.",
+        "evidence_ids": [
+          "e-g34-146-152",
+          "e-g3-284-341"
+        ],
+        "claim_id": "q01-c10",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "formal_consensus": false
+    },
+    {
+      "id": "q02",
+      "title": "What starts, organizes and ends an MJO event?",
+      "question": "Which observable transition constitutes MJO initiation or termination, and how do synoptic disturbances and background conditions influence that transition?",
+      "classification": "open questions",
+      "records": [
+        {
+          "text": "The theory discussion identified ambiguity in initiation: formation of convection, organization of clusters and growth of an MJO envelope need not refer to the same transition.",
+          "evidence_ids": [
+            "e-g34-53-60",
+            "e-khouider-33-53"
+          ],
+          "claim_id": "q02-c01",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "A breakout explicitly distinguished weakening, stalled propagation and termination, including possible redistribution into smaller-scale disturbances.",
+          "evidence_ids": [
+            "e-g3-54-90"
+          ],
+          "claim_id": "q02-c02",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Takasuka reported propagation regimes in two ensemble case studies and sensitivity of branching to prescribed SST conditions; Liu reported wave–convection interactions in a cloud-resolving case.",
+          "evidence_ids": [
+            "e-takasuka-30-36",
+            "e-takasuka-42-47",
+            "e-liu-21-25"
+          ],
+          "claim_id": "q02-c03",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Janiga’s record distinguished the appearance of a convective envelope from the state of an existing wave group.",
+          "evidence_ids": [
+            "e-janiga-43-46"
+          ],
+          "claim_id": "q02-c04",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "coverage": "partial",
+      "status": "Personal synthesis from converted minutes · not workshop consensus",
+      "proposed_research": {
+        "title": "Construct and challenge lifecycle labels",
+        "rationale": {
+          "text": "Operational definitions are needed before mechanisms or predictive skill can be compared.",
+          "evidence_ids": [
+            "e-g34-53-60",
+            "e-g3-54-90"
+          ],
+          "claim_id": "q02-c11",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "steps": [
+          {
+            "text": "Ask an agent to implement researcher-specified onset, organization, propagation and termination criteria separately, retaining raw fields and alternative classifications.",
+            "evidence_ids": [
+              "e-g34-53-60",
+              "e-g3-54-90"
+            ],
+            "claim_id": "q02-c12",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          },
+          {
+            "text": "Compare event tracks and moisture/energy tendencies for propagating, stalled and reorganizing cases, stratified by season and background SST; repeat over plausible thresholds and independent years.",
+            "evidence_ids": [
+              "e-takasuka-30-36",
+              "e-takasuka-42-47",
+              "e-janiga-43-46"
+            ],
+            "claim_id": "q02-c13",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          }
+        ],
+        "expected_outputs": {
+          "text": "Produce an event-level catalogue, threshold-sensitivity matrix and uncertainty estimates based on independent events rather than treating all days as independent.",
+          "evidence_ids": [
+            "e-g3-54-90",
+            "e-takasuka-42-47"
+          ],
+          "claim_id": "q02-c14",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "discriminating_result": {
+          "text": "A proposed precursor should discriminate subsequent transitions in held-out events after background conditioning; failure to do so would limit its explanatory or predictive scope.",
+          "evidence_ids": [
+            "e-takasuka-30-36",
+            "e-g34-53-60"
+          ],
+          "claim_id": "q02-c15",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "limitations": {
+          "text": "Temporal precedence or classification skill alone does not establish causality. Sampling and definitions can change the apparent onset.",
+          "evidence_ids": [
+            "e-g34-53-60",
+            "e-janiga-43-46"
+          ],
+          "claim_id": "q02-c16",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "agent_role": "An AI coding agent may prepare auditable scripts and provenance; researchers define physics, approve experiments and interpret results. No experiment has been executed.",
+        "action_id": "a02",
+        "action_kind": "illustrative_ai_workflow",
+        "commitment": "not_a_commitment"
+      },
+      "positions": [
+        {
+          "text": "Background conditions may alter which propagation regimes are possible, while initial amplitude and interacting disturbances affect which regime is realized.",
+          "evidence_ids": [
+            "e-takasuka-30-36"
+          ],
+          "claim_id": "q02-c05",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "The initiation discussion also considered finite-amplitude, stochastic and multiscale development that may not be represented by infinitesimal linear growth alone.",
+          "evidence_ids": [
+            "e-g34-53-60"
+          ],
+          "claim_id": "q02-c06",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "comparison": {
+        "text": "These are potentially complementary levels of explanation, not a recorded head-to-head rejection of one theory by another. A moving composite, repeated cluster formation and motion of one tracked object must be distinguished.",
+        "evidence_ids": [
+          "e-takasuka-30-36",
+          "e-liu-21-25",
+          "e-janiga-43-46"
+        ],
+        "claim_id": "q02-c07",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "emerging_alignment": {
+        "text": "The records repeatedly call for lifecycle definitions and event-dependent diagnostics. They do not establish one accepted initiation or termination criterion.",
+        "evidence_ids": [
+          "e-g34-53-60",
+          "e-g3-54-90",
+          "e-janiga-43-46"
+        ],
+        "claim_id": "q02-c08",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "unresolved_questions": [
+        {
+          "text": "Can an objective classification distinguish new initiation, reactivation, stalling and loss of large-scale organization? How often do the case-study mechanisms recur?",
+          "evidence_ids": [
+            "e-g34-53-60",
+            "e-g3-54-90",
+            "e-takasuka-42-47"
+          ],
+          "claim_id": "q02-c09",
+          "origin": "evidence_based_editorial_synthesis",
+          "verification": "unverified"
+        }
+      ],
+      "limitations": {
+        "text": "Two simulated MJO events and one cloud-resolving case cannot establish a universal mechanism. The minutes do not provide common thresholds or enough information for a new event catalogue.",
+        "evidence_ids": [
+          "e-takasuka-42-47",
+          "e-liu-21-25",
+          "e-g34-53-60"
+        ],
+        "claim_id": "q02-c10",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      }
+    },
+    {
+      "id": "q03",
+      "title": "Which moisture and energy pathways support propagation?",
+      "question": "How can mean-state humidity, preconvective moistening, moisture advection, shallow convection and temperature contributions be separated when interpreting MJO propagation?",
+      "classification": "diverging perspectives",
+      "records": [
+        {
+          "text": "The prediction Q&A recorded an objection to treating a realistic mean state or premoistening as equivalent to an advective moisture-mode explanation; low-level convergence and shallow convection were emphasized as distinct processes.",
+          "evidence_ids": [
+            "e-hkim-49-69"
+          ],
+          "claim_id": "q03-c01",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Kumar reported appreciable free-tropospheric temperature contributions during transitions at Manus, with seasonal dependence. The exact percentages are withheld because the minutes flag an unresolved denominator.",
+          "evidence_ids": [
+            "e-kumar-30-37",
+            "e-kumar-43-49"
+          ],
+          "claim_id": "q03-c02",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Yokoi estimated distinct downdraft and entrainment contributions to boundary-layer energy loss; Yoneyama reviewed observations of progressive moistening and shallow-to-deeper convection.",
+          "evidence_ids": [
+            "e-yokoi-31-37",
+            "e-yokoi-43-49",
+            "e-yoneyama-20-28"
+          ],
+          "claim_id": "q03-c03",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "coverage": "partial",
+      "status": "Personal synthesis from converted minutes · not workshop consensus",
+      "proposed_research": {
+        "title": "Resolve transition-phase budgets",
+        "rationale": {
+          "text": "Separate terms can test the interpretations that aggregate MSE or mean humidity cannot distinguish.",
+          "evidence_ids": [
+            "e-hkim-49-69",
+            "e-kumar-30-37",
+            "e-yokoi-31-37"
+          ],
+          "claim_id": "q03-c10",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "steps": [
+          {
+            "text": "Freeze the MSE convention, vertical coordinate, mass weighting, phase definition and anomaly baseline; have an agent calculate temperature, moisture, transport, surface-flux and radiative terms with closure residuals.",
+            "evidence_ids": [
+              "e-kumar-43-49",
+              "e-yokoi-43-49"
+            ],
+            "claim_id": "q03-c11",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          },
+          {
+            "text": "Compare independent sites/seasons and event-resolved lead–lag relations, then design controlled model perturbations of convergence, advection or shallow-convective tendencies where technically meaningful.",
+            "evidence_ids": [
+              "e-hkim-49-69",
+              "e-yoneyama-20-28"
+            ],
+            "claim_id": "q03-c12",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          }
+        ],
+        "expected_outputs": {
+          "text": "Deliver phase-by-height budgets with uncertainty, assimilation-lineage flags and a residual relative to each claimed leading term.",
+          "evidence_ids": [
+            "e-kumar-43-49",
+            "e-yokoi-43-49"
+          ],
+          "claim_id": "q03-c13",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "discriminating_result": {
+          "text": "If a claimed dominant pathway is smaller than uncertainty or disappears under defensible definitions, the dominance claim is unsupported. Consistent budgets plus targeted perturbations can distinguish candidate pathways within the tested system.",
+          "evidence_ids": [
+            "e-hkim-49-69",
+            "e-kumar-43-49"
+          ],
+          "claim_id": "q03-c14",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "limitations": {
+          "text": "Budget terms are coupled; holding one fixed may alter others. Do not interpret lead–lag correlation as a controlled intervention.",
+          "evidence_ids": [
+            "e-hkim-49-69",
+            "e-yokoi-43-49"
+          ],
+          "claim_id": "q03-c15",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "agent_role": "An AI coding agent may prepare auditable scripts and provenance; researchers define physics, approve experiments and interpret results. No experiment has been executed.",
+        "action_id": "a03",
+        "action_kind": "illustrative_ai_workflow",
+        "commitment": "not_a_commitment"
+      },
+      "positions": [
+        {
+          "text": "A moisture-advection interpretation emphasizes transport and its relation to propagation; the Q&A challenged whether good mean humidity and premoistening actually identify that pathway.",
+          "evidence_ids": [
+            "e-hkim-49-69"
+          ],
+          "claim_id": "q03-c04",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "An alternative emphasis is low-level convergence and shallow-convective moistening ahead of deep convection. The record does not demonstrate that this pathway excludes advection.",
+          "evidence_ids": [
+            "e-hkim-49-69",
+            "e-yoneyama-20-28"
+          ],
+          "claim_id": "q03-c05",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "comparison": {
+        "text": "The direct dispute concerns causal interpretation of moistening, not the relevance of moisture itself. The temperature result raises a separate scope-of-approximation question; it does not refute every moisture-mode formulation.",
+        "evidence_ids": [
+          "e-hkim-49-69",
+          "e-kumar-30-37",
+          "e-kumar-43-49"
+        ],
+        "claim_id": "q03-c06",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "emerging_alignment": {
+        "text": "The contributions motivate phase-, season- and height-resolved budgets rather than a universal moisture-only or temperature-only account. This is a synthesis, not a common mechanism adopted by the speakers.",
+        "evidence_ids": [
+          "e-kumar-30-37",
+          "e-yokoi-31-37",
+          "e-yoneyama-20-28"
+        ],
+        "claim_id": "q03-c07",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "unresolved_questions": [
+        {
+          "text": "Which budget terms dominate before each transition, and are temperature anomalies a driver, response or covarying component? Does the answer change with location and season?",
+          "evidence_ids": [
+            "e-kumar-43-49",
+            "e-yokoi-43-49",
+            "e-hkim-49-69"
+          ],
+          "claim_id": "q03-c08",
+          "origin": "evidence_based_editorial_synthesis",
+          "verification": "unverified"
+        }
+      ],
+      "limitations": {
+        "text": "Single-site and cruise sampling, residual budget estimates and assimilation dependence limit inference. ERA5 agreement with assimilated radiosondes is not independent confirmation.",
+        "evidence_ids": [
+          "e-kumar-43-49",
+          "e-yokoi-43-49"
+        ],
+        "claim_id": "q03-c09",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "formal_consensus": false
+    },
+    {
+      "id": "q04",
+      "title": "How are tropical-mean and interhemispheric energy variations connected?",
+      "question": "Are tropical-mean intraseasonal oscillations and MJO-associated interhemispheric energy variations parts of one coupled mechanism, or distinct signals with conditional coupling?",
+      "classification": "open questions",
+      "records": [
+        {
+          "text": "Bao reported tropical-mean temperature variability even under an RMM-defined inactive condition, with larger variability when the MJO was active.",
+          "evidence_ids": [
+            "e-bao-39-44"
+          ],
+          "claim_id": "q04-c01",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Bao proposed surface-flux, convection and circulation feedbacks as a candidate explanation; their diagnostic consistency was not presented as causal identification.",
+          "evidence_ids": [
+            "e-bao-45-51",
+            "e-bao-52-57"
+          ],
+          "claim_id": "q04-c02",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Sakaeda reported interhemispheric energy and mass variations, with substantial uncertainty in the mass-transport term and no settled explanation of the oscillation timescale.",
+          "evidence_ids": [
+            "e-sakaeda-34-45",
+            "e-sakaeda-54-61",
+            "e-sakaeda-62-70"
+          ],
+          "claim_id": "q04-c03",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "coverage": "partial",
+      "status": "Personal synthesis from converted minutes · not workshop consensus",
+      "proposed_research": {
+        "title": "Compare energy diagnostics under a common definition set",
+        "rationale": {
+          "text": "A definition audit is needed before interpreting two different spatial integrals as one mechanism.",
+          "evidence_ids": [
+            "e-bao-52-57",
+            "e-sakaeda-54-61"
+          ],
+          "claim_id": "q04-c10",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "steps": [
+          {
+            "text": "Have an agent reproduce each published-in-minutes diagnostic only after variable definitions are reviewed, then harmonize period, filtering and seasonal strata without silently changing either original definition.",
+            "evidence_ids": [
+              "e-bao-52-57",
+              "e-sakaeda-62-70"
+            ],
+            "claim_id": "q04-c11",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          },
+          {
+            "text": "Compare atmosphere–surface exchange and interhemispheric transport across available independent products, retaining mass corrections and residuals; formulate separate flux- and circulation-perturbation experiments.",
+            "evidence_ids": [
+              "e-bao-45-51",
+              "e-sakaeda-54-61"
+            ],
+            "claim_id": "q04-c12",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          }
+        ],
+        "expected_outputs": {
+          "text": "Provide a definition crosswalk, phase-relation sensitivity table and closed-versus-unclosed budget assessment.",
+          "evidence_ids": [
+            "e-bao-52-57",
+            "e-sakaeda-54-61"
+          ],
+          "claim_id": "q04-c13",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "discriminating_result": {
+          "text": "A connection robust to alternative products and selections supports coupling as a hypothesis. A relationship that changes with budget correction or index selection challenges the inferred connection; causal direction still requires intervention.",
+          "evidence_ids": [
+            "e-bao-52-57",
+            "e-sakaeda-54-61"
+          ],
+          "claim_id": "q04-c14",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "limitations": {
+          "text": "No numerical reanalysis was performed here. Independent products and a sufficiently closed budget may not be available.",
+          "evidence_ids": [
+            "e-bao-52-57",
+            "e-sakaeda-54-61"
+          ],
+          "claim_id": "q04-c15",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "agent_role": "An AI coding agent may prepare auditable scripts and provenance; researchers define physics, approve experiments and interpret results. No experiment has been executed.",
+        "action_id": "a04",
+        "action_kind": "illustrative_ai_workflow",
+        "commitment": "not_a_commitment"
+      },
+      "positions": [
+        {
+          "text": "One reported hypothesis permits a tropical-mean oscillation without an active eastward MJO according to the selected index.",
+          "evidence_ids": [
+            "e-bao-39-44",
+            "e-bao-45-51"
+          ],
+          "claim_id": "q04-c04",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "The energy-cycle contribution emphasized a connection through ITCZ/Hadley-circulation changes and cross-equatorial transport; thermodynamic and extratropical drivers remained open.",
+          "evidence_ids": [
+            "e-sakaeda-34-45",
+            "e-sakaeda-62-70"
+          ],
+          "claim_id": "q04-c05",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "comparison": {
+        "text": "These studies diagnose different spatial integrals and event selections. Their coexistence is not a demonstrated disagreement or proof that they describe one oscillation. RMM inactivity is not absence of all MJO-related variability.",
+        "evidence_ids": [
+          "e-bao-39-44",
+          "e-bao-52-57",
+          "e-sakaeda-34-45"
+        ],
+        "claim_id": "q04-c06",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "emerging_alignment": {
+        "text": "Both contributions make energy and circulation diagnostics central and leave the timescale-setting process unresolved. A shared causal explanation is not established.",
+        "evidence_ids": [
+          "e-bao-45-51",
+          "e-sakaeda-62-70"
+        ],
+        "claim_id": "q04-c07",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "unresolved_questions": [
+        {
+          "text": "Does their relationship survive common seasonal sampling, filtering and mass treatment? Which feedback explains timing, and which apparent transport is budget error?",
+          "evidence_ids": [
+            "e-bao-52-57",
+            "e-sakaeda-54-61"
+          ],
+          "claim_id": "q04-c08",
+          "origin": "evidence_based_editorial_synthesis",
+          "verification": "unverified"
+        }
+      ],
+      "limitations": {
+        "text": "Reanalysis budget nonclosure, uncertain radiative variables, seasonal aggregation and index selection can create or obscure phase relations.",
+        "evidence_ids": [
+          "e-bao-52-57",
+          "e-sakaeda-54-61"
+        ],
+        "claim_id": "q04-c09",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "formal_consensus": false
+    },
+    {
+      "id": "q05",
+      "title": "What connects stratospheric state to MJO convection?",
+      "question": "Can stratospheric-wind effects on vertical structure and cloud radiation explain QBO-related MJO differences, and how does that pathway relate to organized convection?",
+      "classification": "open questions",
+      "records": [
+        {
+          "text": "Lin reported wind-dependent vertical structure in a simplified coupled troposphere–stratosphere model, observational composites and an ice-cloud radiative-feedback hypothesis.",
+          "evidence_ids": [
+            "e-lin-30-37",
+            "e-lin-19-24"
+          ],
+          "claim_id": "q05-c01",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "The prediction keynote described QBO-related activity and skill differences with model-dependent significance. A Q&A proposal linking MCS processes to both QBO coupling and the Maritime Continent barrier had not been tested for QBO.",
+          "evidence_ids": [
+            "e-hkim-37-42",
+            "e-hkim-49-69"
+          ],
+          "claim_id": "q05-c02",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "coverage": "partial",
+      "status": "Personal synthesis from converted minutes · not workshop consensus",
+      "proposed_research": {
+        "title": "Design a QBO–cloud–convection factorial test",
+        "rationale": {
+          "text": "Two distinct candidate pathways need separate controls before a common mechanism is asserted.",
+          "evidence_ids": [
+            "e-lin-30-37",
+            "e-hkim-49-69"
+          ],
+          "claim_id": "q05-c09",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "steps": [
+          {
+            "text": "Have an agent prepare common vertical diagnostics and stratify observed events by season, ENSO and QBO; quantify cloud, temperature and circulation phase relationships.",
+            "evidence_ids": [
+              "e-hkim-37-42",
+              "e-lin-30-37"
+            ],
+            "claim_id": "q05-c10",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          },
+          {
+            "text": "Specify controlled model experiments varying stratospheric winds, cloud-radiative coupling and organized-convection treatment, with unchanged diagnostics and checks on induced mean-state drift.",
+            "evidence_ids": [
+              "e-lin-43-49",
+              "e-hkim-49-69"
+            ],
+            "claim_id": "q05-c11",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          }
+        ],
+        "expected_outputs": {
+          "text": "Produce a factorial experiment protocol and uncertainty-aware vertical phase and growth diagnostics.",
+          "evidence_ids": [
+            "e-lin-43-49",
+            "e-hkim-37-42"
+          ],
+          "claim_id": "q05-c12",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "discriminating_result": {
+          "text": "Loss of the QBO response when cloud feedback is disabled would support that pathway within a credible model control; persistence would require other pathways. Interaction terms test whether the MCS and radiative explanations are complementary.",
+          "evidence_ids": [
+            "e-lin-30-37",
+            "e-hkim-49-69"
+          ],
+          "claim_id": "q05-c13",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "limitations": {
+          "text": "The proposed experiment has not been run. Sparse cloud profiles, confounding background states and unrealistic interventions may prevent a decisive result.",
+          "evidence_ids": [
+            "e-lin-43-49",
+            "e-hkim-37-42"
+          ],
+          "claim_id": "q05-c14",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "agent_role": "An AI coding agent may prepare auditable scripts and provenance; researchers define physics, approve experiments and interpret results. No experiment has been executed.",
+        "action_id": "a05",
+        "action_kind": "illustrative_ai_workflow",
+        "commitment": "not_a_commitment"
+      },
+      "positions": [
+        {
+          "text": "The ice-cloud pathway proposes that stratospheric winds alter vertical tilt and radiative-feedback phase, affecting growth in the simplified model.",
+          "evidence_ids": [
+            "e-lin-30-37"
+          ],
+          "claim_id": "q05-c03",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "The organized-convection proposal emphasizes MCS heating, cooling and momentum transport as a possible common missing process. Its QBO role remained conjectural.",
+          "evidence_ids": [
+            "e-hkim-49-69"
+          ],
+          "claim_id": "q05-c04",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "comparison": {
+        "text": "These are candidate pathways with unequal evidence, not a resolved contest. One has an idealized model result; the other was an untested extension in the recorded Q&A. They could interact.",
+        "evidence_ids": [
+          "e-lin-30-37",
+          "e-lin-43-49",
+          "e-hkim-49-69"
+        ],
+        "claim_id": "q05-c05",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "emerging_alignment": {
+        "text": "The contributions suggest examining vertical structure and cloud processes beyond a scalar index. The records do not establish a shared explanation of QBO coupling.",
+        "evidence_ids": [
+          "e-lin-30-37",
+          "e-hkim-37-42"
+        ],
+        "claim_id": "q05-c06",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "unresolved_questions": [
+        {
+          "text": "Do phase relationships and growth responses persist with horizontal advection, distributed cloud radiation and independently sampled cloud profiles? Can MCS and stratospheric effects be separated?",
+          "evidence_ids": [
+            "e-lin-19-24",
+            "e-lin-43-49",
+            "e-hkim-49-69"
+          ],
+          "claim_id": "q05-c07",
+          "origin": "evidence_based_editorial_synthesis",
+          "verification": "unverified"
+        }
+      ],
+      "limitations": {
+        "text": "The simple model omits horizontal advection and simplifies the cloud response. Observational composites may covary with ENSO and season; QBO-conditioned samples and model significance differ.",
+        "evidence_ids": [
+          "e-lin-19-24",
+          "e-lin-43-49",
+          "e-hkim-37-42"
+        ],
+        "claim_id": "q05-c08",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "formal_consensus": false
+    },
+    {
+      "id": "q06",
+      "title": "Which diagnostics preserve the MJO properties that matter?",
+      "question": "How should common MJO indices be complemented by convection, event tracking, vertical structure and regional diagnostics without losing comparability or introducing hindsight?",
+      "classification": "emerging alignment",
+      "records": [
+        {
+          "text": "Chen reported precipitation-event changes not captured in the same way by RMM; this is a reported result whose data and trend robustness still require review.",
+          "evidence_ids": [
+            "e-chen-32-41",
+            "e-chen-48-54"
+          ],
+          "claim_id": "q06-c01",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "The prediction keynote distinguished circulation-weighted index skill from convection skill. Janiga separated location and activity skill and found event-type-dependent performance.",
+          "evidence_ids": [
+            "e-hkim-25-30",
+            "e-janiga-35-42"
+          ],
+          "claim_id": "q06-c02",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "The closing record retained RMM as a useful common language while discussing supplementary descriptors for structure and impacts.",
+          "evidence_ids": [
+            "e-closing-238-249"
+          ],
+          "claim_id": "q06-c03",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "A source filed under the Chang Xu talk reports short-record wave detection, but its content differs from the official talk title. This passage is retained as an unresolved provenance and method flag, not an attributed scientific result.",
+          "evidence_ids": [
+            "e-xu-31-37",
+            "e-xu-43-49"
+          ],
+          "claim_id": "q06-c04",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "coverage": "partial",
+      "status": "Personal synthesis from converted minutes · not workshop consensus",
+      "proposed_research": {
+        "title": "Build a diagnostic comparison and information-availability audit",
+        "rationale": {
+          "text": "The apparent skill of different descriptors should be compared on matched cases and information sets.",
+          "evidence_ids": [
+            "e-hkim-25-30",
+            "e-janiga-17-22",
+            "e-closing-238-249"
+          ],
+          "claim_id": "q06-c11",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "steps": [
+          {
+            "text": "Have an agent implement reviewed RMM, OLR-based, object and regional diagnostics with explicit filters, thresholds and training climatologies. Audit whether each forecast-time quantity uses observations that would only be available later.",
+            "evidence_ids": [
+              "e-hkim-25-30",
+              "e-janiga-17-22",
+              "e-janiga-47-52"
+            ],
+            "claim_id": "q06-c12",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          },
+          {
+            "text": "Compare event position, amplitude, precipitation and user-relevant outcomes at matched lead times; report sensitivity to event definitions and account for serial dependence through event- or year-block resampling.",
+            "evidence_ids": [
+              "e-janiga-35-42",
+              "e-janiga-47-52",
+              "e-closing-238-249"
+            ],
+            "claim_id": "q06-c13",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          }
+        ],
+        "expected_outputs": {
+          "text": "Deliver a metric card for each descriptor, matched-case results and a latency/hindsight register. Keep retrospective diagnostics separate from operationally available predictors.",
+          "evidence_ids": [
+            "e-hkim-25-30",
+            "e-janiga-47-52"
+          ],
+          "claim_id": "q06-c14",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "discriminating_result": {
+          "text": "An additional descriptor earns value if it improves a prespecified held-out process or impact target beyond the common index baseline; a different headline horizon alone is insufficient.",
+          "evidence_ids": [
+            "e-hkim-25-30",
+            "e-closing-238-249"
+          ],
+          "claim_id": "q06-c15",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "limitations": {
+          "text": "Definition review precedes implementation. No particular index, filter or performance threshold is endorsed by this draft.",
+          "evidence_ids": [
+            "e-closing-238-249",
+            "e-xu-43-49"
+          ],
+          "claim_id": "q06-c16",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "agent_role": "An AI coding agent may prepare auditable scripts and provenance; researchers define physics, approve experiments and interpret results. No experiment has been executed.",
+        "action_id": "a06",
+        "action_kind": "illustrative_ai_workflow",
+        "commitment": "not_a_commitment"
+      },
+      "positions": [
+        {
+          "text": "A compact, widely used index supports communication and comparison across forecast systems.",
+          "evidence_ids": [
+            "e-closing-238-249"
+          ],
+          "claim_id": "q06-c05",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Event-based and regional diagnostics retain properties that a small number of principal components can miss, but require choices about filtering, tracking and event duration.",
+          "evidence_ids": [
+            "e-chen-32-41",
+            "e-janiga-17-22",
+            "e-janiga-47-52"
+          ],
+          "claim_id": "q06-c06",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "comparison": {
+        "text": "The recurring direction is supplementation rather than abolition of RMM. A different score can answer a different scientific question; it does not automatically reveal a better model.",
+        "evidence_ids": [
+          "e-hkim-25-30",
+          "e-closing-238-249",
+          "e-janiga-35-42"
+        ],
+        "claim_id": "q06-c07",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "emerging_alignment": {
+        "text": "Across the precipitation, prediction and closing records, there is recurring support for evaluating convection and impacts alongside index skill. No single replacement index or approved metric suite was adopted.",
+        "evidence_ids": [
+          "e-chen-32-41",
+          "e-hkim-25-30",
+          "e-closing-238-249"
+        ],
+        "claim_id": "q06-c08",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "unresolved_questions": [
+        {
+          "text": "Which added diagnostic improves a specified process or impact prediction on the same cases? How do online and retrospective calculations, detection thresholds and short samples alter the result?",
+          "evidence_ids": [
+            "e-janiga-17-22",
+            "e-janiga-47-52",
+            "e-xu-43-49"
+          ],
+          "claim_id": "q06-c09",
+          "origin": "evidence_based_editorial_synthesis",
+          "verification": "unverified"
+        }
+      ],
+      "limitations": {
+        "text": "The minutes use differing event-duration rules for observed and forecast objects. Short-record detection is not a proof of climatological realism. The Xu mapping must be resolved before importing the associated claim.",
+        "evidence_ids": [
+          "e-janiga-17-22",
+          "e-xu-43-49"
+        ],
+        "claim_id": "q06-c10",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      }
+    },
+    {
+      "id": "q07",
+      "title": "When does AI skill become scientific evidence?",
+      "question": "What can a validated AI forecast, an explanation method or a discovered equation establish about the physical mechanisms of the MJO?",
+      "classification": "diverging perspectives",
+      "records": [
+        {
+          "text": "The final-day record explicitly contrasted using rigorously validated AI as a practical tool with the scientific responsibility to explain processes and failures.",
+          "evidence_ids": [
+            "e-final-169-185"
+          ],
+          "claim_id": "q07-c01",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "The theory discussion debated information-based understanding, physics constraints and whether observations alone contain enough information for end-to-end prediction.",
+          "evidence_ids": [
+            "e-p34-36-56",
+            "e-g34-42-50"
+          ],
+          "claim_id": "q07-c02",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "The breakout separated variable importance from causation and proposed equation discovery, starting with systems whose equations are already known.",
+          "evidence_ids": [
+            "e-g3-170-201",
+            "e-g3-202-251"
+          ],
+          "claim_id": "q07-c03",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "coverage": "partial",
+      "status": "Personal synthesis from converted minutes · not workshop consensus",
+      "proposed_research": {
+        "title": "Test an AI explanation against alternatives",
+        "rationale": {
+          "text": "The records motivate physically testable explanations and a controlled starting point for equation discovery.",
+          "evidence_ids": [
+            "e-g3-170-201",
+            "e-g3-202-251"
+          ],
+          "claim_id": "q07-c11",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "steps": [
+          {
+            "text": "Have an agent document training/evaluation lineage, forecast variables and the precise explanatory claim; compare attribution methods and matched-event error growth against dynamical forecasts.",
+            "evidence_ids": [
+              "e-final-169-185",
+              "e-g3-170-201"
+            ],
+            "claim_id": "q07-c12",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          },
+          {
+            "text": "For equation discovery, first recover a known toy-system relation under controlled noise and sampling, then test candidate relationships on held-out regimes. For forecast explanations, use physically admissible perturbations and compare them with independent observations.",
+            "evidence_ids": [
+              "e-g3-202-251",
+              "e-g3-170-201"
+            ],
+            "claim_id": "q07-c13",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          }
+        ],
+        "expected_outputs": {
+          "text": "Produce an explanation dossier containing alternatives, failed tests, out-of-distribution behavior and conservation diagnostics, with a clear boundary between empirical fit and mechanism.",
+          "evidence_ids": [
+            "e-g3-170-201",
+            "e-g3-202-251"
+          ],
+          "claim_id": "q07-c14",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "discriminating_result": {
+          "text": "An explanation that changes under equivalent representations or fails perturbation/held-out tests is not robust. Success supports the stated bounded claim; it does not establish a complete atmospheric theory.",
+          "evidence_ids": [
+            "e-g3-170-201",
+            "e-g3-202-251"
+          ],
+          "claim_id": "q07-c15",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "limitations": {
+          "text": "Black-box access may prevent internal interventions; perturbing inputs outside the training distribution can produce uninterpretable responses.",
+          "evidence_ids": [
+            "e-final-169-185",
+            "e-g34-42-50"
+          ],
+          "claim_id": "q07-c16",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "agent_role": "An AI coding agent may prepare auditable scripts and provenance; researchers define physics, approve experiments and interpret results. No experiment has been executed.",
+        "action_id": "a07",
+        "action_kind": "illustrative_ai_workflow",
+        "commitment": "not_a_commitment"
+      },
+      "positions": [
+        {
+          "text": "The practical-use position does not require every user to understand the network architecture if forecast performance is rigorously validated.",
+          "evidence_ids": [
+            "e-final-169-185"
+          ],
+          "claim_id": "q07-c04",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "The mechanism-oriented position requires physical consistency and evidence about sources of skill, especially for extrapolation and extremes; a third perspective distinguishes architecture knowledge from explaining forecast success and failure.",
+          "evidence_ids": [
+            "e-final-169-185"
+          ],
+          "claim_id": "q07-c05",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "End-to-end and hybrid architectures were discussed without selecting one as universally preferable. Observation sufficiency remained disputed rather than demonstrated.",
+          "evidence_ids": [
+            "e-g34-42-50",
+            "e-final-159-166"
+          ],
+          "claim_id": "q07-c06",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "comparison": {
+        "text": "These positions differ partly in purpose and in the meaning of understanding. Validation can justify a bounded forecasting use without establishing a mechanism. Neither feature attribution nor nonconvex optimization settles the causal or performance debate.",
+        "evidence_ids": [
+          "e-final-169-185",
+          "e-g3-170-201",
+          "e-closing-268-284"
+        ],
+        "claim_id": "q07-c07",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "emerging_alignment": {
+        "text": "A recurring possible bridge is to separate forecast evaluation, physical interpretation and scientific discovery, each with its own evidence standard. This is not agreement that AI has discovered an MJO theory.",
+        "evidence_ids": [
+          "e-p34-36-56",
+          "e-final-169-185",
+          "e-g3-202-251"
+        ],
+        "claim_id": "q07-c08",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "unresolved_questions": [
+        {
+          "text": "What explanation survives independent events and controlled perturbations? Do observation-only systems contain sufficient vertical and coupled-system information for the specified target?",
+          "evidence_ids": [
+            "e-g34-42-50",
+            "e-g3-170-201"
+          ],
+          "claim_id": "q07-c09",
+          "origin": "evidence_based_editorial_synthesis",
+          "verification": "unverified"
+        }
+      ],
+      "limitations": {
+        "text": "Training dependence, correlated inputs, multiple equations fitting the same trajectories and unknown climate states limit interpretation. Claims about a universal AI advantage or incapacity are unsupported by these discussions.",
+        "evidence_ids": [
+          "e-g3-202-251",
+          "e-closing-268-284"
+        ],
+        "claim_id": "q07-c10",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      }
+    },
+    {
+      "id": "q08",
+      "title": "What makes forecast comparisons fair and predictability limits meaningful?",
+      "question": "How should matched reforecasts, evolving real-time systems, probabilistic verification and perfect-model experiments be combined without conflating their targets?",
+      "classification": "emerging alignment",
+      "records": [
+        {
+          "text": "The prediction keynote warned that model rankings depend on test period, season, climatology and ensemble design; reported evaluation problems were discussion claims, not independently adjudicated findings here.",
+          "evidence_ids": [
+            "e-hkim-43-48",
+            "e-hkim-49-69"
+          ],
+          "claim_id": "q08-c01",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Final-day discussion proposed continuous real-time comparison as a complement to reforecasts, explicitly without agreeing to abandon reforecasts.",
+          "evidence_ids": [
+            "e-final-186-201"
+          ],
+          "claim_id": "q08-c02",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Hera Kim distinguished observation-verified skill from member-as-truth predictability and noted unequal error properties of control and perturbed members.",
+          "evidence_ids": [
+            "e-hera-13-17",
+            "e-hera-22-28",
+            "e-hera-33-36"
+          ],
+          "claim_id": "q08-c03",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "The closing record supported common benchmarks but retained disagreement over AI-specific versus common metrics and noted restricted AI outputs.",
+          "evidence_ids": [
+            "e-closing-202-219"
+          ],
+          "claim_id": "q08-c04",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "coverage": "partial",
+      "status": "Personal synthesis from converted minutes · not workshop consensus",
+      "proposed_research": {
+        "title": "Specify a versioned matched forecast benchmark",
+        "rationale": {
+          "text": "A stable evaluation contract can separate model improvement from changes in sample and scoring.",
+          "evidence_ids": [
+            "e-hkim-43-48",
+            "e-final-186-201"
+          ],
+          "claim_id": "q08-c11",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "steps": [
+          {
+            "text": "Have an agent inventory model versions, initialization times, ensemble sizes, training cutoffs, climatology and output availability; construct a shared evaluation intersection and keep a separate current-version real-time ledger.",
+            "evidence_ids": [
+              "e-hkim-43-48",
+              "e-final-186-201",
+              "e-closing-202-219"
+            ],
+            "claim_id": "q08-c12",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          },
+          {
+            "text": "Evaluate index and field errors, calibration and probabilistic scores with event/year-block uncertainty. Repeat potential-predictability estimates under alternative defensible truth-member selections.",
+            "evidence_ids": [
+              "e-hera-13-17",
+              "e-hera-22-28",
+              "e-final-144-147"
+            ],
+            "claim_id": "q08-c13",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          }
+        ],
+        "expected_outputs": {
+          "text": "Deliver a reproducible scoring specification, lineage audit, paired model comparisons and a sensitivity report for perfect-model limits.",
+          "evidence_ids": [
+            "e-hkim-43-48",
+            "e-hera-33-36"
+          ],
+          "claim_id": "q08-c14",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "discriminating_result": {
+          "text": "A claimed advantage should persist on matched held-out cases with uncertainty and comparable information. A change caused by sample choice or truth-member treatment does not establish a model improvement.",
+          "evidence_ids": [
+            "e-hkim-43-48",
+            "e-hera-22-28"
+          ],
+          "claim_id": "q08-c15",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "limitations": {
+          "text": "Historical training and version information may be unavailable. Do not rank incomparable systems or infer real-atmosphere limits from model self-consistency alone.",
+          "evidence_ids": [
+            "e-closing-202-219",
+            "e-hera-13-17"
+          ],
+          "claim_id": "q08-c16",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "agent_role": "An AI coding agent may prepare auditable scripts and provenance; researchers define physics, approve experiments and interpret results. No experiment has been executed.",
+        "action_id": "a08",
+        "action_kind": "illustrative_ai_workflow",
+        "commitment": "not_a_commitment"
+      },
+      "positions": [
+        {
+          "text": "Reforecasts offer larger samples and conditional analysis; real-time verification represents currently operating versions but accumulates independent cases slowly.",
+          "evidence_ids": [
+            "e-final-186-201"
+          ],
+          "claim_id": "q08-c05",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Common physical and forecast metrics favor comparability; AI-specific diagnostics may address distinctive limitations. The exact metric suite was unresolved.",
+          "evidence_ids": [
+            "e-closing-202-219"
+          ],
+          "claim_id": "q08-c06",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "comparison": {
+        "text": "A real-time score, a reforecast horizon and a perfect-model limit are different estimands. Spread is not reliability, and a control member is not automatically exchangeable with perturbed members.",
+        "evidence_ids": [
+          "e-final-186-201",
+          "e-hera-13-17",
+          "e-hera-22-28",
+          "e-final-144-147"
+        ],
+        "claim_id": "q08-c07",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "emerging_alignment": {
+        "text": "There is recurring support for reproducible, matched comparisons and process/probabilistic checks, but no approved benchmark specification or universal MJO predictability horizon.",
+        "evidence_ids": [
+          "e-hkim-43-48",
+          "e-closing-202-219",
+          "e-hera-13-17"
+        ],
+        "claim_id": "q08-c08",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "unresolved_questions": [
+        {
+          "text": "What sample is adequate for rare regimes and extremes? Can rapidly changing AI versions be frozen long enough for fair comparison, and are required budget variables available?",
+          "evidence_ids": [
+            "e-final-186-201",
+            "e-closing-202-219",
+            "e-hera-33-36"
+          ],
+          "claim_id": "q08-c09",
+          "origin": "evidence_based_editorial_synthesis",
+          "verification": "unverified"
+        }
+      ],
+      "limitations": {
+        "text": "Reported skill-day values cannot be compared without common definitions. Training overlap, tuning on the test sample and member inequivalence can make apparent gains misleading.",
+        "evidence_ids": [
+          "e-hkim-49-69",
+          "e-hera-13-17",
+          "e-hera-22-28"
+        ],
+        "claim_id": "q08-c10",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      }
+    },
+    {
+      "id": "q09",
+      "title": "Why do models misrepresent passage through the Maritime Continent?",
+      "question": "Which errors in convection, moisture, coupling and background state cause excessive weakening or stalling, and do AI and dynamical models fail through the same pathways?",
+      "classification": "open questions",
+      "records": [
+        {
+          "text": "The prediction keynote reported excessive weakening or non-passage in several dynamical systems and discussed dry bias, premature weak rain, land–sea interactions and the diurnal cycle as candidates.",
+          "evidence_ids": [
+            "e-hkim-31-36"
+          ],
+          "claim_id": "q09-c01",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Maraldi reported mixed responses to higher resolution: some circulation measures improved while activity and convective propagation biases remained. Some configurations were evaluated over different periods.",
+          "evidence_ids": [
+            "e-maraldi-30-37",
+            "e-maraldi-43-48"
+          ],
+          "claim_id": "q09-c02",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Takasuka’s boundary-condition experiment altered propagation-regime branching within two cases; the final discussion left the existence and cause of an AI Maritime Continent barrier unanswered.",
+          "evidence_ids": [
+            "e-takasuka-30-36",
+            "e-final-210-217"
+          ],
+          "claim_id": "q09-c03",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Siena reported that finer resolution helped some members in an Italian rainfall case but did not remove ensemble differences. This is a methodological illustration, not direct evidence about MJO passage.",
+          "evidence_ids": [
+            "e-siena-21-26",
+            "e-siena-31-34"
+          ],
+          "claim_id": "q09-c04",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "coverage": "partial",
+      "status": "Personal synthesis from converted minutes · not workshop consensus",
+      "proposed_research": {
+        "title": "Diagnose passage errors before choosing interventions",
+        "rationale": {
+          "text": "Matched cases can distinguish a better index forecast from improved physical passage.",
+          "evidence_ids": [
+            "e-hkim-31-36",
+            "e-final-210-217"
+          ],
+          "claim_id": "q09-c12",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "steps": [
+          {
+            "text": "Have an agent match crossing, stalled and terminated events across AI, dynamical forecasts and observations using reviewed definitions; calculate lead-dependent speed, amplitude, rainfall, humidity and diurnal errors.",
+            "evidence_ids": [
+              "e-g3-54-90",
+              "e-hkim-31-36"
+            ],
+            "claim_id": "q09-c13",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          },
+          {
+            "text": "Where budget outputs exist, compare dynamical-minus-analysis, AI-minus-analysis and dynamical-minus-AI tendencies, then test selected coupling or convection changes with matched background conditions and independent observations.",
+            "evidence_ids": [
+              "e-final-210-217",
+              "e-maraldi-30-37",
+              "e-takasuka-30-36"
+            ],
+            "claim_id": "q09-c14",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          }
+        ],
+        "expected_outputs": {
+          "text": "Deliver an event-by-lead error decomposition, output-availability audit and a small controlled-experiment specification.",
+          "evidence_ids": [
+            "e-final-210-217",
+            "e-maraldi-30-37"
+          ],
+          "claim_id": "q09-c15",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "discriminating_result": {
+          "text": "If apparent AI improvement disappears in precipitation or independent regional data, the claim must be narrowed. A targeted process change that improves passage without an uncontrolled mean-state shift provides a testable mechanistic lead.",
+          "evidence_ids": [
+            "e-hkim-31-36",
+            "e-final-210-217"
+          ],
+          "claim_id": "q09-c16",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "limitations": {
+          "text": "Missing model tendencies can prevent budget comparison. Model differences alone cannot establish atmospheric causality.",
+          "evidence_ids": [
+            "e-final-210-217",
+            "e-maraldi-43-48"
+          ],
+          "claim_id": "q09-c17",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "agent_role": "An AI coding agent may prepare auditable scripts and provenance; researchers define physics, approve experiments and interpret results. No experiment has been executed.",
+        "action_id": "a09",
+        "action_kind": "illustrative_ai_workflow",
+        "commitment": "not_a_commitment"
+      },
+      "positions": [
+        {
+          "text": "Local moisture, diurnal and land–sea processes are candidate sources of barrier errors.",
+          "evidence_ids": [
+            "e-hkim-31-36"
+          ],
+          "claim_id": "q09-c05",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Background SST and interacting disturbances can influence propagation regimes, so a local convection-only explanation may be incomplete.",
+          "evidence_ids": [
+            "e-takasuka-30-36"
+          ],
+          "claim_id": "q09-c06",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Higher horizontal resolution is a possible intervention, not an established sufficient remedy; the model review and specific comparisons both retain process and mean-state limitations.",
+          "evidence_ids": [
+            "e-dkim-19-26",
+            "e-maraldi-30-37"
+          ],
+          "claim_id": "q09-c07",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "comparison": {
+        "text": "The records support competing causal candidates but do not rank them. AI lacking an identical convective parameterization does not imply that it lacks a barrier or training-data bias.",
+        "evidence_ids": [
+          "e-hkim-31-36",
+          "e-final-210-217",
+          "e-maraldi-30-37"
+        ],
+        "claim_id": "q09-c08",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "emerging_alignment": {
+        "text": "A common evaluative direction is to separate speed, amplitude, convective location and regional processes. It does not establish one dominant barrier mechanism.",
+        "evidence_ids": [
+          "e-hkim-31-36",
+          "e-maraldi-30-37",
+          "e-g3-54-90"
+        ],
+        "claim_id": "q09-c09",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "unresolved_questions": [
+        {
+          "text": "When is stalling an event-definition issue, a real physical regime or a model bias? Does any AI improvement persist for rainfall and independent observations rather than just an index?",
+          "evidence_ids": [
+            "e-g3-54-90",
+            "e-final-210-217"
+          ],
+          "claim_id": "q09-c10",
+          "origin": "evidence_based_editorial_synthesis",
+          "verification": "unverified"
+        }
+      ],
+      "limitations": {
+        "text": "Resolution comparisons mix configurations and periods, and the SST experiment is case-specific. Neither supports a general claim that resolution or SST alone controls the barrier.",
+        "evidence_ids": [
+          "e-maraldi-43-48",
+          "e-takasuka-30-36",
+          "e-siena-31-34"
+        ],
+        "claim_id": "q09-c11",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      }
+    },
+    {
+      "id": "q10",
+      "title": "Which observations would most reduce scientific uncertainty?",
+      "question": "What combination of precision, density, duration and vertical information can distinguish mechanisms and independently evaluate forecasts at the intended scale?",
+      "classification": "open questions",
+      "records": [
+        {
+          "text": "Observation discussions contrasted sparse high-precision measurements with more numerous lower-cost measurements. A possible advantage of density for some AI applications was proposed, but no general comparison resolved the trade-off.",
+          "evidence_ids": [
+            "e-obs-74-83",
+            "e-obs-183-188",
+            "e-p12-34-48"
+          ],
+          "claim_id": "q10-c01",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Observers asked theoreticians to specify variables, perturbation scales, sampling intervals and observing duration, rather than request multiscale observations without a measurement specification.",
+          "evidence_ids": [
+            "e-obs-201-228"
+          ],
+          "claim_id": "q10-c02",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Plenary and closing records proposed cataloguing existing datasets and sustaining observations; the relative priority of core-MJO, remote-impact and intensive-process observing remained unresolved.",
+          "evidence_ids": [
+            "e-p12-25-33",
+            "e-closing-113-127",
+            "e-closing-75-86"
+          ],
+          "claim_id": "q10-c03",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Independent in situ data were highlighted for testing satellite products, reanalysis and AI. The final-day record warned that reanalysis-trained systems may inherit reanalysis errors.",
+          "evidence_ids": [
+            "e-obs-154-159",
+            "e-final-132-139"
+          ],
+          "claim_id": "q10-c04",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "coverage": "partial",
+      "status": "Personal synthesis from converted minutes · not workshop consensus",
+      "proposed_research": {
+        "title": "Create a private observation-and-independence register",
+        "rationale": {
+          "text": "A catalogue and question-specific sampling study can precede expensive new observing plans.",
+          "evidence_ids": [
+            "e-closing-113-127",
+            "e-obs-201-228"
+          ],
+          "claim_id": "q10-c11",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "steps": [
+          {
+            "text": "Have an agent inventory dataset variables, coordinates, cadence, quality flags, access conditions, processing needs, assimilation history and AI-training overlap; mark unknown lineage explicitly.",
+            "evidence_ids": [
+              "e-closing-113-127",
+              "e-final-132-139",
+              "e-obs-154-159"
+            ],
+            "claim_id": "q10-c12",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          },
+          {
+            "text": "For a selected measurable target, compare subsampling and controlled measurement-noise experiments using an independent reference, then draft requirements for missing vertical or temporal information.",
+            "evidence_ids": [
+              "e-obs-74-83",
+              "e-obs-201-228"
+            ],
+            "claim_id": "q10-c13",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          }
+        ],
+        "expected_outputs": {
+          "text": "Deliver a gap map, lineage matrix and accuracy-versus-coverage sensitivity curves, with limits of the reference dataset and actual processing effort recorded.",
+          "evidence_ids": [
+            "e-closing-113-127",
+            "e-obs-74-83"
+          ],
+          "claim_id": "q10-c14",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "discriminating_result": {
+          "text": "A sampling strategy is useful if it reduces uncertainty in the chosen diagnostic or improves held-out verification under matched resources; a generic claim that more sensors or more accuracy is always better is not supported.",
+          "evidence_ids": [
+            "e-obs-74-83",
+            "e-obs-183-188"
+          ],
+          "claim_id": "q10-c15",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "limitations": {
+          "text": "Observing-system simulations inherit model error, and accessible data need not be independent. This workflow does not authorize instrument procurement or data redistribution.",
+          "evidence_ids": [
+            "e-obs-154-159",
+            "e-final-132-139"
+          ],
+          "claim_id": "q10-c16",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "agent_role": "An AI coding agent may prepare auditable scripts and provenance; researchers define physics, approve experiments and interpret results. No experiment has been executed.",
+        "action_id": "a10",
+        "action_kind": "illustrative_ai_workflow",
+        "commitment": "not_a_commitment"
+      },
+      "positions": [
+        {
+          "text": "High-precision process measurements may resolve vertical and flux relationships that broad but noisy observations miss.",
+          "evidence_ids": [
+            "e-obs-74-83",
+            "e-obs-201-228"
+          ],
+          "claim_id": "q10-c05",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Denser coverage and sustained records may better sample diverse events and support training or verification; this is target-dependent, not a universal alternative to precision.",
+          "evidence_ids": [
+            "e-obs-183-188",
+            "e-closing-75-86",
+            "e-yoneyama-29-37"
+          ],
+          "claim_id": "q10-c06",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "comparison": {
+        "text": "This is an unresolved design trade-off rather than evidence that one observing strategy is scientifically superior. Data that exist but cannot be discovered, processed or accessed are a separate problem from unobserved processes.",
+        "evidence_ids": [
+          "e-p12-34-48",
+          "e-closing-113-127"
+        ],
+        "claim_id": "q10-c07",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "emerging_alignment": {
+        "text": "Multiple records support linking observational requirements to a scientific question and reusing existing assets. They do not fix a location, instrument specification, budget or observing campaign.",
+        "evidence_ids": [
+          "e-p12-25-33",
+          "e-obs-201-228",
+          "e-yoneyama-29-37"
+        ],
+        "claim_id": "q10-c08",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "unresolved_questions": [
+        {
+          "text": "What is the marginal value of greater accuracy versus additional coverage for each target? Which validation observations are genuinely outside both training and assimilation dependencies?",
+          "evidence_ids": [
+            "e-obs-74-83",
+            "e-final-132-139",
+            "e-obs-154-159"
+          ],
+          "claim_id": "q10-c09",
+          "origin": "evidence_based_editorial_synthesis",
+          "verification": "unverified"
+        }
+      ],
+      "limitations": {
+        "text": "The main observations-plenary excerpt is incomplete, dates and group labels in the extended version are uncertain, and quantitative data-use estimates were personal estimates rather than audited statistics.",
+        "evidence_ids": [
+          "e-p12-25-33",
+          "e-p12-34-48",
+          "e-closing-113-127"
+        ],
+        "claim_id": "q10-c10",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "formal_consensus": false
+    },
+    {
+      "id": "q11",
+      "title": "When does better MJO prediction improve regional outcomes?",
+      "question": "Under which environmental and user-specific conditions does MJO forecast skill add information about rainfall, cyclones, floods or other regional outcomes?",
+      "classification": "emerging alignment",
+      "records": [
+        {
+          "text": "Rushley reported different extratropical skill among forecasts with similar MJO correlations, and distinguished humidity errors from displacement in space and time.",
+          "evidence_ids": [
+            "e-rushley-25-31",
+            "e-rushley-42-47",
+            "e-rushley-36-41"
+          ],
+          "claim_id": "q11-c01",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Robertson emphasized conditional windows of opportunity and decision context; Ekot called for comparison with simple climatological baselines. Scheibe and Silverio reported ENSO-dependent regional responses.",
+          "evidence_ids": [
+            "e-robertson-17-22",
+            "e-robertson-29-34",
+            "e-ekot-26-29",
+            "e-scheibe-26-29",
+            "e-silverio-21-26"
+          ],
+          "claim_id": "q11-c02",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Tsai reported excessive wave activity in a biased model environment, while the CENS Q&A record left the proposed feedback onto the MJO and pressure-system dynamics untested.",
+          "evidence_ids": [
+            "e-tsai-21-27",
+            "e-tsai-32-35",
+            "e-moteki-107-113"
+          ],
+          "claim_id": "q11-c03",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "The final-day discussion identified tropical heating location, propagation and background-flow errors as distinct possible sources of remote-response errors.",
+          "evidence_ids": [
+            "e-final-104-115"
+          ],
+          "claim_id": "q11-c04",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "coverage": "partial",
+      "status": "Personal synthesis from converted minutes · not workshop consensus",
+      "proposed_research": {
+        "title": "Evaluate conditional skill and incremental decision value",
+        "rationale": {
+          "text": "Regional application requires testing the target outcome, not inferring value from index accuracy.",
+          "evidence_ids": [
+            "e-robertson-29-34",
+            "e-rushley-25-31",
+            "e-ekot-26-29"
+          ],
+          "claim_id": "q11-c11",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "steps": [
+          {
+            "text": "Have an agent build matched held-out comparisons of climatology, season/ENSO baselines and models adding MJO structure plus relevant waves or surges; retain definitions, sample counts and temporal information availability.",
+            "evidence_ids": [
+              "e-ekot-26-29",
+              "e-scheibe-26-29",
+              "e-silverio-21-26",
+              "e-tsai-21-27"
+            ],
+            "claim_id": "q11-c12",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          },
+          {
+            "text": "Separate heating-location and background-jet errors for teleconnections. With a clearly specified user scenario, evaluate calibration and a range of cost–loss assumptions without claiming realized societal benefit.",
+            "evidence_ids": [
+              "e-final-104-115",
+              "e-robertson-29-34"
+            ],
+            "claim_id": "q11-c13",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          }
+        ],
+        "expected_outputs": {
+          "text": "Produce regional conditional-skill tables, event-level uncertainty, displacement diagnostics and decision-value sensitivity results.",
+          "evidence_ids": [
+            "e-rushley-25-31",
+            "e-robertson-29-34",
+            "e-tsai-32-35"
+          ],
+          "claim_id": "q11-c14",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "discriminating_result": {
+          "text": "Only an improvement beyond matched baselines on held-out outcomes supports incremental predictive value. Failure under background conditioning narrows the claimed window of opportunity; causal attribution remains a separate task.",
+          "evidence_ids": [
+            "e-ekot-26-29",
+            "e-rushley-36-41",
+            "e-scheibe-26-29"
+          ],
+          "claim_id": "q11-c15",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "limitations": {
+          "text": "Small conditional samples may be inconclusive. Damage depends on exposure and vulnerability as well as weather; no intervention, user action or achieved benefit is recorded here.",
+          "evidence_ids": [
+            "e-robertson-29-34",
+            "e-rushley-36-41"
+          ],
+          "claim_id": "q11-c16",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "agent_role": "An AI coding agent may prepare auditable scripts and provenance; researchers define physics, approve experiments and interpret results. No experiment has been executed.",
+        "action_id": "a11",
+        "action_kind": "illustrative_ai_workflow",
+        "commitment": "not_a_commitment"
+      },
+      "positions": [
+        {
+          "text": "MJO information can provide a useful conditional predictor or physical context when the relevant background state and user target are specified.",
+          "evidence_ids": [
+            "e-robertson-17-22",
+            "e-robertson-29-34",
+            "e-ekot-26-29"
+          ],
+          "claim_id": "q11-c05",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Similar index skill need not imply similar teleconnections or hazards; jets, interacting disturbances, local exposure and hydrological state can matter.",
+          "evidence_ids": [
+            "e-rushley-25-31",
+            "e-final-104-115",
+            "e-robertson-29-34"
+          ],
+          "claim_id": "q11-c06",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "comparison": {
+        "text": "These contributions are complementary rather than evidence of opposition to using MJO information. Statistical modulation and predictive value do not attribute a particular disaster to the MJO.",
+        "evidence_ids": [
+          "e-rushley-36-41",
+          "e-brennek-45-51",
+          "e-scheibe-26-29"
+        ],
+        "claim_id": "q11-c07",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "emerging_alignment": {
+        "text": "Across regional talks and final discussion, there is recurring support for regional, conditional and multiscale evaluation beyond phase alone. This does not demonstrate that an operational service already delivers benefit.",
+        "evidence_ids": [
+          "e-robertson-17-22",
+          "e-ekot-26-29",
+          "e-scheibe-26-29",
+          "e-silverio-21-26",
+          "e-final-104-115"
+        ],
+        "claim_id": "q11-c08",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "unresolved_questions": [
+        {
+          "text": "How much incremental skill remains after season, ENSO and other disturbances are considered? Which loss-relevant target and lead time matter to a specified user?",
+          "evidence_ids": [
+            "e-robertson-29-34",
+            "e-ekot-26-29",
+            "e-scheibe-26-29",
+            "e-tsai-32-35"
+          ],
+          "claim_id": "q11-c09",
+          "origin": "evidence_based_editorial_synthesis",
+          "verification": "unverified"
+        }
+      ],
+      "limitations": {
+        "text": "Rare-event samples, geographic differences and differing definitions limit transfer. A perfect-future-index experiment that includes the predicted rainfall is not an operationally available forecast.",
+        "evidence_ids": [
+          "e-rushley-36-41",
+          "e-tsai-32-35",
+          "e-robertson-23-28"
+        ],
+        "claim_id": "q11-c10",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      }
+    },
+    {
+      "id": "q12",
+      "title": "How credible are inferred changes under future climates?",
+      "question": "What supports confidence in historical MJO trends or projected regional convective changes when indicators, physical mechanisms and training climates differ?",
+      "classification": "open questions",
+      "records": [
+        {
+          "text": "Chen reported increasing precipitation-event measures while RMM did not show the same trend, and identified data-period and quality sensitivity as a continuing concern.",
+          "evidence_ids": [
+            "e-chen-32-41",
+            "e-chen-48-54"
+          ],
+          "claim_id": "q12-c01",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Maraldi reported discrepancies between model and reanalysis long-term behavior; cause and the contributions of mean state, circulation and forcing were not separated.",
+          "evidence_ids": [
+            "e-maraldi-30-37",
+            "e-maraldi-43-48"
+          ],
+          "claim_id": "q12-c02",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Peatman reported a shared projected decrease in Sumatra-squall frequency but cautioned that present-climate process relationships were inconsistent across models.",
+          "evidence_ids": [
+            "e-peatman-23-29",
+            "e-peatman-30-33",
+            "e-peatman-34-37"
+          ],
+          "claim_id": "q12-c03",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Closing discussion treated prediction beyond historical AI training conditions as an unresolved capability, and earlier discussion retained a role for dynamical and hybrid approaches without demonstrating their superiority.",
+          "evidence_ids": [
+            "e-closing-258-265",
+            "e-g34-18-25"
+          ],
+          "claim_id": "q12-c04",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "coverage": "partial",
+      "status": "Personal synthesis from converted minutes · not workshop consensus",
+      "proposed_research": {
+        "title": "Audit trends and perform climate-regime stress tests",
+        "rationale": {
+          "text": "Projection confidence needs tests of present mechanisms as well as the projected statistic.",
+          "evidence_ids": [
+            "e-peatman-30-33",
+            "e-closing-258-265"
+          ],
+          "claim_id": "q12-c11",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "steps": [
+          {
+            "text": "Have an agent prepare common-period, multi-product sensitivity analyses of event frequency, intensity, area and duration, recording observing-system changes and detection settings.",
+            "evidence_ids": [
+              "e-chen-48-54",
+              "e-peatman-34-37"
+            ],
+            "claim_id": "q12-c12",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          },
+          {
+            "text": "Specify held-out climate-regime tests for AI and dynamical systems, verify present-climate wind/convection relationships, and compare physically motivated perturbations while retaining model uncertainty.",
+            "evidence_ids": [
+              "e-peatman-30-33",
+              "e-maraldi-43-48",
+              "e-closing-258-265"
+            ],
+            "claim_id": "q12-c13",
+            "origin": "new_proposal_developed_in_phase5",
+            "verification": "unverified"
+          }
+        ],
+        "expected_outputs": {
+          "text": "Deliver a trend-definition crosswalk, robustness matrix and regime-test protocol with explicit conditions under which interpretation must be withheld.",
+          "evidence_ids": [
+            "e-chen-48-54",
+            "e-maraldi-43-48",
+            "e-closing-258-265"
+          ],
+          "claim_id": "q12-c14",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "discriminating_result": {
+          "text": "If a trend or projection changes sign under defensible data/definition choices, its robustness is limited. A consistent sign with incorrect mechanisms supports only a conditional model result, not a reliable atmospheric projection.",
+          "evidence_ids": [
+            "e-chen-48-54",
+            "e-peatman-30-33"
+          ],
+          "claim_id": "q12-c15",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "limitations": {
+          "text": "Historical regime withholding cannot validate an unprecedented future climate. Model agreement is not independence, and no future-climate experiment has been executed in this phase.",
+          "evidence_ids": [
+            "e-closing-258-265",
+            "e-peatman-30-33"
+          ],
+          "claim_id": "q12-c16",
+          "origin": "new_proposal_developed_in_phase5",
+          "verification": "unverified"
+        },
+        "agent_role": "An AI coding agent may prepare auditable scripts and provenance; researchers define physics, approve experiments and interpret results. No experiment has been executed.",
+        "action_id": "a12",
+        "action_kind": "illustrative_ai_workflow",
+        "commitment": "not_a_commitment"
+      },
+      "positions": [
+        {
+          "text": "Agreement in a projected sign or in some historical diagnostics can motivate investigation, but a common sign is not sufficient when the relevant mechanisms are biased.",
+          "evidence_ids": [
+            "e-peatman-23-29",
+            "e-peatman-30-33"
+          ],
+          "claim_id": "q12-c05",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        },
+        {
+          "text": "Physical-process checks and out-of-sample climate tests are needed; hybrid or dynamical modelling was proposed as part of the response, not a validated universal solution.",
+          "evidence_ids": [
+            "e-closing-258-265",
+            "e-g34-18-25"
+          ],
+          "claim_id": "q12-c06",
+          "origin": "workshop_statement_as_paraphrased_in_minutes",
+          "verification": "unverified"
+        }
+      ],
+      "comparison": {
+        "text": "Precipitation-event trends, index variance and squall frequency are different quantities. Opposite or absent trends across them are not automatically a scientific contradiction. Consistency across models can also coexist with shared structural error.",
+        "evidence_ids": [
+          "e-chen-32-41",
+          "e-maraldi-30-37",
+          "e-peatman-30-33"
+        ],
+        "claim_id": "q12-c07",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "emerging_alignment": {
+        "text": "These contributions motivate evaluating processes and definitions alongside changes in frequency or intensity. They do not support a workshop consensus on the magnitude or sign of future MJO change.",
+        "evidence_ids": [
+          "e-chen-48-54",
+          "e-maraldi-43-48",
+          "e-peatman-34-37",
+          "e-closing-258-265"
+        ],
+        "claim_id": "q12-c08",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "unresolved_questions": [
+        {
+          "text": "How much apparent change reflects data inhomogeneity, event definition or forced physical response? Can candidate models represent intensity, duration and compound impacts beyond frequency?",
+          "evidence_ids": [
+            "e-chen-48-54",
+            "e-maraldi-43-48",
+            "e-peatman-34-37"
+          ],
+          "claim_id": "q12-c09",
+          "origin": "evidence_based_editorial_synthesis",
+          "verification": "unverified"
+        }
+      ],
+      "limitations": {
+        "text": "The recorded analyses mix observational periods and model configurations. The minutes provide neither a harmonized trend estimate nor an independent demonstration of AI extrapolation skill.",
+        "evidence_ids": [
+          "e-chen-48-54",
+          "e-maraldi-43-48",
+          "e-closing-258-265"
+        ],
+        "claim_id": "q12-c10",
+        "origin": "evidence_based_editorial_synthesis",
+        "verification": "unverified"
+      },
+      "formal_consensus": false
+    }
+  ],
+  "actions": [
+    {
+      "id": "action-q01",
+      "issue_id": "q01",
+      "title": "Build a falsifiable theory-comparison matrix",
+      "classification": "diverging perspectives",
+      "rationale": "The records motivate tests of assumptions rather than a ranking by a single score.",
+      "steps": [
+        "Have an agent assemble a researcher-reviewed matrix of assumptions, parameter ranges, predicted signs or phase relations, and observations that would contradict each prediction.",
+        "Pilot matched control and process-suppression experiments in a simple nonlinear model and an independent comprehensive model; diagnose the induced mean-state change as well as the targeted tendency."
+      ],
+      "expected_outputs": [
+        "Deliver an executable experiment specification, provenance table, budget-residual report and a record of both confirming and contradicting outcomes."
+      ],
+      "limitations": [
+        "Process removal may produce an unrealistic climate. No conclusion is warranted without a credible control and quantified mean-state effects."
+      ],
+      "illustrative": true
+    },
+    {
+      "id": "action-q02",
+      "issue_id": "q02",
+      "title": "Construct and challenge lifecycle labels",
+      "classification": "open questions",
+      "rationale": "Operational definitions are needed before mechanisms or predictive skill can be compared.",
+      "steps": [
+        "Ask an agent to implement researcher-specified onset, organization, propagation and termination criteria separately, retaining raw fields and alternative classifications.",
+        "Compare event tracks and moisture/energy tendencies for propagating, stalled and reorganizing cases, stratified by season and background SST; repeat over plausible thresholds and independent years."
+      ],
+      "expected_outputs": [
+        "Produce an event-level catalogue, threshold-sensitivity matrix and uncertainty estimates based on independent events rather than treating all days as independent."
+      ],
+      "limitations": [
+        "Temporal precedence or classification skill alone does not establish causality. Sampling and definitions can change the apparent onset."
+      ],
+      "illustrative": true
+    },
+    {
+      "id": "action-q03",
+      "issue_id": "q03",
+      "title": "Resolve transition-phase budgets",
+      "classification": "diverging perspectives",
+      "rationale": "Separate terms can test the interpretations that aggregate MSE or mean humidity cannot distinguish.",
+      "steps": [
+        "Freeze the MSE convention, vertical coordinate, mass weighting, phase definition and anomaly baseline; have an agent calculate temperature, moisture, transport, surface-flux and radiative terms with closure residuals.",
+        "Compare independent sites/seasons and event-resolved lead–lag relations, then design controlled model perturbations of convergence, advection or shallow-convective tendencies where technically meaningful."
+      ],
+      "expected_outputs": [
+        "Deliver phase-by-height budgets with uncertainty, assimilation-lineage flags and a residual relative to each claimed leading term."
+      ],
+      "limitations": [
+        "Budget terms are coupled; holding one fixed may alter others. Do not interpret lead–lag correlation as a controlled intervention."
+      ],
+      "illustrative": true
+    },
+    {
+      "id": "action-q04",
+      "issue_id": "q04",
+      "title": "Compare energy diagnostics under a common definition set",
+      "classification": "open questions",
+      "rationale": "A definition audit is needed before interpreting two different spatial integrals as one mechanism.",
+      "steps": [
+        "Have an agent reproduce each published-in-minutes diagnostic only after variable definitions are reviewed, then harmonize period, filtering and seasonal strata without silently changing either original definition.",
+        "Compare atmosphere–surface exchange and interhemispheric transport across available independent products, retaining mass corrections and residuals; formulate separate flux- and circulation-perturbation experiments."
+      ],
+      "expected_outputs": [
+        "Provide a definition crosswalk, phase-relation sensitivity table and closed-versus-unclosed budget assessment."
+      ],
+      "limitations": [
+        "No numerical reanalysis was performed here. Independent products and a sufficiently closed budget may not be available."
+      ],
+      "illustrative": true
+    },
+    {
+      "id": "action-q05",
+      "issue_id": "q05",
+      "title": "Design a QBO–cloud–convection factorial test",
+      "classification": "open questions",
+      "rationale": "Two distinct candidate pathways need separate controls before a common mechanism is asserted.",
+      "steps": [
+        "Have an agent prepare common vertical diagnostics and stratify observed events by season, ENSO and QBO; quantify cloud, temperature and circulation phase relationships.",
+        "Specify controlled model experiments varying stratospheric winds, cloud-radiative coupling and organized-convection treatment, with unchanged diagnostics and checks on induced mean-state drift."
+      ],
+      "expected_outputs": [
+        "Produce a factorial experiment protocol and uncertainty-aware vertical phase and growth diagnostics."
+      ],
+      "limitations": [
+        "The proposed experiment has not been run. Sparse cloud profiles, confounding background states and unrealistic interventions may prevent a decisive result."
+      ],
+      "illustrative": true
+    },
+    {
+      "id": "action-q06",
+      "issue_id": "q06",
+      "title": "Build a diagnostic comparison and information-availability audit",
+      "classification": "emerging alignment",
+      "rationale": "The apparent skill of different descriptors should be compared on matched cases and information sets.",
+      "steps": [
+        "Have an agent implement reviewed RMM, OLR-based, object and regional diagnostics with explicit filters, thresholds and training climatologies. Audit whether each forecast-time quantity uses observations that would only be available later.",
+        "Compare event position, amplitude, precipitation and user-relevant outcomes at matched lead times; report sensitivity to event definitions and account for serial dependence through event- or year-block resampling."
+      ],
+      "expected_outputs": [
+        "Deliver a metric card for each descriptor, matched-case results and a latency/hindsight register. Keep retrospective diagnostics separate from operationally available predictors."
+      ],
+      "limitations": [
+        "Definition review precedes implementation. No particular index, filter or performance threshold is endorsed by this draft."
+      ],
+      "illustrative": true
+    },
+    {
+      "id": "action-q07",
+      "issue_id": "q07",
+      "title": "Test an AI explanation against alternatives",
+      "classification": "diverging perspectives",
+      "rationale": "The records motivate physically testable explanations and a controlled starting point for equation discovery.",
+      "steps": [
+        "Have an agent document training/evaluation lineage, forecast variables and the precise explanatory claim; compare attribution methods and matched-event error growth against dynamical forecasts.",
+        "For equation discovery, first recover a known toy-system relation under controlled noise and sampling, then test candidate relationships on held-out regimes. For forecast explanations, use physically admissible perturbations and compare them with independent observations."
+      ],
+      "expected_outputs": [
+        "Produce an explanation dossier containing alternatives, failed tests, out-of-distribution behavior and conservation diagnostics, with a clear boundary between empirical fit and mechanism."
+      ],
+      "limitations": [
+        "Black-box access may prevent internal interventions; perturbing inputs outside the training distribution can produce uninterpretable responses."
+      ],
+      "illustrative": true
+    },
+    {
+      "id": "action-q08",
+      "issue_id": "q08",
+      "title": "Specify a versioned matched forecast benchmark",
+      "classification": "emerging alignment",
+      "rationale": "A stable evaluation contract can separate model improvement from changes in sample and scoring.",
+      "steps": [
+        "Have an agent inventory model versions, initialization times, ensemble sizes, training cutoffs, climatology and output availability; construct a shared evaluation intersection and keep a separate current-version real-time ledger.",
+        "Evaluate index and field errors, calibration and probabilistic scores with event/year-block uncertainty. Repeat potential-predictability estimates under alternative defensible truth-member selections."
+      ],
+      "expected_outputs": [
+        "Deliver a reproducible scoring specification, lineage audit, paired model comparisons and a sensitivity report for perfect-model limits."
+      ],
+      "limitations": [
+        "Historical training and version information may be unavailable. Do not rank incomparable systems or infer real-atmosphere limits from model self-consistency alone."
+      ],
+      "illustrative": true
+    },
+    {
+      "id": "action-q09",
+      "issue_id": "q09",
+      "title": "Diagnose passage errors before choosing interventions",
+      "classification": "open questions",
+      "rationale": "Matched cases can distinguish a better index forecast from improved physical passage.",
+      "steps": [
+        "Have an agent match crossing, stalled and terminated events across AI, dynamical forecasts and observations using reviewed definitions; calculate lead-dependent speed, amplitude, rainfall, humidity and diurnal errors.",
+        "Where budget outputs exist, compare dynamical-minus-analysis, AI-minus-analysis and dynamical-minus-AI tendencies, then test selected coupling or convection changes with matched background conditions and independent observations."
+      ],
+      "expected_outputs": [
+        "Deliver an event-by-lead error decomposition, output-availability audit and a small controlled-experiment specification."
+      ],
+      "limitations": [
+        "Missing model tendencies can prevent budget comparison. Model differences alone cannot establish atmospheric causality."
+      ],
+      "illustrative": true
+    },
+    {
+      "id": "action-q10",
+      "issue_id": "q10",
+      "title": "Create a private observation-and-independence register",
+      "classification": "open questions",
+      "rationale": "A catalogue and question-specific sampling study can precede expensive new observing plans.",
+      "steps": [
+        "Have an agent inventory dataset variables, coordinates, cadence, quality flags, access conditions, processing needs, assimilation history and AI-training overlap; mark unknown lineage explicitly.",
+        "For a selected measurable target, compare subsampling and controlled measurement-noise experiments using an independent reference, then draft requirements for missing vertical or temporal information."
+      ],
+      "expected_outputs": [
+        "Deliver a gap map, lineage matrix and accuracy-versus-coverage sensitivity curves, with limits of the reference dataset and actual processing effort recorded."
+      ],
+      "limitations": [
+        "Observing-system simulations inherit model error, and accessible data need not be independent. This workflow does not authorize instrument procurement or data redistribution."
+      ],
+      "illustrative": true
+    },
+    {
+      "id": "action-q11",
+      "issue_id": "q11",
+      "title": "Evaluate conditional skill and incremental decision value",
+      "classification": "emerging alignment",
+      "rationale": "Regional application requires testing the target outcome, not inferring value from index accuracy.",
+      "steps": [
+        "Have an agent build matched held-out comparisons of climatology, season/ENSO baselines and models adding MJO structure plus relevant waves or surges; retain definitions, sample counts and temporal information availability.",
+        "Separate heating-location and background-jet errors for teleconnections. With a clearly specified user scenario, evaluate calibration and a range of cost–loss assumptions without claiming realized societal benefit."
+      ],
+      "expected_outputs": [
+        "Produce regional conditional-skill tables, event-level uncertainty, displacement diagnostics and decision-value sensitivity results."
+      ],
+      "limitations": [
+        "Small conditional samples may be inconclusive. Damage depends on exposure and vulnerability as well as weather; no intervention, user action or achieved benefit is recorded here."
+      ],
+      "illustrative": true
+    },
+    {
+      "id": "action-q12",
+      "issue_id": "q12",
+      "title": "Audit trends and perform climate-regime stress tests",
+      "classification": "open questions",
+      "rationale": "Projection confidence needs tests of present mechanisms as well as the projected statistic.",
+      "steps": [
+        "Have an agent prepare common-period, multi-product sensitivity analyses of event frequency, intensity, area and duration, recording observing-system changes and detection settings.",
+        "Specify held-out climate-regime tests for AI and dynamical systems, verify present-climate wind/convection relationships, and compare physically motivated perturbations while retaining model uncertainty."
+      ],
+      "expected_outputs": [
+        "Deliver a trend-definition crosswalk, robustness matrix and regime-test protocol with explicit conditions under which interpretation must be withheld."
+      ],
+      "limitations": [
+        "Historical regime withholding cannot validate an unprecedented future climate. Model agreement is not independence, and no future-climate experiment has been executed in this phase."
+      ],
+      "illustrative": true
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "src-bao",
+      "title": "Tropics-wide Intraseasonal Oscillation",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-26",
+      "contribution_family": "talk-bao",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-chen",
+      "title": "MJO precipitation trends and global impacts",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-26",
+      "contribution_family": "talk-chen",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-closing",
+      "title": "Closing discussion and preliminary recommendations",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-30",
+      "contribution_family": "final-day-discussion",
+      "attribution_mode": "unattributed",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived translation/synthesis; exact session extent unresolved. Named discussion attribution is not reused. Administrative placeholder deadlines and inferred owners excluded. No formal adoption of full recommendation list recorded; no signed review located."
+    },
+    {
+      "source_id": "src-dkim",
+      "title": "Modelling",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-27",
+      "contribution_family": "talk-dkim",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-ekot",
+      "title": "MJO and West African climate variability",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-29",
+      "contribution_family": "talk-ekot",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-final",
+      "title": "Final-day reports and plenary discussion",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-30",
+      "contribution_family": "final-day-discussion",
+      "attribution_mode": "unattributed",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived thematic record; exact mapping to 11:00 versus 14:00 session unresolved. Section 7 is analytical commentary, excluded from workshop evidence. Overlap with closing cannot be ruled out. No signed review located."
+    },
+    {
+      "source_id": "src-g3",
+      "title": "Breakout discussion: theory, modelling and future research",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-27",
+      "contribution_family": "theory-breakout",
+      "attribution_mode": "unattributed",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "One breakout record, not coverage of all groups. Reported again in plenary; repeated recommendations are not independent support. No signed review located."
+    },
+    {
+      "source_id": "src-g34",
+      "title": "Extended theory and modelling discussion minutes",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": null,
+      "contribution_family": "theory-plenary",
+      "attribution_mode": "unattributed",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "Date inferred in source; likely overlaps p34. Sections 9–10 contain editorial analysis or contextual verification and are excluded from workshop-statement evidence. No signed review located."
+    },
+    {
+      "source_id": "src-hera",
+      "title": "Limits of MJO predictability",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-30",
+      "contribution_family": "talk-hera",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-hkim",
+      "title": "Prediction",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-29",
+      "contribution_family": "talk-hkim",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-janiga",
+      "title": "Object-based climatology and verification",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-29",
+      "contribution_family": "talk-janiga",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-khouider",
+      "title": "The MJO at the crossroads of theory and modelling",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-27",
+      "contribution_family": "talk-khouider",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-kumar",
+      "title": "Temperature contributions to MSE during MJO transitions",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-27",
+      "contribution_family": "talk-kumar",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-lin",
+      "title": "Stratospheric interactions with the MJO",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-27",
+      "contribution_family": "talk-lin",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-liu",
+      "title": "Shallow convection and super-cloud-cluster propagation",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-29",
+      "contribution_family": "talk-liu",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-maraldi",
+      "title": "MJO in high-resolution IFS-NEMO",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-27",
+      "contribution_family": "talk-maraldi",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-moteki",
+      "title": "CENS–MJO presentation record and subsequent reflection",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-26",
+      "contribution_family": "talk-moteki",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "Mixed source: reconstructed talk/Q&A plus later reflection. Only narrowly selected recorded statements are used; suggested improved answers, prior-paper discussion and follow-up analysis are excluded. No independent sign-off located."
+    },
+    {
+      "source_id": "src-obs",
+      "title": "Extended observation and AI discussion minutes",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": null,
+      "contribution_family": "observations-plenary",
+      "attribution_mode": "unattributed",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "Date provisional; group numbering uncertain; likely overlaps p12. Section 7 is later strategic commentary and is excluded from workshop-statement evidence. No signed review located."
+    },
+    {
+      "source_id": "src-p12",
+      "title": "Plenary discussion: observations and global patterns",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-28",
+      "contribution_family": "observations-plenary",
+      "attribution_mode": "unattributed",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR excerpt 00:00:00–01:18:41 of a 01:49:13 recording; starts during a report and omits the final approximately 30 minutes. No signed review located."
+    },
+    {
+      "source_id": "src-p34",
+      "title": "Plenary discussion: theory and modelling",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-28",
+      "contribution_family": "theory-plenary",
+      "attribution_mode": "unattributed",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR 00:00:03–01:35:46 of 01:35:54; speaker identity and some language uncertain. Overlaps GroupDiscussion v2; not an independent vote. No signed review located."
+    },
+    {
+      "source_id": "src-peatman",
+      "title": "Sumatra squalls in present and future climates",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-30",
+      "contribution_family": "talk-peatman",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-robertson",
+      "title": "Applications and remote regional impacts",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-29",
+      "contribution_family": "talk-robertson",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-rushley",
+      "title": "North Pacific cyclone forecast skill relative to MJO skill",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-29",
+      "contribution_family": "talk-rushley",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-sakaeda",
+      "title": "Global atmospheric energy cycle associated with the MJO",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-26",
+      "contribution_family": "talk-sakaeda",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-scheibe",
+      "title": "ENSO modulation of MJO impacts in South America",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-29",
+      "contribution_family": "talk-scheibe",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-siena",
+      "title": "Hectometric ICON ensembles",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-29",
+      "contribution_family": "talk-siena",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review. Source time 12:30 conflicts with the live official programme at 12:15; use programme time only after import review. Case is an Italian convective rainfall event, not direct MJO evidence."
+    },
+    {
+      "source_id": "src-silverio",
+      "title": "ENSO-dependent MJO impacts on southern African rainfall",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-30",
+      "contribution_family": "talk-silverio",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-takasuka",
+      "title": "MJO propagation as a deterministic chaotic phenomenon",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-27",
+      "contribution_family": "talk-takasuka",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-tsai",
+      "title": "MJO modulation of East Pacific waves and cyclogenesis",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-30",
+      "contribution_family": "talk-tsai",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-xu",
+      "title": "Short-record wave detection reported in the Chang Xu minutes",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-27",
+      "contribution_family": "talk-xu",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review. Official programme title concerns phase-dependent moisture–convection interactions, whereas these minutes describe short-record wave detection. Content-to-talk mapping is disputed; used only to flag a methodological question and withheld from named scientific attribution."
+    },
+    {
+      "source_id": "src-yokoi",
+      "title": "Marine boundary-layer thermodynamics",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-27",
+      "contribution_family": "talk-yokoi",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    },
+    {
+      "source_id": "src-yoneyama",
+      "title": "Field Data and Tropical Variability",
+      "source_version": "version withheld from public package",
+      "snapshot_date": "2026-11-02",
+      "session_date": "2026-10-26",
+      "contribution_family": "talk-yoneyama",
+      "attribution_mode": "named_talk",
+      "source_review_status": "not_established",
+      "coverage": "partial",
+      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "e-bao-39-44",
+      "source_id": "src-bao",
+      "line_start": 39,
+      "line_end": 44,
+      "locator": "Section near lines 39–44",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-bao-45-51",
+      "source_id": "src-bao",
+      "line_start": 45,
+      "line_end": 51,
+      "locator": "Section near lines 45–51",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-bao-52-57",
+      "source_id": "src-bao",
+      "line_start": 52,
+      "line_end": 57,
+      "locator": "## Open issues",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-chen-32-41",
+      "source_id": "src-chen",
+      "line_start": 32,
+      "line_end": 41,
+      "locator": "## Results",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-chen-48-54",
+      "source_id": "src-chen",
+      "line_start": 48,
+      "line_end": 54,
+      "locator": "## Open issues",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-closing-113-127",
+      "source_id": "src-closing",
+      "line_start": 113,
+      "line_end": 127,
+      "locator": "### 3.5",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-closing-148-161",
+      "source_id": "src-closing",
+      "line_start": 148,
+      "line_end": 161,
+      "locator": "### 4.2",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-closing-162-171",
+      "source_id": "src-closing",
+      "line_start": 162,
+      "line_end": 171,
+      "locator": "### 4.3",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-closing-202-219",
+      "source_id": "src-closing",
+      "line_start": 202,
+      "line_end": 219,
+      "locator": "### 5.3",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-closing-238-249",
+      "source_id": "src-closing",
+      "line_start": 238,
+      "line_end": 249,
+      "locator": "### 6.2",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-closing-258-265",
+      "source_id": "src-closing",
+      "line_start": 258,
+      "line_end": 265,
+      "locator": "### 6.4",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-closing-75-86",
+      "source_id": "src-closing",
+      "line_start": 75,
+      "line_end": 86,
+      "locator": "### 3.1",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-dkim-19-26",
+      "source_id": "src-dkim",
+      "line_start": 19,
+      "line_end": 26,
+      "locator": "## Historical framing",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-ekot-26-29",
+      "source_id": "src-ekot",
+      "line_start": 26,
+      "line_end": 29,
+      "locator": "## Claims",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-final-104-115",
+      "source_id": "src-final",
+      "line_start": 104,
+      "line_end": 115,
+      "locator": "#### 2.3.1",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-final-132-139",
+      "source_id": "src-final",
+      "line_start": 132,
+      "line_end": 139,
+      "locator": "#### 2.4.1",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-final-148-157",
+      "source_id": "src-final",
+      "line_start": 148,
+      "line_end": 157,
+      "locator": "2.4.4 Improved MJO diagnostics",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-final-159-166",
+      "source_id": "src-final",
+      "line_start": 159,
+      "line_end": 166,
+      "locator": "#### 2.4.5",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-final-169-185",
+      "source_id": "src-final",
+      "line_start": 169,
+      "line_end": 185,
+      "locator": "### 3.1",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-final-186-201",
+      "source_id": "src-final",
+      "line_start": 186,
+      "line_end": 201,
+      "locator": "### 3.2",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-final-210-217",
+      "source_id": "src-final",
+      "line_start": 210,
+      "line_end": 217,
+      "locator": "### 3.4",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-g3-170-201",
+      "source_id": "src-g3",
+      "line_start": 170,
+      "line_end": 201,
+      "locator": "## 3.4",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-g3-202-251",
+      "source_id": "src-g3",
+      "line_start": 202,
+      "line_end": 251,
+      "locator": "## 3.5",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-g3-54-90",
+      "source_id": "src-g3",
+      "line_start": 54,
+      "line_end": 90,
+      "locator": "## 3.1",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-g34-146-152",
+      "source_id": "src-g34",
+      "line_start": 146,
+      "line_end": 152,
+      "locator": "### 5.5",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-g34-18-25",
+      "source_id": "src-g34",
+      "line_start": 18,
+      "line_end": 25,
+      "locator": "### 2.1",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-g34-42-50",
+      "source_id": "src-g34",
+      "line_start": 42,
+      "line_end": 50,
+      "locator": "### 2.4",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-g34-53-60",
+      "source_id": "src-g34",
+      "line_start": 53,
+      "line_end": 60,
+      "locator": "### 3.1",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-hera-13-17",
+      "source_id": "src-hera",
+      "line_start": 13,
+      "line_end": 17,
+      "locator": "## Premises",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-hera-22-28",
+      "source_id": "src-hera",
+      "line_start": 22,
+      "line_end": 28,
+      "locator": "## Results",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-hera-33-36",
+      "source_id": "src-hera",
+      "line_start": 33,
+      "line_end": 36,
+      "locator": "## Open issues",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-hkim-25-30",
+      "source_id": "src-hkim",
+      "line_start": 25,
+      "line_end": 30,
+      "locator": "### Evaluation targets and metrics",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-hkim-31-36",
+      "source_id": "src-hkim",
+      "line_start": 31,
+      "line_end": 36,
+      "locator": "### Initiation and diversity",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-hkim-37-42",
+      "source_id": "src-hkim",
+      "line_start": 37,
+      "line_end": 42,
+      "locator": "Section near lines 37–42",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-hkim-43-48",
+      "source_id": "src-hkim",
+      "line_start": 43,
+      "line_end": 48,
+      "locator": "## Progress in AI prediction",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-hkim-49-69",
+      "source_id": "src-hkim",
+      "line_start": 49,
+      "line_end": 69,
+      "locator": "## Discussion / Q&A",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-janiga-17-22",
+      "source_id": "src-janiga",
+      "line_start": 17,
+      "line_end": 22,
+      "locator": "## Premises",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-janiga-35-42",
+      "source_id": "src-janiga",
+      "line_start": 35,
+      "line_end": 42,
+      "locator": "### Forecast verification",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-janiga-43-46",
+      "source_id": "src-janiga",
+      "line_start": 43,
+      "line_end": 46,
+      "locator": "## Claims",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-janiga-47-52",
+      "source_id": "src-janiga",
+      "line_start": 47,
+      "line_end": 52,
+      "locator": "## Open issues",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-khouider-19-25",
+      "source_id": "src-khouider",
+      "line_start": 19,
+      "line_end": 25,
+      "locator": "## Historical framing",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-khouider-33-53",
+      "source_id": "src-khouider",
+      "line_start": 33,
+      "line_end": 53,
+      "locator": "## Discussion / Q&A",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-kumar-30-37",
+      "source_id": "src-kumar",
+      "line_start": 30,
+      "line_end": 37,
+      "locator": "## Results",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-kumar-43-49",
+      "source_id": "src-kumar",
+      "line_start": 43,
+      "line_end": 49,
+      "locator": "## Open issues",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-lin-19-24",
+      "source_id": "src-lin",
+      "line_start": 19,
+      "line_end": 24,
+      "locator": "## Premises",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-lin-30-37",
+      "source_id": "src-lin",
+      "line_start": 30,
+      "line_end": 37,
+      "locator": "## Results",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-liu-21-25",
+      "source_id": "src-liu",
+      "line_start": 21,
+      "line_end": 25,
+      "locator": "## Results",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-maraldi-30-37",
+      "source_id": "src-maraldi",
+      "line_start": 30,
+      "line_end": 37,
+      "locator": "## Results",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-maraldi-43-48",
+      "source_id": "src-maraldi",
+      "line_start": 43,
+      "line_end": 48,
+      "locator": "## Open issues",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-moteki-107-113",
+      "source_id": "src-moteki",
+      "line_start": 107,
+      "line_end": 113,
+      "locator": "Recorded Q&A summary only",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-obs-154-159",
+      "source_id": "src-obs",
+      "line_start": 154,
+      "line_end": 159,
+      "locator": "Section near lines 154–159",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-obs-183-188",
+      "source_id": "src-obs",
+      "line_start": 183,
+      "line_end": 188,
+      "locator": "Section near lines 183–188",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-obs-201-228",
+      "source_id": "src-obs",
+      "line_start": 201,
+      "line_end": 228,
+      "locator": "### 3.1",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-obs-74-83",
+      "source_id": "src-obs",
+      "line_start": 74,
+      "line_end": 83,
+      "locator": "Section near lines 74–83",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-p12-25-33",
+      "source_id": "src-p12",
+      "line_start": 25,
+      "line_end": 33,
+      "locator": "Section near lines 25–33",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-p12-34-48",
+      "source_id": "src-p12",
+      "line_start": 34,
+      "line_end": 48,
+      "locator": "## Discussion / Q&A",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-p34-36-56",
+      "source_id": "src-p34",
+      "line_start": 36,
+      "line_end": 56,
+      "locator": "## Discussion / Q&A",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-peatman-23-29",
+      "source_id": "src-peatman",
+      "line_start": 23,
+      "line_end": 29,
+      "locator": "## Results",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-peatman-30-33",
+      "source_id": "src-peatman",
+      "line_start": 30,
+      "line_end": 33,
+      "locator": "## Claims",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-peatman-34-37",
+      "source_id": "src-peatman",
+      "line_start": 34,
+      "line_end": 37,
+      "locator": "## Open issues",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-robertson-17-22",
+      "source_id": "src-robertson",
+      "line_start": 17,
+      "line_end": 22,
+      "locator": "## Historical framing",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-robertson-29-34",
+      "source_id": "src-robertson",
+      "line_start": 29,
+      "line_end": 34,
+      "locator": "## Societal applications",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-rushley-25-31",
+      "source_id": "src-rushley",
+      "line_start": 25,
+      "line_end": 31,
+      "locator": "## Results",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-rushley-36-41",
+      "source_id": "src-rushley",
+      "line_start": 36,
+      "line_end": 41,
+      "locator": "## Open issues",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-rushley-42-47",
+      "source_id": "src-rushley",
+      "line_start": 42,
+      "line_end": 47,
+      "locator": "## Discussion / Q&A",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-sakaeda-34-45",
+      "source_id": "src-sakaeda",
+      "line_start": 34,
+      "line_end": 45,
+      "locator": "## Results",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-sakaeda-54-61",
+      "source_id": "src-sakaeda",
+      "line_start": 54,
+      "line_end": 61,
+      "locator": "## Open issues",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-sakaeda-62-70",
+      "source_id": "src-sakaeda",
+      "line_start": 62,
+      "line_end": 70,
+      "locator": "## Discussion / Q&A",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-scheibe-26-29",
+      "source_id": "src-scheibe",
+      "line_start": 26,
+      "line_end": 29,
+      "locator": "## Claims",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-siena-21-26",
+      "source_id": "src-siena",
+      "line_start": 21,
+      "line_end": 26,
+      "locator": "## Results",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-siena-31-34",
+      "source_id": "src-siena",
+      "line_start": 31,
+      "line_end": 34,
+      "locator": "## Open issues",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-silverio-21-26",
+      "source_id": "src-silverio",
+      "line_start": 21,
+      "line_end": 26,
+      "locator": "## Results",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-takasuka-30-36",
+      "source_id": "src-takasuka",
+      "line_start": 30,
+      "line_end": 36,
+      "locator": "## Results",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-takasuka-42-47",
+      "source_id": "src-takasuka",
+      "line_start": 42,
+      "line_end": 47,
+      "locator": "## Open issues",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-tsai-21-27",
+      "source_id": "src-tsai",
+      "line_start": 21,
+      "line_end": 27,
+      "locator": "## Results",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-tsai-32-35",
+      "source_id": "src-tsai",
+      "line_start": 32,
+      "line_end": 35,
+      "locator": "## Open issues",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-xu-31-37",
+      "source_id": "src-xu",
+      "line_start": 31,
+      "line_end": 37,
+      "locator": "## Results",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-xu-43-49",
+      "source_id": "src-xu",
+      "line_start": 43,
+      "line_end": 49,
+      "locator": "## Open issues",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-yokoi-31-37",
+      "source_id": "src-yokoi",
+      "line_start": 31,
+      "line_end": 37,
+      "locator": "## Results",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-yokoi-43-49",
+      "source_id": "src-yokoi",
+      "line_start": 43,
+      "line_end": 49,
+      "locator": "## Open issues",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-yoneyama-20-28",
+      "source_id": "src-yoneyama",
+      "line_start": 20,
+      "line_end": 28,
+      "locator": "## Historical framing",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    },
+    {
+      "evidence_id": "e-yoneyama-29-37",
+      "source_id": "src-yoneyama",
+      "line_start": 29,
+      "line_end": 37,
+      "locator": "Section near lines 29–37",
+      "verification": "pending_human_review",
+      "coverage": "partial"
+    }
+  ],
+  "references": [
+    {
+      "id": "wh2004",
+      "title": "Wheeler & Hendon (2004) · An All-Season Real-Time Multivariate MJO Index",
+      "url": "https://doi.org/10.1175/1520-0493(2004)132<1917:AARMMI>2.0.CO;2",
+      "verified_on": "2026-11-03",
+      "scope": "Original RMM construction; definition checked against the paper hosted by the Australian Bureau of Meteorology."
+    },
+    {
+      "id": "kiladis2014",
+      "title": "Kiladis et al. (2014) · A Comparison of OLR and Circulation-Based Indices for Tracking the MJO",
+      "url": "https://doi.org/10.1175/MWR-D-13-00301.1",
+      "verified_on": "2026-11-03",
+      "scope": "Sections 2, 5 and 6: convective indices, real-time approximation and diagnostic differences."
+    },
+    {
+      "id": "noaa-indices",
+      "title": "NOAA Physical Sciences Laboratory · MJO index definitions and versions",
+      "url": "https://psl.noaa.gov/mjo/mjoindex/",
+      "verified_on": "2026-11-03",
+      "scope": "Operational product definitions and phase conventions; version-specific documentation, not interchangeable index names."
+    },
+    {
+      "id": "neuralgcm",
+      "title": "Kochkov et al. (2024) · Neural general circulation models for weather and climate",
+      "url": "https://doi.org/10.1038/s41586-024-07744-y",
+      "verified_on": "2026-11-03",
+      "scope": "External example of a hybrid architecture only; no inference of workshop consensus or MJO skill ranking."
+    }
+  ],
+  "highlight": {
+    "highlight_id": "highlight-breakout-3-4",
+    "youtube_id": "RPXnSvabsGY",
+    "url": "https://www.youtube.com/watch?v=RPXnSvabsGY",
+    "duration_seconds": 60,
+    "title": "MJO Workshop 2026: Discussion — Breakout Discussion — Themes 3 + 4",
+    "official_session": "2026-10-27 16:30–18:00 Europe/Rome",
+    "verification_date": "2026-11-02",
+    "verification_method": "YouTube rendered title, duration, unlisted marker and expanded description checked using browser; official programme independently checked.",
+    "source_mapping": "Description topics closely match g3 sections 3.1–3.7. Owner confirmed this YouTube ID as the representative one-minute derivative on 2026-11-03. Claim-level scientific coverage of the clip remains unapproved.",
+    "scientific_review": "pending_as_independent_evidence",
+    "publication_permission": "owner_approved",
+    "representative_version_approval": "owner_approved",
+    "visually_reviewed": "user_reported_in_project_requirements; not a fresh full-video review",
+    "evidence_role": "editorial_orientation_only_not_independent_scientific_evidence",
+    "publication_permission_date": "2026-11-03",
+    "publication_permission_scope": "participants_and_future_public_embed; youtube_visibility_unlisted",
+    "representative_version_approval_date": "2026-11-03",
+    "channel_display_name_policy": "accept_as_shown_by_youtube"
+  }
+}

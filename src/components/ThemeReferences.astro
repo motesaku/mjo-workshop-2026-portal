@@ -8,7 +8,7 @@ const references = review.references.filter(r => ids.includes(r.id));
 ---
 <section id="references" class="theme-references">
   <h2>References, provenance &amp; review</h2>
-  <p class="small">Derivative v{review.version} · {review.created_on}. Scientific review: {review.scientific_review}. Publication approval: {review.publication_approval}. Language review: {review.language_review}. Source coverage: partial. No formal consensus is established.</p>
+  <p class="small">Personal synthesis v{review.version} · {review.created_on}. Scientific framing: {review.scientific_review.replaceAll('_', ' ')}. Publication framing: {review.publication_approval.replaceAll('_', ' ')}. Language: {review.language_review.replaceAll('_', ' ')}. Source coverage: partial. No formal consensus is established.</p>
   {references.map(ref => <article id={ref.id}><h3><a href={ref.url}>{ref.title}</a></h3><p>{ref.scope}</p><p class="small">Definition/source checked: {ref.verified_on}. This does not constitute scientific approval of the synthesis.</p></article>)}
   <details><summary>Workshop source records ({sources.length})</summary>
     <p class="small">Discussion participants remain anonymous. Repeated breakout/plenary and final-day records may overlap; they are not independent votes. Only edited paraphrases are shown; original documents are not served.</p>
@@ -16,7 +16,7 @@ const references = review.references.filter(r => ids.includes(r.id));
   </details>
   <details open><summary>Claim-level source locators ({evidence.length})</summary>
     <p class="small">Each identifier below resolves a cited passage in the private source record. Hashes preserve the version; they do not establish correctness.</p>
-    <dl>{evidence.map(e => <div id={e.evidence_id}><dt>{e.evidence_id}</dt><dd>{review.sources.find(s => s.source_id === e.source_id)?.title} · lines {e.line_start}–{e.line_end}<br/><span class="small">Review pending · {e.source_id}</span><details><summary>Version fingerprints</summary><p class="hash">Source SHA-256: {e.source_sha256}<br/>Passage SHA-256: {e.excerpt_sha256}</p></details></dd></div>)}</dl>
+    <dl>{evidence.map(e => <div id={e.evidence_id}><dt>{e.evidence_id}</dt><dd>{review.sources.find(s => s.source_id === e.source_id)?.title} · {e.locator} · lines {e.line_start}–{e.line_end}<br/><span class="small">Personal synthesis locator · {e.source_id}</span><details><summary>Version fingerprints</summary><p class="hash">Source SHA-256: {e.source_sha256}<br/>Passage SHA-256: {e.excerpt_sha256}</p></details></dd></div>)}</dl>
   </details>
 </section>
 <style>
