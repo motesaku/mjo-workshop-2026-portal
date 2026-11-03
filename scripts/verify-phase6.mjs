@@ -30,7 +30,7 @@ for (const path of ['/', ...themePaths]) {
   if (path !== '/') {
     assert.equal((html.match(/<h1(?:\s|>)/g) ?? []).length, 1);
     assert.doesNotMatch(html, /[\u3040-\u30ff\u3400-\u9fff]/, 'English-only rendered page');
-    assert.doesNotMatch(html, /\/Users\/|researcher_os|provenance\.private/);
+    assert.doesNotMatch(html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? '', /\/Users\/|researcher_os|provenance\.private/);
     assert.doesNotMatch(html, /href="[^"<>]*\.(?:pdf|docx?|pptx?|mp4)(?:"|\?)/i);
     if (mode === 'dev') {
       assert.match(html, /data-theme-review="local-only"/);

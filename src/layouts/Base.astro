@@ -67,8 +67,8 @@ const pageCtx = createPublicPageContext({
 			<div class="header-inner">
 				<a class="brand" href="/" aria-label={siteTitle}><span class="brand-mark" aria-hidden="true">MJO<span>26</span></span><span>MJO Workshop 2026<small>Knowledge &amp; Action Portal</small></span></a>
 				<nav class="primary-nav" aria-label="Primary navigation">
-					{navigation.slice(0, 4).map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a>)}
-					<details class="explore-menu"><summary>Explore topics</summary><div>{navigation.slice(4).map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a>)}</div></details>
+					{navigation.filter((item, index) => index < 4 || ["/ai-for-mjo-research", "/mjo-indices-and-diagnostics"].includes(item.href)).map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a>)}
+					<details class="explore-menu"><summary>Explore topics</summary><div>{navigation.filter((item, index) => index >= 4 && !["/ai-for-mjo-research", "/mjo-indices-and-diagnostics"].includes(item.href)).map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a>)}</div></details>
 				</nav>
 			</div>
 		</header>
