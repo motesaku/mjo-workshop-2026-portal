@@ -1,6 +1,6 @@
 # Implementation Plan
 
-Updated 2026-11-01. Phase 1 decisions were read from the preceding audit/planning chat; its source materials remain in the private research repository. This phase implements the requested local foundation before any scientific import.
+Updated 2026-11-03. Phase 1 decisions were read from the preceding audit/planning chat; its source materials remain in the private research repository. Phases 2–6 below record local foundation, import contract, portal presentation and editorial theme work. Scientific CMS publication and public deployment remain unauthorized.
 
 ## Phase 2: local foundation
 
@@ -14,24 +14,33 @@ Updated 2026-11-01. Phase 1 decisions were read from the preceding audit/plannin
 - [x] Complete homepage/admin browser and HTTP verification, typecheck and build; record evidence in VERIFICATION.md.
 - [ ] Owner completes initial admin identity and passkey registration (manual).
 
-No remote creation/push, CMS scientific publication, YouTube upload or Cloudflare operation is authorized by Phase 2.
+## Phase 3: reviewed publication contract
 
-## Next: reviewed publication contract
+- [x] Define the scientific import contract, provenance rules and publication policy in-repo.
+- [x] Implement validation and dry-run planning that reject unreviewed claims, private paths and forbidden attachments.
+- [x] Keep EmDash publish/schedule blocked for scientific collections until a later authorized writer exists.
+- [ ] Import one reviewed talk, one anonymous discussion summary and one illustrative workflow after owner authorization.
+- [ ] Complete scientific sign-off, language review and publication approval for any imported records.
 
-1. In the private research environment, reconcile programme, canonical minutes and videos. Preserve originals.
-2. Define exported fields: stable item ID, type (talk/discussion/workflow), date/time/timezone, theme, English summary, coverage limits, source reference/hash/version, review status, publication approval and approved YouTube ID. Speaker names are allowed only for individual talks.
-3. Define scientific text ownership and re-import behavior: source remains the research environment; decide exactly which display fields editors may change in EmDash. Test idempotency and revision handling before bulk imports.
-4. Implement validation which rejects unreviewed/unapproved claims, missing provenance, private paths, forbidden attachments and discussion speaker names. EmDash publishing controls are not this validator.
+## Phase 4–5: portal presentation and editorial drafts
 
-Done when one reviewed talk, one anonymous discussion summary and one illustrative workflow can be validated and imported locally without duplicate entries or private information. These representative samples require later instructions; none are loaded now.
+- [x] Build English day/theme indexes, detail views, highlight embeds and illustrative workflow pages.
+- [x] Keep record-gap labels visible; do not turn workflow examples into project-management records.
+- [x] Prepare Phase 5 editorial issue/workflow drafts under ignored `exports/` (not CMS imports).
+- [ ] Confirm remaining YouTube highlight mappings, representative versions and publication permissions.
 
-## Then: portal presentation
+## Phase 6: dedicated scientific themes
 
-Build day/theme indexes, item detail views, highlight embeds and workflow examples around the approved contract. Keep record-gap labels visible. Verify English-only display, keyboard/mobile layout, mathematical notation, tables, links and YouTube playback. Do not turn workflow examples into project-management records.
+- [x] Deliver independent `/ai-for-mjo-research` and `/mjo-indices-and-diagnostics` sections in primary navigation.
+- [x] Author local English theme review package and Japanese scientific synthesis under ignored `exports/`.
+- [x] Withhold draft theme/issue bodies from normal builds; expose them only in local development.
+- [x] Record mechanical verification in `docs/PHASE6_IMPLEMENTATION.md`.
+- [ ] Complete scientific sign-off, language review, publication approval and any additional video mappings.
 
-## GitHub gate — explicit authorization required
+## GitHub gate
 
-Intended remote: `motesaku/mjo-workshop-2026-portal`, private. Review file inventory and exclusions before configuring the origin, committing or pushing. Do not use `researcher_os` as a submodule, workspace package or CI checkout. No automatic deployment integration is installed.
+Remote configured: `motesaku/mjo-workshop-2026-portal` (private), tracking `origin/main`.
+Do not use `researcher_os` as a submodule, workspace package or CI checkout. No automatic deployment integration is installed. Additional pushes, visibility changes and CI deploy hooks still require explicit authorization. A private repository is not website access control.
 
 ## Cloudflare migration — plan only
 
@@ -52,5 +61,6 @@ No active Wrangler configuration/deploy script is included now. Local Node build
 ## Outstanding owner actions
 
 - Register the local admin email/passkey in the setup wizard.
-- Specify later content imports, approval workflow, video mappings and participant access policy.
-- Authorize private GitHub creation/push and Cloudflare provisioning/deployment separately when ready.
+- Complete scientific/language/publication review for Phase 5–6 editorial packages before any CMS import.
+- Specify remaining video mappings, participant access policy and approved import samples.
+- Authorize Cloudflare provisioning/deployment separately when ready.

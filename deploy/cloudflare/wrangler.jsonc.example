@@ -1,0 +1,72 @@
+// Cloudflare Workers configuration TEMPLATE for the MJO Workshop 2026 portal.
+//
+// INACTIVE: this file is named *.example so that Wrangler, Astro and `emdash doctor`
+// ignore it. Copy it to ./wrangler.jsonc at the project root only after public
+// deployment has been explicitly authorized. See docs/PHASE7_DEPLOYMENT_GUIDE.md.
+//
+// Based on the official EmDash guide (checked 2026-11-03):
+// https://docs.emdashcms.com/deployment/cloudflare/
+// Re-check binding names, compatibility date and Wrangler version before use.
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "mjo-workshop-2026-portal",
+	"main": "./src/worker.ts",
+	// Keep at or after 2025-04-01 so Worker secrets reach process.env (EmDash requirement).
+	"compatibility_date": "2026-02-24",
+	"compatibility_flags": ["nodejs_compat"],
+
+	// Binding names MUST match astro.config.mjs: d1({ binding: "DB" }), r2({ binding: "MEDIA" }).
+	// Wrangler creates resources with these names on the first deploy if they do not exist.
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "mjo-workshop-2026-portal"
+			// "database_id": "<fill after `wrangler d1 create`; required for emdash migrate>"
+		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "MEDIA",
+			"bucket_name": "mjo-workshop-2026-portal-media"
+			// Approved site assets only. Never videos, original PDFs/DOCX/PPTX, transcripts or photos.
+			// EmDash writes JSON backups under the `backups/` prefix of this bucket: never expose
+			// the bucket through a public domain.
+		}
+	],
+
+	// Required for scheduled publishing, automatic JSON backups and maintenance.
+	"triggers": { "crons": ["* * * * *"] },
+
+	// Optional: image transformation binding (declared by @astrojs/cloudflare automatically,
+	// listed here to make the intent visible).
+	"images": { "binding": "IMAGES" },
+
+	// Not needed: this project registers one native (host) plugin and no sandboxed/registry plugins,
+	// so `worker_loaders` / LOADER and `sandboxRunner` are intentionally omitted.
+
+	// Keep the site reachable only through the intended hostname once a domain is approved.
+	// "workers_dev": false,
+	// "routes": [{ "pattern": "portal.example.org", "custom_domain": true }],
+
+	// Non-secret runtime variables. Secrets go through `wrangler secret put`, never here.
+	"vars": {
+		// Set to the approved production origin BEFORE the setup wizard is completed;
+		// passkeys are bound to this origin.
+		// "EMDASH_SITE_URL": "https://portal.example.org",
+		// Optional: enforce deployment-managed migrations after the pipeline is reliable.
+		// "EMDASH_MIGRATIONS_MODE": "check"
+	},
+
+	// Optional: run the Worker near the D1 primary (choose exactly one selector).
+	// "placement": { "mode": "targeted", "region": "<region>" },
+
+	// Optional preview resources. Never point previews at production DB/bucket.
+	// Previews are publicly reachable: protect with Cloudflare Access and finish setup immediately.
+	// "previews": {
+	//   "d1_databases": [{ "binding": "DB", "database_name": "mjo-workshop-2026-portal-preview", "database_id": "<uuid>" }],
+	//   "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "mjo-workshop-2026-portal-media-preview" }],
+	//   "kv_namespaces": [{ "binding": "SESSION", "id": "<kv-id>" }]
+	// },
+
+	"observability": { "enabled": true }
+}

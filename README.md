@@ -2,7 +2,7 @@
 
 Private, local development prototype for workshop participants. English-only.
 This repository is independent of the private `researcher_os` research environment.
-No scientific content has been imported. No remote repository or deployment has been created.
+Scientific CMS import and public website deployment remain unauthorized. Local Phase 3–6 work adds review gates, portal pages and editorial theme drafts that stay unpublished until scientific sign-off.
 
 ## Local development
 
@@ -42,7 +42,11 @@ No administrator identity or passkey was created by the implementation agent. A 
 
 ```sh
 npm run typecheck
+npm run test:science
+npm run science:check
 npm run verify:local  # Requires the local dev server
+node scripts/verify-phase4-http.mjs
+node scripts/verify-phase6.mjs dev
 npm run build
 npm run preview
 ```
@@ -51,23 +55,25 @@ npm run preview
 | --- | --- |
 | `astro.config.mjs` | Official Node adapter, English React admin, EmDash SQLite/local storage integration and private-file HTTP exclusions |
 | `src/live.config.ts` | Official EmDash live content loader |
-| `src/pages/` | Server-rendered homepage and Starter post/page/taxonomy routes |
+| `src/pages/` | Server-rendered homepage, portal routes and Starter post/page/taxonomy routes |
 | `src/layouts/Base.astro` | Shared English layout with official EmDash page contributions |
 | `src/styles/portal.css` | Small responsive local prototype stylesheet |
 | `seed/seed.json` | Starter Posts/Pages schema; no sample or scientific content |
 | `data.db`, `uploads/` | Local runtime data; ignored by Git |
+| `exports/` | Local editorial review packages only; ignored by Git and denied over HTTP |
 | `docs/PROJECT_BRIEF.md` | Audience, boundaries, editorial rules and future scope |
 | `docs/IMPLEMENTATION_PLAN.md` | Phase checklist, acceptance criteria and deployment gates |
-| `docs/VERIFICATION.md` | Actual implementation checks, limitations and dependency findings |
+| `docs/PHASE6_IMPLEMENTATION.md` | Dedicated scientific theme delivery and verification notes |
+| `docs/VERIFICATION.md` | Phase 2 implementation checks, limitations and dependency findings |
 
-## GitHub preparation
+## GitHub status
 
-Intended destination: **`motesaku/mjo-workshop-2026-portal`**, private.
-The local Git repository has no commits and no configured remote. This is intentional: no remote creation, push, publication, or automated deployment is authorized. After explicit authorization, create the remote as private, review the files and ignored paths, and then configure/push it. A private GitHub repository does not make a deployed website private.
+Private remote: **`motesaku/mjo-workshop-2026-portal`** (`origin`, branch `main`).
+A private GitHub repository does not make a deployed website private. Do not change visibility, add CI deploy hooks, or push secrets, SQLite data, `exports/`, `backups/` or `.env`. Further pushes still require explicit authorization when they are not part of an already approved handoff.
 
 ## Later Cloudflare deployment
 
-Plan only: Cloudflare Workers + D1 (`DB`) + R2 (`MEDIA`). See the implementation plan before changing the adapter. No Wrangler deployment configuration, cloud resources, GitHub Actions, deployment button, or deploy script is enabled in this phase. Videos will remain YouTube embeds; R2 is only for approved site assets and carefully protected backups.
+Plan only: Cloudflare Workers + D1 (`DB`) + R2 (`MEDIA`). See the implementation plan before changing the adapter. No Wrangler deployment configuration, cloud resources, GitHub Actions, deployment button, or deploy script is enabled. Videos will remain YouTube embeds; R2 is only for approved site assets and carefully protected backups.
 
 ## Official sources and scaffold provenance
 

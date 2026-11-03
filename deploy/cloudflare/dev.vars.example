@@ -1,0 +1,10 @@
+# Local Wrangler variables TEMPLATE (copy to ./.dev.vars only for `wrangler dev`; it is gitignored).
+# Wrangler reads EITHER .dev.vars OR .env, and .dev.vars wins when present.
+# Never commit real values. Production secrets are set with `wrangler secret put <NAME>`.
+
+# Generate with `npx emdash secrets generate` (format: emdash_enc_v1_<43 base64url chars>).
+# Use a DIFFERENT key from the local Node prototype's .env; store production keys in a secret manager.
+EMDASH_ENCRYPTION_KEY=
+
+# Origin that `wrangler dev` serves, so passkeys/CSRF match the browser.
+EMDASH_SITE_URL=http://127.0.0.1:8787

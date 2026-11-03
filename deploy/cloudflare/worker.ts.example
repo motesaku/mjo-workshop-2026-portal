@@ -1,0 +1,15 @@
+// Cloudflare Worker entry point TEMPLATE (copy to ./src/worker.ts when migration is authorized).
+// INACTIVE: *.example is excluded from typecheck and build.
+//
+// Official source (checked 2026-11-03): https://docs.emdashcms.com/deployment/cloudflare/#add-the-worker-entry-point
+// The scheduled handler runs scheduled publishing, automatic JSON backups and maintenance
+// on the Cron Trigger declared in wrangler.jsonc. `emdash doctor` checks this wiring.
+
+import handler, { createScheduledHandler, PluginBridge } from "@emdash-cms/cloudflare/worker";
+
+export { PluginBridge }; // Harmless without sandboxed plugins; keeps future options open.
+
+export default {
+	...handler,
+	scheduled: createScheduledHandler(),
+} satisfies ExportedHandler;

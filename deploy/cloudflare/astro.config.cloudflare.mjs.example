@@ -1,0 +1,58 @@
+// Astro configuration TEMPLATE for the Cloudflare Workers target.
+//
+// INACTIVE: the live configuration is ./astro.config.mjs (Node adapter + SQLite + local
+// storage), which keeps the local prototype working. Replace it with this file only in
+// the authorized Cloudflare migration step described in docs/PHASE7_DEPLOYMENT_GUIDE.md.
+//
+// Requires packages that are NOT installed yet (install only after approval):
+//   @astrojs/cloudflare, @emdash-cms/cloudflare, wrangler (dev dependency)
+// and removal of @astrojs/node. Follow the official guide (checked 2026-11-03):
+//   https://docs.emdashcms.com/deployment/cloudflare/
+//   https://docs.emdashcms.com/reference/configuration/
+
+import cloudflare from "@astrojs/cloudflare";
+import react from "@astrojs/react";
+import { d1, r2 } from "@emdash-cms/cloudflare";
+import { defineConfig } from "astro/config";
+import emdash from "emdash/astro";
+import scientificPublicationPolicy from "./src/science/publication-policy.mjs";
+
+export default defineConfig({
+	output: "server",
+	adapter: cloudflare(),
+	// Workers Cache is intentionally NOT enabled: participant access policy and
+	// cached-page sharing with signed-in editors must be decided first.
+	image: {
+		layout: "constrained",
+		responsiveStyles: true,
+	},
+	integrations: [
+		react(), // Required: the admin UI is a React app.
+		emdash({
+			admin: { locales: ["en"] },
+			// Host-local publication blocker for scientific collections. Its entrypoint is
+			// currently an absolute filesystem path (fileURLToPath). Verify with `wrangler dev`
+			// that the Worker bundle resolves it; otherwise convert the plugin to a package-style
+			// entrypoint before deploying. See PHASE7_RISKS_AND_NEXT_STEPS.md (R1).
+			plugins: [scientificPublicationPolicy],
+			database: d1({ binding: "DB", session: "auto", coalesce: true }),
+			storage: r2({
+				binding: "MEDIA",
+				// Do NOT set publicUrl: media stays behind EmDash's authenticated route so the
+				// `backups/` prefix can never be reached through a public bucket domain.
+			}),
+			// Optional later: objectCache: kvCache({ binding: "CACHE" })
+			// Optional later: migrations: { runtime: "check", dev: "auto" }
+		}),
+	],
+	devToolbar: { enabled: false },
+});
+
+// Differences from ./astro.config.mjs that must be re-evaluated for Workers:
+// - `server.host` / `vite.server.fs.deny` are development-only and have no effect on Workers.
+//   Private-file protection on Workers comes from the bundle: `exports/`, `backups/`, `.env`,
+//   `data.db` and `uploads/` are never part of the Worker bundle or R2 (verify with
+//   `node scripts/verify-phase6.mjs production` against `wrangler dev`).
+// - Sessions move from filesystem storage to the SESSION KV namespace created by the adapter.
+// - `src/science/theme-review.ts` reads local files only when `import.meta.env.DEV` is true;
+//   production bundles exclude the drafts (already verified for the Node build).
