@@ -1,0 +1,25 @@
+---
+interface Props { id: string; title: string }
+const { id, title } = Astro.props;
+if (!/^[A-Za-z0-9_-]{11}$/.test(id)) throw new Error("Invalid YouTube ID");
+---
+<div class="youtube-player" data-video-id={id} data-video-title={title}>
+  <div class="video-frame"><div class="video-placeholder"><span class="play-symbol" aria-hidden="true">▶</span><button type="button" class="load-video">Load YouTube player</button><p>Connects to YouTube when loaded. Playback starts with the player's play button.</p></div></div>
+  <p class="player-message" aria-live="polite">Player not loaded. This video is hosted on YouTube.</p>
+  <p class="small"><a href={`https://www.youtube.com/watch?v=${id}`} target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a> · If playback is unavailable here, use the direct link.</p>
+</div>
+<script>
+  for (const player of document.querySelectorAll<HTMLElement>(".youtube-player")) {
+    player.querySelector(".load-video")?.addEventListener("click", () => {
+      const frame = document.createElement("iframe");
+      frame.src = `https://www.youtube-nocookie.com/embed/${player.dataset.videoId!}?rel=0&playsinline=1&hl=en`;
+      frame.title = player.dataset.videoTitle!;
+      frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      frame.allowFullscreen = true;
+      frame.referrerPolicy = "strict-origin-when-cross-origin";
+      player.querySelector(".video-frame")!.replaceChildren(frame);
+      player.querySelector(".player-message")!.textContent = "YouTube player requested. Press Play in the player; availability depends on YouTube and your connection.";
+      frame.focus();
+    }, { once: true });
+  }
+</script>

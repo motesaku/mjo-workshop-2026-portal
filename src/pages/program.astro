@@ -1,0 +1,13 @@
+---
+import Base from "../layouts/Base.astro";
+import PageIntro from "../components/PageIntro.astro";
+import { days, programSource } from "../data/program";
+import { highlight } from "../data/portal";
+---
+<Base title="Program & Sessions" description="Explore the official ICTP MJO workshop program in chronological order, 26–30 October 2026.">
+  <PageIntro title="Program & Sessions" eyebrow="Five days of scientific exchange" description="Follow the workshop chronologically, from observations and mechanisms to prediction, impacts and future research."><p class="small">All times: {programSource.timezone}. <a href={programSource.url} target="_blank" rel="noopener noreferrer">Official ICTP program ↗</a> · Verified 2 November 2026.</p></PageIntro>
+  <nav class="day-nav" aria-label="Jump to workshop day">{days.map((day, i) => <a href={`#${day.date}`}>{["Mon 26", "Tue 27", "Wed 28", "Thu 29", "Fri 30"][i]} Oct</a>)}</nav>
+  <p class="small" style="margin-top:1rem">Academic sessions, scheduled talks, posters and social blocks are listed below. Breaks within session blocks are noted. Talk titles describe the program, not reviewed scientific findings.</p>
+  {days.map(day => <section class="day" id={day.date} aria-label={day.label}><div class="day-heading"><h2>{day.label}</h2><span class="small">{day.theme}</span></div><div class="schedule">{day.sessions.map(session => <article id={session.id} class:list={["session", { "has-highlight": session.id === highlight.sessionId }]}><div class="session-time">{session.time}</div><div><span class="badge">{session.kind}</span><h3>{session.title}</h3>{session.talks && <ul class="talks">{session.talks.map(talk => <li><time>{talk.time}</time><div>{talk.title}<span class="speaker">{talk.speaker}</span></div></li>)}</ul>}{session.note && <p class="muted">{session.note}</p>}{session.id === highlight.sessionId ? <><a class="button" href={`/videos/${highlight.slug}`}>Watch the 1:00 highlight <span aria-hidden="true">→</span></a><p class="small" style="margin-top:.7rem">Session mapping verified · Scientific summary awaiting review</p></> : !["Administrative", "Social", "Break"].includes(session.kind) && <p class="small">Highlight not yet available · Scientific summary not yet reviewed</p>}</div></article>)}</div></section>)}
+  <div class="notice">Coverage note: this is a program-based index, not a record of attendance or a complete scientific account. Discussion sessions are not attributed to individual people. No original slides, documents or photographs are hosted.</div>
+</Base>

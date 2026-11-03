@@ -1,0 +1,7 @@
+---
+import { highlight } from "../data/portal";
+---
+<article class="highlight-card">
+  <a class="highlight-cover" href={`/videos/${highlight.slug}`} aria-label={`Watch ${highlight.title}`}><span class="play-symbol" aria-hidden="true">▶</span><small>Theory &amp; Modeling</small><span class="duration">{highlight.duration}</span></a>
+  <div class="highlight-body"><span class="badge">Session mapping verified</span><h2><a href={`/videos/${highlight.slug}`}>{highlight.title}</a></h2><p>{highlight.date} · {highlight.time} CET<br />One-minute highlight · YouTube unlisted</p><p>Revisit the discussion, then follow the path to scientific questions and possible research workflows.</p><span class="badge draft">Scientific summary awaiting review</span></div>
+</article>

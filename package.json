@@ -1,0 +1,39 @@
+{
+  "name": "mjo-workshop-2026-portal",
+  "version": "0.0.3",
+  "private": true,
+  "type": "module",
+  "emdash": {
+    "label": "Starter",
+    "seed": "seed/seed.json"
+  },
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1",
+    "build": "astro build",
+    "preview": "astro preview --host 127.0.0.1",
+    "start": "HOST=127.0.0.1 node --env-file=.env ./dist/server/entry.mjs",
+    "typecheck": "astro check",
+    "verify:local": "node scripts/verify-local.mjs",
+    "test:science": "node --test tests/science.test.mjs",
+    "science:validate": "node scripts/science.mjs validate",
+    "science:plan": "node scripts/science.mjs plan",
+    "science:check": "node scripts/science.mjs check-generated"
+  },
+  "dependencies": {
+    "@astrojs/node": "^11.1.5",
+    "@astrojs/react": "^7.0.0",
+    "astro": "^7.3.2",
+    "emdash": "^1.3.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^24.19.2",
+    "node": "^24.22.2",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": "^24.15.0"
+  }
+}

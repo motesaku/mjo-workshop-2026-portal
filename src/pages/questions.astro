@@ -1,0 +1,13 @@
+---
+import Base from "../layouts/Base.astro";
+import PageIntro from "../components/PageIntro.astro";
+import ScienceNavigation from "../components/ScienceNavigation.astro";
+import { CLASSIFICATIONS } from "../science/contract.mjs";
+---
+<Base title="Scientific Questions">
+  <PageIntro title="Scientific Questions" eyebrow="Follow the ideas across sessions" description="Connect discussion highlights with reviewed questions, evidence, different interpretations and possible next steps." />
+  <ScienceNavigation />
+  <div class="notice">No scientific questions have completed review. The draft entry below demonstrates navigation; it does not reconstruct a question or claim from the workshop.</div>
+  <article class="card"><p class="eyebrow">Themes 3 + 4 · 27 October</p><span class="badge draft">Draft interface entry</span><h2 style="margin-top:1rem"><a href="/questions/theory-and-modelling">Theory &amp; modeling — question awaiting review</a></h2><p>The supplied breakout highlight is connected to this placeholder. A reviewed question, source references and uncertainties will be added after editorial approval.</p><a href="/questions/theory-and-modelling">Explore the draft connection →</a></article>
+  <section><h2>How future questions will be classified</h2><p>These are editorial definitions. They have not been applied to workshop contributions yet.</p><dl class="method-list">{Object.values(CLASSIFICATIONS).map(({label, description}) => <><dt>{label}</dt><dd>{description}</dd></>)}</dl></section>
+</Base>

@@ -1,0 +1,14 @@
+---
+import Base from "../../layouts/Base.astro";
+import ScienceNavigation from "../../components/ScienceNavigation.astro";
+import { TOPICS } from "../../science/contract.mjs";
+const topic = Astro.params.topic ?? "";
+const title = Object.hasOwn(TOPICS, topic) ? TOPICS[topic as keyof typeof TOPICS] : null;
+if (!title) Astro.response.status = 404;
+---
+<Base title={title ?? "Topic not found"}>
+  <p class="eyebrow">Scientific topic</p>
+  <h1>{title ?? "Topic not found"}</h1>
+  <ScienceNavigation />
+  {title ? <><p>Questions in this topic will connect contributions across the workshop programme.</p><p>No reviewed questions are available yet. Records will retain their evidence, interpretation, uncertainty and coverage limits.</p></> : <p>This topic is not part of the portal's current topic structure.</p>}
+</Base>

@@ -1,0 +1,81 @@
+---
+import "../styles/portal.css";
+import { getMenuWithCacheHint, getSiteSettingsWithCacheHint } from "emdash";
+import { EmDashHead, EmDashBodyStart, EmDashBodyEnd } from "emdash/ui";
+import { createPublicPageContext } from "emdash/page";
+import { SITE_TITLE, SUBTITLE, navigation } from "../data/portal";
+
+interface Props {
+	title: string;
+	pageTitle?: string | null;
+	description?: string | null;
+	image?: string | null;
+	canonical?: string | null;
+	/** Pass content reference for plugin page contributions on content pages */
+	content?: { collection: string; id: string; slug?: string | null };
+}
+
+const { title, pageTitle, description, image, canonical, content } =
+	Astro.props;
+const [settingsResult, menuResult] = await Promise.all([
+	getSiteSettingsWithCacheHint(),
+	getMenuWithCacheHint("primary"),
+]);
+if (Astro.cache?.enabled) {
+	Astro.cache.set(settingsResult.cacheHint);
+	Astro.cache.set(menuResult.cacheHint);
+}
+
+const siteTitle = SITE_TITLE;
+const siteTagline = SUBTITLE;
+const titleIncludesSiteName =
+	title === siteTitle ||
+	title.endsWith(` | ${siteTitle}`) ||
+	title.endsWith(` — ${siteTitle}`);
+const fullTitle = titleIncludesSiteName ? title : `${title} — ${siteTitle}`;
+const pageDescription = description ?? siteTagline;
+
+const pageCtx = createPublicPageContext({
+	Astro,
+	kind: content ? "content" : "custom",
+	pageType: "website",
+	title: fullTitle,
+	pageTitle: pageTitle ?? title,
+	description: pageDescription,
+	canonical,
+	image,
+	content,
+	siteName: siteTitle,
+});
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="robots" content="noindex, nofollow" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{fullTitle}</title>
+		<EmDashHead page={pageCtx} />
+	</head>
+	<body>
+		<EmDashBodyStart page={pageCtx} />
+
+		<a class="skip-link" href="#main">Skip to content</a>
+		<div class="prototype-bar">Local prototype <span>•</span> Scientific content under review</div>
+		<header class="site-header">
+			<div class="header-inner">
+				<a class="brand" href="/" aria-label={siteTitle}><span class="brand-mark" aria-hidden="true">MJO<span>26</span></span><span>MJO Workshop 2026<small>Knowledge &amp; Action Portal</small></span></a>
+				<nav class="primary-nav" aria-label="Primary navigation">
+					{navigation.slice(0, 4).map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a>)}
+					<details class="explore-menu"><summary>Explore topics</summary><div>{navigation.slice(4).map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a>)}</div></details>
+				</nav>
+			</div>
+		</header>
+		<main id="main" tabindex="-1">
+			<slot />
+		</main>
+		<footer class="site-footer"><div class="footer-inner"><div><p class="eyebrow">ICTP · Trieste · 26–30 October 2026</p><p class="footer-title">{siteTitle}</p><p>{SUBTITLE}</p><p class="small">An independent workshop knowledge prototype. Reviewed summaries are in preparation.</p></div><nav aria-label="All portal pages">{navigation.map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a>)}</nav><p class="small footer-bottom"><a href="/about">Sources, coverage &amp; editorial method</a><a href="/_emdash/admin/">Editor sign-in</a></p></div></footer>
+		<EmDashBodyEnd page={pageCtx} />
+	</body>
+</html>

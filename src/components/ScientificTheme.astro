@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from './PageIntro.astro';
+import ScienceNavigation from './ScienceNavigation.astro';
+import ThemeReferences from './ThemeReferences.astro';
+import { loadThemeReview, themeRoutes } from '../science/theme-review';
+interface Props { theme: 'ai' | 'indices' }
+const { theme: key } = Astro.props;
+const review = await loadThemeReview();
+const theme = review?.themes.find(t => t.id === key);
+const title = key === 'ai' ? 'AI for MJO Research' : 'MJO Indices and Diagnostics';
+const peer = key === 'ai' ? 'indices' : 'ai';
+const peerTitle = peer === 'ai' ? 'AI for MJO Research' : 'MJO Indices and Diagnostics';
+const ids = [...new Set(theme?.sections.flatMap(s => s.items.flatMap(i => i.refs)) ?? [])];
+Astro.response.headers.set('Cache-Control', 'no-store');
+---
+<Base title={title} description={theme?.description ?? 'An independent scientific section awaiting review.'}>
+  <PageIntro title={title} eyebrow={`Dedicated scientific theme / ${key === 'ai' ? '01' : '02'}`} description={theme?.description ?? 'Scientific content will become available after review and publication approval.'} />
+  <ScienceNavigation />
+  {theme && review ? <>
+    <div class="notice" data-theme-review="local-only"><strong>Local editorial review · not approved for publication.</strong><p>Workshop records are paraphrases of converted minutes whose scientific sign-off is not established. External definitions, editorial comparisons and new research proposals are labelled separately. These drafts are available only in local development and are withheld from normal builds.</p></div>
+    <nav class="theme-toc" aria-label="On this page">{theme.sections.map(s => <a href={`#${s.id}`}>{s.title}</a>)}<a href="#related">Related issues &amp; video</a><a href="#references">Sources &amp; review</a></nav>
+    {theme.sections.map(section => <section id={section.id} class="theme-section"><h2>{section.title}</h2><p class="lead">{section.intro}</p><div class="theme-items">{section.items.map(item => <article><span class="badge draft">{item.origin} · review pending</span><h3>{item.title}</h3><p>{item.text}</p><p class="theme-citations">References: {item.refs.map(ref => <a href={`#${ref}`}>{review.references.find(r => r.id === ref)?.title.split(' · ')[0] ?? ref}</a>)}</p></article>)}</div></section>)}
+    <section id="related"><h2>Related issues &amp; video</h2><div class="card-grid">{theme.issues.map(id => { const issue = review.issues.find(q => q.id === id); return issue && <article class="card"><p class="eyebrow">{id} · Editorial draft</p><h3><a href={`/questions/themes/${id}`}>{issue.title}</a></h3><p>{issue.question}</p></article>; })}</div>
+      <article class="video-context"><p class="eyebrow">Related highlight · contextual excerpt</p><h3><a href="/videos/breakout-themes-3-4">Breakout Discussion — Themes 3 + 4 · 1 minute</a></h3><p>{theme.video_context}</p><p class="small">27 October 2026 breakout; not the 28 October plenary. Mapping checked {review.highlight.verification_date}; publication permission and representative-version approval remain pending. A highlight is not independent evidence.</p><p class="notice">Coverage gap: {theme.video_gap}</p></article>
+      <p class="peer-link">Continue to the independent section: <a href={themeRoutes[peer]}>{peerTitle} →</a></p>
+      <nav class="subnav" aria-label="Related scientific issue areas"><a href="/diverging-perspectives">Diverging Perspectives</a><a href="/emerging-alignment">Emerging Alignment</a><a href="/open-challenges">Open Challenges</a><a href="/actions">Research Action Roadmap</a></nav>
+    </section>
+    <ThemeReferences review={review} ids={ids} />
+  </> : <section class="empty-state" data-theme-withheld><span class="badge draft">Awaiting scientific review</span><h2>Scientific synthesis is not published</h2><p>Reviewed source records and an approved publication derivative are required. Local editorial drafts are excluded from normal builds.</p><a href={themeRoutes[peer]}>Explore {peerTitle} →</a></section>}
+</Base>
+<style>
+.theme-toc{display:flex;flex-wrap:wrap;gap:.6rem 1.1rem;padding:1rem 0;border-block:1px solid var(--line);font-size:.85rem}.theme-section{scroll-margin-top:1.5rem}.theme-items{display:grid;gap:1rem}.theme-items h3{margin:1rem 0 .7rem;font-size:1.2rem}.theme-items p{max-width:90ch}.theme-citations{display:flex;flex-wrap:wrap;gap:.3rem .7rem;font-size:.75rem;margin-bottom:0}.theme-citations a{overflow-wrap:anywhere}.video-context{margin-top:1.4rem}.peer-link{margin:1.5rem 0}.theme-section .lead{font-size:1rem}
+</style>

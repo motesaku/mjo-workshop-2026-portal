@@ -1,0 +1,19 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PageIntro from '../../../components/PageIntro.astro';
+import ThemeReferences from '../../../components/ThemeReferences.astro';
+import { loadThemeReview, themeRoutes } from '../../../science/theme-review';
+const review = await loadThemeReview();
+const issue = review?.issues.find(q => q.id === Astro.params.issue);
+if (!review || !issue) return Astro.rewrite('/404');
+Astro.response.headers.set('Cache-Control', 'no-store');
+const refs = [...new Set(issue.records.flatMap(c => c.evidence_ids))];
+---
+<Base title={issue.title} description={issue.question}>
+  <PageIntro title={issue.title} eyebrow={`${issue.id} / Cross-session scientific issue`} description={issue.question} />
+  <div class="notice" data-theme-review="local-only"><strong>Local editorial review · not approved for publication.</strong><p>{issue.status}. Classification: provisional {issue.classification}. Coverage: {issue.coverage}. Formal consensus is not established.</p></div>
+  <section><h2>Workshop record</h2><p>Edited paraphrases retained from the Phase 5 review package. These records may overlap and do not constitute independent verification.</p>{issue.records.map(c => <article><p>{c.text}</p><p class="small">{c.claim_id} · Workshop record · Review pending</p><nav class="subnav" aria-label={`Sources for ${c.claim_id}`}>{c.evidence_ids.map(id => <a href={`#${id}`}>{id}</a>)}</nav></article>)}</section>
+  <section><h2>Explore the connected scientific themes</h2><div class="card-grid">{review.themes.filter(t => t.issues.includes(issue.id)).map(t => <article><h3><a href={themeRoutes[t.id]}>{t.title}</a></h3><p>{t.description}</p><a href={`${themeRoutes[t.id]}#testable-actions`}>See testable future actions →</a></article>)}</div><p class="small">These links connect independent sections; an issue does not inherit publication approval from either page.</p></section>
+  <ThemeReferences review={review} ids={refs} />
+</Base>
+<style>section>article{margin-top:1rem}</style>

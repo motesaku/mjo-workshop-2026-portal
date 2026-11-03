@@ -1,0 +1,45 @@
+node_modules
+dist
+.astro
+.emdash/migrations.json
+uploads
+data.db
+data.db-*
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Local state, logs, and cloud tooling
+.DS_Store
+*.log
+.wrangler/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+.emdash/
+.verification/
+coverage/
+backups/
+exports/
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.sqlite-*
+*.sqlite3-*
+*.pem
+*.key
+
+# Private source documents and locally hosted videos are forbidden here.
+*.pdf
+*.doc
+*.docx
+*.ppt
+*.pptx
+*.potx
+*.mp4
+*.mov
+*.webm
+*.mkv

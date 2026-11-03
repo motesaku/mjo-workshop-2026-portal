@@ -1,0 +1,3650 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mjo-workshop:scientific-import:1.0.0",
+  "title": "MJO Workshop reviewed scientific content export v1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "format": {
+      "const": "mjo-workshop-reviewed-content"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "purpose": {
+      "type": "string",
+      "enum": [
+        "reviewed_import",
+        "test_fixture"
+      ]
+    },
+    "producer": {
+      "const": "researcher_os"
+    },
+    "export_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+    },
+    "exported_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "language": {
+      "const": "en"
+    },
+    "records": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "workshop_sessions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "external_id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+              },
+              "record_version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000,
+                "pattern": "\\S"
+              },
+              "topic_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "ai_for_mjo_research",
+                    "mjo_indices_and_diagnostics"
+                  ]
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "coverage": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "extent": {
+                    "type": "string",
+                    "enum": [
+                      "complete",
+                      "partial",
+                      "missing"
+                    ]
+                  },
+                  "limitations": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "extent",
+                  "limitations"
+                ]
+              },
+              "scientific_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "publication_approval": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "language_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "session_kind": {
+                "type": "string",
+                "enum": [
+                  "talk_session",
+                  "discussion"
+                ]
+              },
+              "starts_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "ends_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "timezone": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000,
+                "pattern": "\\S"
+              },
+              "programme_order": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "programme_evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "summary": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "claim_id": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "observation",
+                        "hypothesis",
+                        "interpretation",
+                        "proposal",
+                        "documented_agreement"
+                      ]
+                    },
+                    "evidence_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "session_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "attribution": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "mode": {
+                          "type": "string",
+                          "enum": [
+                            "unattributed",
+                            "named_talk"
+                          ]
+                        },
+                        "talk_id": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "mode",
+                        "talk_id"
+                      ]
+                    },
+                    "verification": {
+                      "type": "string",
+                      "enum": [
+                        "unverified",
+                        "verified",
+                        "disputed"
+                      ]
+                    },
+                    "uncertainty": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    }
+                  },
+                  "required": [
+                    "claim_id",
+                    "text",
+                    "kind",
+                    "evidence_ids",
+                    "session_ids",
+                    "attribution",
+                    "verification",
+                    "uncertainty"
+                  ]
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "external_id",
+              "record_version",
+              "title",
+              "topic_ids",
+              "coverage",
+              "scientific_review",
+              "publication_approval",
+              "language_review",
+              "session_kind",
+              "starts_at",
+              "ends_at",
+              "timezone",
+              "programme_order",
+              "programme_evidence_ids",
+              "summary"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 500,
+          "uniqueItems": true
+        },
+        "talks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "external_id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+              },
+              "record_version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000,
+                "pattern": "\\S"
+              },
+              "topic_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "ai_for_mjo_research",
+                    "mjo_indices_and_diagnostics"
+                  ]
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "coverage": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "extent": {
+                    "type": "string",
+                    "enum": [
+                      "complete",
+                      "partial",
+                      "missing"
+                    ]
+                  },
+                  "limitations": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "extent",
+                  "limitations"
+                ]
+              },
+              "scientific_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "publication_approval": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "language_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "session_id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+              },
+              "programme_order": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "programme_evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "speaker_names": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 8000,
+                  "pattern": "\\S"
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "summary": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "claim_id": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "observation",
+                        "hypothesis",
+                        "interpretation",
+                        "proposal",
+                        "documented_agreement"
+                      ]
+                    },
+                    "evidence_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "session_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "attribution": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "mode": {
+                          "type": "string",
+                          "enum": [
+                            "unattributed",
+                            "named_talk"
+                          ]
+                        },
+                        "talk_id": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "mode",
+                        "talk_id"
+                      ]
+                    },
+                    "verification": {
+                      "type": "string",
+                      "enum": [
+                        "unverified",
+                        "verified",
+                        "disputed"
+                      ]
+                    },
+                    "uncertainty": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    }
+                  },
+                  "required": [
+                    "claim_id",
+                    "text",
+                    "kind",
+                    "evidence_ids",
+                    "session_ids",
+                    "attribution",
+                    "verification",
+                    "uncertainty"
+                  ]
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "external_id",
+              "record_version",
+              "title",
+              "topic_ids",
+              "coverage",
+              "scientific_review",
+              "publication_approval",
+              "language_review",
+              "session_id",
+              "programme_order",
+              "programme_evidence_ids",
+              "speaker_names",
+              "summary"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 500,
+          "uniqueItems": true
+        },
+        "video_highlights": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "external_id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+              },
+              "record_version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000,
+                "pattern": "\\S"
+              },
+              "topic_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "ai_for_mjo_research",
+                    "mjo_indices_and_diagnostics"
+                  ]
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "coverage": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "extent": {
+                    "type": "string",
+                    "enum": [
+                      "complete",
+                      "partial",
+                      "missing"
+                    ]
+                  },
+                  "limitations": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "extent",
+                  "limitations"
+                ]
+              },
+              "scientific_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "publication_approval": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "language_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "session_id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+              },
+              "talk_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "youtube_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]{11}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "video_kind": {
+                "const": "highlight"
+              },
+              "representative_version": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000,
+                "pattern": "\\S"
+              },
+              "mapping_evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "mapping_verified": {
+                "type": "boolean"
+              },
+              "visually_reviewed": {
+                "type": "boolean"
+              },
+              "permission_verified": {
+                "type": "boolean"
+              },
+              "caption": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "claim_id": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "observation",
+                        "hypothesis",
+                        "interpretation",
+                        "proposal",
+                        "documented_agreement"
+                      ]
+                    },
+                    "evidence_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "session_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "attribution": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "mode": {
+                          "type": "string",
+                          "enum": [
+                            "unattributed",
+                            "named_talk"
+                          ]
+                        },
+                        "talk_id": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "mode",
+                        "talk_id"
+                      ]
+                    },
+                    "verification": {
+                      "type": "string",
+                      "enum": [
+                        "unverified",
+                        "verified",
+                        "disputed"
+                      ]
+                    },
+                    "uncertainty": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    }
+                  },
+                  "required": [
+                    "claim_id",
+                    "text",
+                    "kind",
+                    "evidence_ids",
+                    "session_ids",
+                    "attribution",
+                    "verification",
+                    "uncertainty"
+                  ]
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "external_id",
+              "record_version",
+              "title",
+              "topic_ids",
+              "coverage",
+              "scientific_review",
+              "publication_approval",
+              "language_review",
+              "session_id",
+              "talk_id",
+              "youtube_id",
+              "video_kind",
+              "representative_version",
+              "mapping_evidence_ids",
+              "mapping_verified",
+              "visually_reviewed",
+              "permission_verified",
+              "caption"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 500,
+          "uniqueItems": true
+        },
+        "scientific_questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "external_id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+              },
+              "record_version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000,
+                "pattern": "\\S"
+              },
+              "topic_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "ai_for_mjo_research",
+                    "mjo_indices_and_diagnostics"
+                  ]
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "coverage": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "extent": {
+                    "type": "string",
+                    "enum": [
+                      "complete",
+                      "partial",
+                      "missing"
+                    ]
+                  },
+                  "limitations": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "extent",
+                  "limitations"
+                ]
+              },
+              "scientific_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "publication_approval": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "language_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "session_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "classification": {
+                "type": "string",
+                "enum": [
+                  "diverging_perspectives",
+                  "emerging_alignment",
+                  "open_questions",
+                  "documented_agreements"
+                ]
+              },
+              "classification_basis": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "claim_id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  },
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "observation",
+                      "hypothesis",
+                      "interpretation",
+                      "proposal",
+                      "documented_agreement"
+                    ]
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "minItems": 1,
+                    "maxItems": 500,
+                    "uniqueItems": true
+                  },
+                  "session_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "minItems": 1,
+                    "maxItems": 500,
+                    "uniqueItems": true
+                  },
+                  "attribution": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "mode": {
+                        "type": "string",
+                        "enum": [
+                          "unattributed",
+                          "named_talk"
+                        ]
+                      },
+                      "talk_id": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "mode",
+                      "talk_id"
+                    ]
+                  },
+                  "verification": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "disputed"
+                    ]
+                  },
+                  "uncertainty": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "claim_id",
+                  "text",
+                  "kind",
+                  "evidence_ids",
+                  "session_ids",
+                  "attribution",
+                  "verification",
+                  "uncertainty"
+                ]
+              },
+              "background": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "claim_id": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "observation",
+                        "hypothesis",
+                        "interpretation",
+                        "proposal",
+                        "documented_agreement"
+                      ]
+                    },
+                    "evidence_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "session_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "attribution": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "mode": {
+                          "type": "string",
+                          "enum": [
+                            "unattributed",
+                            "named_talk"
+                          ]
+                        },
+                        "talk_id": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "mode",
+                        "talk_id"
+                      ]
+                    },
+                    "verification": {
+                      "type": "string",
+                      "enum": [
+                        "unverified",
+                        "verified",
+                        "disputed"
+                      ]
+                    },
+                    "uncertainty": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    }
+                  },
+                  "required": [
+                    "claim_id",
+                    "text",
+                    "kind",
+                    "evidence_ids",
+                    "session_ids",
+                    "attribution",
+                    "verification",
+                    "uncertainty"
+                  ]
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "position_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "supporting_evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "uncertainties": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "claim_id": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "observation",
+                        "hypothesis",
+                        "interpretation",
+                        "proposal",
+                        "documented_agreement"
+                      ]
+                    },
+                    "evidence_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "session_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "attribution": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "mode": {
+                          "type": "string",
+                          "enum": [
+                            "unattributed",
+                            "named_talk"
+                          ]
+                        },
+                        "talk_id": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "mode",
+                        "talk_id"
+                      ]
+                    },
+                    "verification": {
+                      "type": "string",
+                      "enum": [
+                        "unverified",
+                        "verified",
+                        "disputed"
+                      ]
+                    },
+                    "uncertainty": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    }
+                  },
+                  "required": [
+                    "claim_id",
+                    "text",
+                    "kind",
+                    "evidence_ids",
+                    "session_ids",
+                    "attribution",
+                    "verification",
+                    "uncertainty"
+                  ]
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "scientific_interpretation": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "claim_id": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "observation",
+                        "hypothesis",
+                        "interpretation",
+                        "proposal",
+                        "documented_agreement"
+                      ]
+                    },
+                    "evidence_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "session_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "attribution": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "mode": {
+                          "type": "string",
+                          "enum": [
+                            "unattributed",
+                            "named_talk"
+                          ]
+                        },
+                        "talk_id": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "mode",
+                        "talk_id"
+                      ]
+                    },
+                    "verification": {
+                      "type": "string",
+                      "enum": [
+                        "unverified",
+                        "verified",
+                        "disputed"
+                      ]
+                    },
+                    "uncertainty": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    }
+                  },
+                  "required": [
+                    "claim_id",
+                    "text",
+                    "kind",
+                    "evidence_ids",
+                    "session_ids",
+                    "attribution",
+                    "verification",
+                    "uncertainty"
+                  ]
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "talk_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "video_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "action_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "finding_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "external_id",
+              "record_version",
+              "title",
+              "topic_ids",
+              "coverage",
+              "scientific_review",
+              "publication_approval",
+              "language_review",
+              "session_ids",
+              "classification",
+              "classification_basis",
+              "background",
+              "position_ids",
+              "supporting_evidence_ids",
+              "uncertainties",
+              "scientific_interpretation",
+              "talk_ids",
+              "video_ids",
+              "action_ids",
+              "finding_ids"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 500,
+          "uniqueItems": true
+        },
+        "scientific_positions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "external_id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+              },
+              "record_version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000,
+                "pattern": "\\S"
+              },
+              "topic_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "ai_for_mjo_research",
+                    "mjo_indices_and_diagnostics"
+                  ]
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "coverage": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "extent": {
+                    "type": "string",
+                    "enum": [
+                      "complete",
+                      "partial",
+                      "missing"
+                    ]
+                  },
+                  "limitations": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "extent",
+                  "limitations"
+                ]
+              },
+              "scientific_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "publication_approval": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "language_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "question_id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+              },
+              "session_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "position_kind": {
+                "type": "string",
+                "enum": [
+                  "hypothesis",
+                  "interpretation",
+                  "research_approach"
+                ]
+              },
+              "statement": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "claim_id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  },
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "observation",
+                      "hypothesis",
+                      "interpretation",
+                      "proposal",
+                      "documented_agreement"
+                    ]
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "minItems": 1,
+                    "maxItems": 500,
+                    "uniqueItems": true
+                  },
+                  "session_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "minItems": 1,
+                    "maxItems": 500,
+                    "uniqueItems": true
+                  },
+                  "attribution": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "mode": {
+                        "type": "string",
+                        "enum": [
+                          "unattributed",
+                          "named_talk"
+                        ]
+                      },
+                      "talk_id": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "mode",
+                      "talk_id"
+                    ]
+                  },
+                  "verification": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "disputed"
+                    ]
+                  },
+                  "uncertainty": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "claim_id",
+                  "text",
+                  "kind",
+                  "evidence_ids",
+                  "session_ids",
+                  "attribution",
+                  "verification",
+                  "uncertainty"
+                ]
+              },
+              "supporting_evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "challenging_evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "talk_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "external_id",
+              "record_version",
+              "title",
+              "topic_ids",
+              "coverage",
+              "scientific_review",
+              "publication_approval",
+              "language_review",
+              "question_id",
+              "session_ids",
+              "position_kind",
+              "statement",
+              "supporting_evidence_ids",
+              "challenging_evidence_ids",
+              "talk_ids"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 500,
+          "uniqueItems": true
+        },
+        "evidence_references": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "external_id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+              },
+              "record_version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000,
+                "pattern": "\\S"
+              },
+              "topic_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "ai_for_mjo_research",
+                    "mjo_indices_and_diagnostics"
+                  ]
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "coverage": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "extent": {
+                    "type": "string",
+                    "enum": [
+                      "complete",
+                      "partial",
+                      "missing"
+                    ]
+                  },
+                  "limitations": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "extent",
+                  "limitations"
+                ]
+              },
+              "scientific_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "publication_approval": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "language_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "session_id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+              },
+              "talk_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "contribution_id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+              },
+              "source_document": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "source_id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                  },
+                  "version": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  },
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "reviewed_minutes",
+                      "official_programme",
+                      "approved_publication_derivative",
+                      "published_research"
+                    ]
+                  },
+                  "review_status": {
+                    "type": "string",
+                    "enum": [
+                      "unreviewed",
+                      "reviewed",
+                      "superseded"
+                    ]
+                  },
+                  "source_language": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "source_id",
+                  "version",
+                  "sha256",
+                  "title",
+                  "kind",
+                  "review_status",
+                  "source_language"
+                ]
+              },
+              "passage": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "locator": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "locator",
+                  "description"
+                ]
+              },
+              "evidence_role": {
+                "type": "string",
+                "enum": [
+                  "context",
+                  "supports",
+                  "challenges",
+                  "explicit_agreement",
+                  "programme",
+                  "video_mapping"
+                ]
+              },
+              "verification": {
+                "type": "string",
+                "enum": [
+                  "unverified",
+                  "verified",
+                  "disputed"
+                ]
+              },
+              "attribution": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "unattributed",
+                      "named_talk"
+                    ]
+                  },
+                  "talk_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "mode",
+                  "talk_id"
+                ]
+              }
+            },
+            "required": [
+              "external_id",
+              "record_version",
+              "title",
+              "topic_ids",
+              "coverage",
+              "scientific_review",
+              "publication_approval",
+              "language_review",
+              "session_id",
+              "talk_id",
+              "contribution_id",
+              "source_document",
+              "passage",
+              "evidence_role",
+              "verification",
+              "attribution"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 500,
+          "uniqueItems": true
+        },
+        "scientific_findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "external_id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+              },
+              "record_version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000,
+                "pattern": "\\S"
+              },
+              "topic_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "ai_for_mjo_research",
+                    "mjo_indices_and_diagnostics"
+                  ]
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "coverage": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "extent": {
+                    "type": "string",
+                    "enum": [
+                      "complete",
+                      "partial",
+                      "missing"
+                    ]
+                  },
+                  "limitations": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "extent",
+                  "limitations"
+                ]
+              },
+              "scientific_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "publication_approval": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "language_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "question_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "session_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "statement": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "claim_id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  },
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "observation",
+                      "hypothesis",
+                      "interpretation",
+                      "proposal",
+                      "documented_agreement"
+                    ]
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "minItems": 1,
+                    "maxItems": 500,
+                    "uniqueItems": true
+                  },
+                  "session_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "minItems": 1,
+                    "maxItems": 500,
+                    "uniqueItems": true
+                  },
+                  "attribution": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "mode": {
+                        "type": "string",
+                        "enum": [
+                          "unattributed",
+                          "named_talk"
+                        ]
+                      },
+                      "talk_id": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "mode",
+                      "talk_id"
+                    ]
+                  },
+                  "verification": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "disputed"
+                    ]
+                  },
+                  "uncertainty": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "claim_id",
+                  "text",
+                  "kind",
+                  "evidence_ids",
+                  "session_ids",
+                  "attribution",
+                  "verification",
+                  "uncertainty"
+                ]
+              }
+            },
+            "required": [
+              "external_id",
+              "record_version",
+              "title",
+              "topic_ids",
+              "coverage",
+              "scientific_review",
+              "publication_approval",
+              "language_review",
+              "question_ids",
+              "session_ids",
+              "statement"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 500,
+          "uniqueItems": true
+        },
+        "research_actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "external_id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+              },
+              "record_version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000,
+                "pattern": "\\S"
+              },
+              "topic_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "ai_for_mjo_research",
+                    "mjo_indices_and_diagnostics"
+                  ]
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "coverage": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "extent": {
+                    "type": "string",
+                    "enum": [
+                      "complete",
+                      "partial",
+                      "missing"
+                    ]
+                  },
+                  "limitations": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "extent",
+                  "limitations"
+                ]
+              },
+              "scientific_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "publication_approval": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "language_review": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "approved",
+                      "rejected"
+                    ]
+                  },
+                  "reviewer_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reviewed_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "content_sha256": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewer_id",
+                  "reviewed_at",
+                  "content_sha256"
+                ]
+              },
+              "question_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "session_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "action_kind": {
+                "const": "illustrative_ai_workflow"
+              },
+              "rationale": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "claim_id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  },
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "observation",
+                      "hypothesis",
+                      "interpretation",
+                      "proposal",
+                      "documented_agreement"
+                    ]
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "minItems": 1,
+                    "maxItems": 500,
+                    "uniqueItems": true
+                  },
+                  "session_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "minItems": 1,
+                    "maxItems": 500,
+                    "uniqueItems": true
+                  },
+                  "attribution": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "mode": {
+                        "type": "string",
+                        "enum": [
+                          "unattributed",
+                          "named_talk"
+                        ]
+                      },
+                      "talk_id": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "mode",
+                      "talk_id"
+                    ]
+                  },
+                  "verification": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "disputed"
+                    ]
+                  },
+                  "uncertainty": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "claim_id",
+                  "text",
+                  "kind",
+                  "evidence_ids",
+                  "session_ids",
+                  "attribution",
+                  "verification",
+                  "uncertainty"
+                ]
+              },
+              "steps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "claim_id": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "observation",
+                        "hypothesis",
+                        "interpretation",
+                        "proposal",
+                        "documented_agreement"
+                      ]
+                    },
+                    "evidence_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "session_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "attribution": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "mode": {
+                          "type": "string",
+                          "enum": [
+                            "unattributed",
+                            "named_talk"
+                          ]
+                        },
+                        "talk_id": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "mode",
+                        "talk_id"
+                      ]
+                    },
+                    "verification": {
+                      "type": "string",
+                      "enum": [
+                        "unverified",
+                        "verified",
+                        "disputed"
+                      ]
+                    },
+                    "uncertainty": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    }
+                  },
+                  "required": [
+                    "claim_id",
+                    "text",
+                    "kind",
+                    "evidence_ids",
+                    "session_ids",
+                    "attribution",
+                    "verification",
+                    "uncertainty"
+                  ]
+                },
+                "minItems": 1,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "expected_outputs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "claim_id": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "observation",
+                        "hypothesis",
+                        "interpretation",
+                        "proposal",
+                        "documented_agreement"
+                      ]
+                    },
+                    "evidence_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "session_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                      },
+                      "minItems": 1,
+                      "maxItems": 500,
+                      "uniqueItems": true
+                    },
+                    "attribution": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "mode": {
+                          "type": "string",
+                          "enum": [
+                            "unattributed",
+                            "named_talk"
+                          ]
+                        },
+                        "talk_id": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "mode",
+                        "talk_id"
+                      ]
+                    },
+                    "verification": {
+                      "type": "string",
+                      "enum": [
+                        "unverified",
+                        "verified",
+                        "disputed"
+                      ]
+                    },
+                    "uncertainty": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000,
+                      "pattern": "\\S"
+                    }
+                  },
+                  "required": [
+                    "claim_id",
+                    "text",
+                    "kind",
+                    "evidence_ids",
+                    "session_ids",
+                    "attribution",
+                    "verification",
+                    "uncertainty"
+                  ]
+                },
+                "minItems": 0,
+                "maxItems": 500,
+                "uniqueItems": true
+              },
+              "limitations": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000,
+                "pattern": "\\S"
+              },
+              "commitment": {
+                "const": "not_a_commitment"
+              }
+            },
+            "required": [
+              "external_id",
+              "record_version",
+              "title",
+              "topic_ids",
+              "coverage",
+              "scientific_review",
+              "publication_approval",
+              "language_review",
+              "question_ids",
+              "session_ids",
+              "action_kind",
+              "rationale",
+              "steps",
+              "expected_outputs",
+              "limitations",
+              "commitment"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 500,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "workshop_sessions",
+        "talks",
+        "video_highlights",
+        "scientific_questions",
+        "scientific_positions",
+        "evidence_references",
+        "scientific_findings",
+        "research_actions"
+      ]
+    }
+  },
+  "required": [
+    "format",
+    "schema_version",
+    "purpose",
+    "producer",
+    "export_id",
+    "exported_at",
+    "language",
+    "records"
+  ]
+}

@@ -1,0 +1,1530 @@
+{
+  "$schema": "https://emdashcms.com/seed.schema.json",
+  "version": "1",
+  "meta": {
+    "name": "MJO Workshop 2026 Portal",
+    "description": "Local portal with scientific architecture v1; no scientific content",
+    "author": "EmDash"
+  },
+  "settings": {
+    "title": "MJO Workshop 2026",
+    "tagline": "Knowledge & Action Portal"
+  },
+  "collections": [
+    {
+      "slug": "posts",
+      "label": "Posts",
+      "labelSingular": "Post",
+      "urlPattern": "/posts/{slug}",
+      "supports": [
+        "drafts",
+        "revisions",
+        "preview",
+        "scheduling",
+        "search",
+        "seo"
+      ],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true,
+          "searchable": true
+        },
+        {
+          "slug": "featured_image",
+          "label": "Featured Image",
+          "type": "image"
+        },
+        {
+          "slug": "content",
+          "label": "Content",
+          "type": "portableText",
+          "searchable": true
+        },
+        {
+          "slug": "excerpt",
+          "label": "Excerpt",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "slug": "pages",
+      "label": "Pages",
+      "labelSingular": "Page",
+      "urlPattern": "/{slug}",
+      "supports": [
+        "drafts",
+        "revisions",
+        "preview",
+        "search",
+        "seo"
+      ],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true,
+          "searchable": true
+        },
+        {
+          "slug": "content",
+          "label": "Content",
+          "type": "portableText",
+          "searchable": true
+        }
+      ]
+    },
+    {
+      "slug": "workshop_sessions",
+      "label": "Workshop Sessions",
+      "supports": [
+        "drafts",
+        "revisions"
+      ],
+      "fields": [
+        {
+          "slug": "external_id",
+          "label": "External Id",
+          "required": true,
+          "type": "string",
+          "unique": true,
+          "indexed": true,
+          "validation": {
+            "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+          }
+        },
+        {
+          "slug": "record_version",
+          "label": "Record Version",
+          "required": true,
+          "type": "integer",
+          "validation": {
+            "min": 1
+          }
+        },
+        {
+          "slug": "title",
+          "label": "Title",
+          "required": true,
+          "type": "string",
+          "validation": {
+            "pattern": "\\S",
+            "maxLength": 8000
+          }
+        },
+        {
+          "slug": "topic_ids",
+          "label": "Topic Ids",
+          "required": true,
+          "type": "multiSelect",
+          "validation": {
+            "options": [
+              "ai_for_mjo_research",
+              "mjo_indices_and_diagnostics"
+            ]
+          }
+        },
+        {
+          "slug": "coverage",
+          "label": "Coverage",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "scientific_review",
+          "label": "Scientific Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "publication_approval",
+          "label": "Publication Approval",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "language_review",
+          "label": "Language Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "session_kind",
+          "label": "Session Kind",
+          "required": true,
+          "type": "select",
+          "validation": {
+            "options": [
+              "talk_session",
+              "discussion"
+            ]
+          }
+        },
+        {
+          "slug": "starts_at",
+          "label": "Starts At",
+          "required": true,
+          "type": "datetime",
+          "validation": {}
+        },
+        {
+          "slug": "ends_at",
+          "label": "Ends At",
+          "required": true,
+          "type": "datetime",
+          "validation": {}
+        },
+        {
+          "slug": "timezone",
+          "label": "Timezone",
+          "required": true,
+          "type": "string",
+          "validation": {
+            "pattern": "\\S",
+            "maxLength": 8000
+          }
+        },
+        {
+          "slug": "programme_order",
+          "label": "Programme Order",
+          "required": true,
+          "type": "integer",
+          "validation": {
+            "min": 1
+          }
+        },
+        {
+          "slug": "programme_evidence_ids",
+          "label": "Programme Evidence Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "workshop_sessions_programme_evidence_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "summary",
+          "label": "Summary",
+          "required": true,
+          "type": "json"
+        }
+      ]
+    },
+    {
+      "slug": "talks",
+      "label": "Talks",
+      "supports": [
+        "drafts",
+        "revisions"
+      ],
+      "fields": [
+        {
+          "slug": "external_id",
+          "label": "External Id",
+          "required": true,
+          "type": "string",
+          "unique": true,
+          "indexed": true,
+          "validation": {
+            "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+          }
+        },
+        {
+          "slug": "record_version",
+          "label": "Record Version",
+          "required": true,
+          "type": "integer",
+          "validation": {
+            "min": 1
+          }
+        },
+        {
+          "slug": "title",
+          "label": "Title",
+          "required": true,
+          "type": "string",
+          "validation": {
+            "pattern": "\\S",
+            "maxLength": 8000
+          }
+        },
+        {
+          "slug": "topic_ids",
+          "label": "Topic Ids",
+          "required": true,
+          "type": "multiSelect",
+          "validation": {
+            "options": [
+              "ai_for_mjo_research",
+              "mjo_indices_and_diagnostics"
+            ]
+          }
+        },
+        {
+          "slug": "coverage",
+          "label": "Coverage",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "scientific_review",
+          "label": "Scientific Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "publication_approval",
+          "label": "Publication Approval",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "language_review",
+          "label": "Language Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "session_id",
+          "label": "Session Id",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "talks_session_id",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "programme_order",
+          "label": "Programme Order",
+          "required": true,
+          "type": "integer",
+          "validation": {
+            "min": 1
+          }
+        },
+        {
+          "slug": "programme_evidence_ids",
+          "label": "Programme Evidence Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "talks_programme_evidence_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "speaker_names",
+          "label": "Speaker Names",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "summary",
+          "label": "Summary",
+          "required": true,
+          "type": "json"
+        }
+      ]
+    },
+    {
+      "slug": "video_highlights",
+      "label": "Video Highlights",
+      "supports": [
+        "drafts",
+        "revisions"
+      ],
+      "fields": [
+        {
+          "slug": "external_id",
+          "label": "External Id",
+          "required": true,
+          "type": "string",
+          "unique": true,
+          "indexed": true,
+          "validation": {
+            "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+          }
+        },
+        {
+          "slug": "record_version",
+          "label": "Record Version",
+          "required": true,
+          "type": "integer",
+          "validation": {
+            "min": 1
+          }
+        },
+        {
+          "slug": "title",
+          "label": "Title",
+          "required": true,
+          "type": "string",
+          "validation": {
+            "pattern": "\\S",
+            "maxLength": 8000
+          }
+        },
+        {
+          "slug": "topic_ids",
+          "label": "Topic Ids",
+          "required": true,
+          "type": "multiSelect",
+          "validation": {
+            "options": [
+              "ai_for_mjo_research",
+              "mjo_indices_and_diagnostics"
+            ]
+          }
+        },
+        {
+          "slug": "coverage",
+          "label": "Coverage",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "scientific_review",
+          "label": "Scientific Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "publication_approval",
+          "label": "Publication Approval",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "language_review",
+          "label": "Language Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "session_id",
+          "label": "Session Id",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "video_highlights_session_id",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "talk_id",
+          "label": "Talk Id",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "video_highlights_talk_id",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "youtube_id",
+          "label": "Youtube Id",
+          "required": false,
+          "type": "json"
+        },
+        {
+          "slug": "video_kind",
+          "label": "Video Kind",
+          "required": true,
+          "type": "select",
+          "validation": {
+            "options": [
+              "highlight"
+            ]
+          }
+        },
+        {
+          "slug": "representative_version",
+          "label": "Representative Version",
+          "required": true,
+          "type": "string",
+          "validation": {
+            "pattern": "\\S",
+            "maxLength": 8000
+          }
+        },
+        {
+          "slug": "mapping_evidence_ids",
+          "label": "Mapping Evidence Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "video_highlights_mapping_evidence_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "mapping_verified",
+          "label": "Mapping Verified",
+          "required": true,
+          "type": "boolean"
+        },
+        {
+          "slug": "visually_reviewed",
+          "label": "Visually Reviewed",
+          "required": true,
+          "type": "boolean"
+        },
+        {
+          "slug": "permission_verified",
+          "label": "Permission Verified",
+          "required": true,
+          "type": "boolean"
+        },
+        {
+          "slug": "caption",
+          "label": "Caption",
+          "required": true,
+          "type": "json"
+        }
+      ]
+    },
+    {
+      "slug": "scientific_questions",
+      "label": "Scientific Questions",
+      "supports": [
+        "drafts",
+        "revisions"
+      ],
+      "fields": [
+        {
+          "slug": "external_id",
+          "label": "External Id",
+          "required": true,
+          "type": "string",
+          "unique": true,
+          "indexed": true,
+          "validation": {
+            "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+          }
+        },
+        {
+          "slug": "record_version",
+          "label": "Record Version",
+          "required": true,
+          "type": "integer",
+          "validation": {
+            "min": 1
+          }
+        },
+        {
+          "slug": "title",
+          "label": "Title",
+          "required": true,
+          "type": "string",
+          "validation": {
+            "pattern": "\\S",
+            "maxLength": 8000
+          }
+        },
+        {
+          "slug": "topic_ids",
+          "label": "Topic Ids",
+          "required": true,
+          "type": "multiSelect",
+          "validation": {
+            "options": [
+              "ai_for_mjo_research",
+              "mjo_indices_and_diagnostics"
+            ]
+          }
+        },
+        {
+          "slug": "coverage",
+          "label": "Coverage",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "scientific_review",
+          "label": "Scientific Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "publication_approval",
+          "label": "Publication Approval",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "language_review",
+          "label": "Language Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "session_ids",
+          "label": "Session Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "scientific_questions_session_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "classification",
+          "label": "Classification",
+          "required": true,
+          "type": "select",
+          "validation": {
+            "options": [
+              "diverging_perspectives",
+              "emerging_alignment",
+              "open_questions",
+              "documented_agreements"
+            ]
+          }
+        },
+        {
+          "slug": "classification_basis",
+          "label": "Classification Basis",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "background",
+          "label": "Background",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "position_ids",
+          "label": "Position Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "scientific_questions_position_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "supporting_evidence_ids",
+          "label": "Supporting Evidence Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "scientific_questions_supporting_evidence_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "uncertainties",
+          "label": "Uncertainties",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "scientific_interpretation",
+          "label": "Scientific Interpretation",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "talk_ids",
+          "label": "Talk Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "scientific_questions_talk_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "video_ids",
+          "label": "Video Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "scientific_questions_video_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "action_ids",
+          "label": "Action Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "scientific_questions_action_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "finding_ids",
+          "label": "Finding Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "scientific_questions_finding_ids",
+            "relationSide": "parent"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "scientific_positions",
+      "label": "Scientific Positions",
+      "supports": [
+        "drafts",
+        "revisions"
+      ],
+      "fields": [
+        {
+          "slug": "external_id",
+          "label": "External Id",
+          "required": true,
+          "type": "string",
+          "unique": true,
+          "indexed": true,
+          "validation": {
+            "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+          }
+        },
+        {
+          "slug": "record_version",
+          "label": "Record Version",
+          "required": true,
+          "type": "integer",
+          "validation": {
+            "min": 1
+          }
+        },
+        {
+          "slug": "title",
+          "label": "Title",
+          "required": true,
+          "type": "string",
+          "validation": {
+            "pattern": "\\S",
+            "maxLength": 8000
+          }
+        },
+        {
+          "slug": "topic_ids",
+          "label": "Topic Ids",
+          "required": true,
+          "type": "multiSelect",
+          "validation": {
+            "options": [
+              "ai_for_mjo_research",
+              "mjo_indices_and_diagnostics"
+            ]
+          }
+        },
+        {
+          "slug": "coverage",
+          "label": "Coverage",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "scientific_review",
+          "label": "Scientific Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "publication_approval",
+          "label": "Publication Approval",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "language_review",
+          "label": "Language Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "question_id",
+          "label": "Question Id",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "scientific_positions_question_id",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "session_ids",
+          "label": "Session Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "scientific_positions_session_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "position_kind",
+          "label": "Position Kind",
+          "required": true,
+          "type": "select",
+          "validation": {
+            "options": [
+              "hypothesis",
+              "interpretation",
+              "research_approach"
+            ]
+          }
+        },
+        {
+          "slug": "statement",
+          "label": "Statement",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "supporting_evidence_ids",
+          "label": "Supporting Evidence Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "scientific_positions_supporting_evidence_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "challenging_evidence_ids",
+          "label": "Challenging Evidence Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "scientific_positions_challenging_evidence_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "talk_ids",
+          "label": "Talk Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "scientific_positions_talk_ids",
+            "relationSide": "parent"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "evidence_references",
+      "label": "Evidence and Source References",
+      "supports": [
+        "drafts",
+        "revisions"
+      ],
+      "fields": [
+        {
+          "slug": "external_id",
+          "label": "External Id",
+          "required": true,
+          "type": "string",
+          "unique": true,
+          "indexed": true,
+          "validation": {
+            "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+          }
+        },
+        {
+          "slug": "record_version",
+          "label": "Record Version",
+          "required": true,
+          "type": "integer",
+          "validation": {
+            "min": 1
+          }
+        },
+        {
+          "slug": "title",
+          "label": "Title",
+          "required": true,
+          "type": "string",
+          "validation": {
+            "pattern": "\\S",
+            "maxLength": 8000
+          }
+        },
+        {
+          "slug": "topic_ids",
+          "label": "Topic Ids",
+          "required": true,
+          "type": "multiSelect",
+          "validation": {
+            "options": [
+              "ai_for_mjo_research",
+              "mjo_indices_and_diagnostics"
+            ]
+          }
+        },
+        {
+          "slug": "coverage",
+          "label": "Coverage",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "scientific_review",
+          "label": "Scientific Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "publication_approval",
+          "label": "Publication Approval",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "language_review",
+          "label": "Language Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "session_id",
+          "label": "Session Id",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "evidence_references_session_id",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "talk_id",
+          "label": "Talk Id",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "evidence_references_talk_id",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "contribution_id",
+          "label": "Contribution Id",
+          "required": true,
+          "type": "string",
+          "validation": {
+            "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+          }
+        },
+        {
+          "slug": "source_document",
+          "label": "Source Document",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "passage",
+          "label": "Passage",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "evidence_role",
+          "label": "Evidence Role",
+          "required": true,
+          "type": "select",
+          "validation": {
+            "options": [
+              "context",
+              "supports",
+              "challenges",
+              "explicit_agreement",
+              "programme",
+              "video_mapping"
+            ]
+          }
+        },
+        {
+          "slug": "verification",
+          "label": "Verification",
+          "required": true,
+          "type": "select",
+          "validation": {
+            "options": [
+              "unverified",
+              "verified",
+              "disputed"
+            ]
+          }
+        },
+        {
+          "slug": "attribution",
+          "label": "Attribution",
+          "required": true,
+          "type": "json"
+        }
+      ]
+    },
+    {
+      "slug": "scientific_findings",
+      "label": "Scientific Findings",
+      "supports": [
+        "drafts",
+        "revisions"
+      ],
+      "fields": [
+        {
+          "slug": "external_id",
+          "label": "External Id",
+          "required": true,
+          "type": "string",
+          "unique": true,
+          "indexed": true,
+          "validation": {
+            "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+          }
+        },
+        {
+          "slug": "record_version",
+          "label": "Record Version",
+          "required": true,
+          "type": "integer",
+          "validation": {
+            "min": 1
+          }
+        },
+        {
+          "slug": "title",
+          "label": "Title",
+          "required": true,
+          "type": "string",
+          "validation": {
+            "pattern": "\\S",
+            "maxLength": 8000
+          }
+        },
+        {
+          "slug": "topic_ids",
+          "label": "Topic Ids",
+          "required": true,
+          "type": "multiSelect",
+          "validation": {
+            "options": [
+              "ai_for_mjo_research",
+              "mjo_indices_and_diagnostics"
+            ]
+          }
+        },
+        {
+          "slug": "coverage",
+          "label": "Coverage",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "scientific_review",
+          "label": "Scientific Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "publication_approval",
+          "label": "Publication Approval",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "language_review",
+          "label": "Language Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "question_ids",
+          "label": "Question Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "scientific_findings_question_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "session_ids",
+          "label": "Session Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "scientific_findings_session_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "statement",
+          "label": "Statement",
+          "required": true,
+          "type": "json"
+        }
+      ]
+    },
+    {
+      "slug": "research_actions",
+      "label": "Research Actions",
+      "supports": [
+        "drafts",
+        "revisions"
+      ],
+      "fields": [
+        {
+          "slug": "external_id",
+          "label": "External Id",
+          "required": true,
+          "type": "string",
+          "unique": true,
+          "indexed": true,
+          "validation": {
+            "pattern": "^[a-z][a-z0-9_-]{2,95}$"
+          }
+        },
+        {
+          "slug": "record_version",
+          "label": "Record Version",
+          "required": true,
+          "type": "integer",
+          "validation": {
+            "min": 1
+          }
+        },
+        {
+          "slug": "title",
+          "label": "Title",
+          "required": true,
+          "type": "string",
+          "validation": {
+            "pattern": "\\S",
+            "maxLength": 8000
+          }
+        },
+        {
+          "slug": "topic_ids",
+          "label": "Topic Ids",
+          "required": true,
+          "type": "multiSelect",
+          "validation": {
+            "options": [
+              "ai_for_mjo_research",
+              "mjo_indices_and_diagnostics"
+            ]
+          }
+        },
+        {
+          "slug": "coverage",
+          "label": "Coverage",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "scientific_review",
+          "label": "Scientific Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "publication_approval",
+          "label": "Publication Approval",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "language_review",
+          "label": "Language Review",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "question_ids",
+          "label": "Question Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "research_actions_question_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "session_ids",
+          "label": "Session Ids",
+          "required": false,
+          "type": "reference",
+          "validation": {
+            "relation": "research_actions_session_ids",
+            "relationSide": "parent"
+          }
+        },
+        {
+          "slug": "action_kind",
+          "label": "Action Kind",
+          "required": true,
+          "type": "select",
+          "validation": {
+            "options": [
+              "illustrative_ai_workflow"
+            ]
+          }
+        },
+        {
+          "slug": "rationale",
+          "label": "Rationale",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "steps",
+          "label": "Steps",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "expected_outputs",
+          "label": "Expected Outputs",
+          "required": true,
+          "type": "json"
+        },
+        {
+          "slug": "limitations",
+          "label": "Limitations",
+          "required": true,
+          "type": "string",
+          "validation": {
+            "pattern": "\\S",
+            "maxLength": 8000
+          }
+        },
+        {
+          "slug": "commitment",
+          "label": "Commitment",
+          "required": true,
+          "type": "select",
+          "validation": {
+            "options": [
+              "not_a_commitment"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "taxonomies": [
+    {
+      "name": "category",
+      "label": "Categories",
+      "labelSingular": "Category",
+      "hierarchical": true,
+      "collections": [
+        "posts"
+      ],
+      "terms": [
+        {
+          "slug": "general",
+          "label": "General"
+        },
+        {
+          "slug": "updates",
+          "label": "Updates"
+        }
+      ]
+    },
+    {
+      "name": "tag",
+      "label": "Tags",
+      "labelSingular": "Tag",
+      "hierarchical": false,
+      "collections": [
+        "posts"
+      ],
+      "terms": [
+        {
+          "slug": "starter",
+          "label": "Starter"
+        },
+        {
+          "slug": "example",
+          "label": "Example"
+        }
+      ]
+    },
+    {
+      "name": "scientific_topic",
+      "label": "Scientific Topics",
+      "hierarchical": false,
+      "collections": [
+        "workshop_sessions",
+        "talks",
+        "video_highlights",
+        "scientific_questions",
+        "scientific_positions",
+        "evidence_references",
+        "scientific_findings",
+        "research_actions"
+      ],
+      "terms": [
+        {
+          "slug": "ai_for_mjo_research",
+          "label": "AI for MJO Research"
+        },
+        {
+          "slug": "mjo_indices_and_diagnostics",
+          "label": "MJO Indices and Diagnostics"
+        }
+      ]
+    }
+  ],
+  "menus": [
+    {
+      "name": "primary",
+      "label": "Primary Navigation",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Home",
+          "url": "/"
+        },
+        {
+          "type": "custom",
+          "label": "Posts",
+          "url": "/posts"
+        }
+      ]
+    }
+  ],
+  "widgetAreas": [
+    {
+      "name": "sidebar",
+      "label": "Sidebar",
+      "description": "Sidebar widget area",
+      "widgets": [
+        {
+          "type": "component",
+          "componentId": "core:search",
+          "title": "Search"
+        },
+        {
+          "type": "component",
+          "componentId": "core:categories",
+          "title": "Categories"
+        },
+        {
+          "type": "component",
+          "componentId": "core:recent-posts",
+          "title": "Recent Posts",
+          "props": {
+            "count": 5
+          }
+        }
+      ]
+    }
+  ],
+  "content": {
+    "pages": [],
+    "posts": []
+  },
+  "relations": [
+    {
+      "slug": "workshop_sessions_programme_evidence_ids",
+      "parentCollection": "workshop_sessions",
+      "childCollection": "evidence_references",
+      "parentLabel": "Workshop Sessions",
+      "childLabel": "Programme Evidence Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "talks_session_id",
+      "parentCollection": "talks",
+      "childCollection": "workshop_sessions",
+      "parentLabel": "Talks",
+      "childLabel": "Session Id",
+      "maxChildrenPerParent": 1
+    },
+    {
+      "slug": "talks_programme_evidence_ids",
+      "parentCollection": "talks",
+      "childCollection": "evidence_references",
+      "parentLabel": "Talks",
+      "childLabel": "Programme Evidence Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "video_highlights_session_id",
+      "parentCollection": "video_highlights",
+      "childCollection": "workshop_sessions",
+      "parentLabel": "Video Highlights",
+      "childLabel": "Session Id",
+      "maxChildrenPerParent": 1
+    },
+    {
+      "slug": "video_highlights_talk_id",
+      "parentCollection": "video_highlights",
+      "childCollection": "talks",
+      "parentLabel": "Video Highlights",
+      "childLabel": "Talk Id",
+      "maxChildrenPerParent": 1
+    },
+    {
+      "slug": "video_highlights_mapping_evidence_ids",
+      "parentCollection": "video_highlights",
+      "childCollection": "evidence_references",
+      "parentLabel": "Video Highlights",
+      "childLabel": "Mapping Evidence Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "scientific_questions_session_ids",
+      "parentCollection": "scientific_questions",
+      "childCollection": "workshop_sessions",
+      "parentLabel": "Scientific Questions",
+      "childLabel": "Session Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "scientific_questions_position_ids",
+      "parentCollection": "scientific_questions",
+      "childCollection": "scientific_positions",
+      "parentLabel": "Scientific Questions",
+      "childLabel": "Position Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "scientific_questions_supporting_evidence_ids",
+      "parentCollection": "scientific_questions",
+      "childCollection": "evidence_references",
+      "parentLabel": "Scientific Questions",
+      "childLabel": "Supporting Evidence Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "scientific_questions_talk_ids",
+      "parentCollection": "scientific_questions",
+      "childCollection": "talks",
+      "parentLabel": "Scientific Questions",
+      "childLabel": "Talk Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "scientific_questions_video_ids",
+      "parentCollection": "scientific_questions",
+      "childCollection": "video_highlights",
+      "parentLabel": "Scientific Questions",
+      "childLabel": "Video Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "scientific_questions_action_ids",
+      "parentCollection": "scientific_questions",
+      "childCollection": "research_actions",
+      "parentLabel": "Scientific Questions",
+      "childLabel": "Action Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "scientific_questions_finding_ids",
+      "parentCollection": "scientific_questions",
+      "childCollection": "scientific_findings",
+      "parentLabel": "Scientific Questions",
+      "childLabel": "Finding Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "scientific_positions_question_id",
+      "parentCollection": "scientific_positions",
+      "childCollection": "scientific_questions",
+      "parentLabel": "Scientific Positions",
+      "childLabel": "Question Id",
+      "maxChildrenPerParent": 1
+    },
+    {
+      "slug": "scientific_positions_session_ids",
+      "parentCollection": "scientific_positions",
+      "childCollection": "workshop_sessions",
+      "parentLabel": "Scientific Positions",
+      "childLabel": "Session Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "scientific_positions_supporting_evidence_ids",
+      "parentCollection": "scientific_positions",
+      "childCollection": "evidence_references",
+      "parentLabel": "Scientific Positions",
+      "childLabel": "Supporting Evidence Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "scientific_positions_challenging_evidence_ids",
+      "parentCollection": "scientific_positions",
+      "childCollection": "evidence_references",
+      "parentLabel": "Scientific Positions",
+      "childLabel": "Challenging Evidence Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "scientific_positions_talk_ids",
+      "parentCollection": "scientific_positions",
+      "childCollection": "talks",
+      "parentLabel": "Scientific Positions",
+      "childLabel": "Talk Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "evidence_references_session_id",
+      "parentCollection": "evidence_references",
+      "childCollection": "workshop_sessions",
+      "parentLabel": "Evidence and Source References",
+      "childLabel": "Session Id",
+      "maxChildrenPerParent": 1
+    },
+    {
+      "slug": "evidence_references_talk_id",
+      "parentCollection": "evidence_references",
+      "childCollection": "talks",
+      "parentLabel": "Evidence and Source References",
+      "childLabel": "Talk Id",
+      "maxChildrenPerParent": 1
+    },
+    {
+      "slug": "scientific_findings_question_ids",
+      "parentCollection": "scientific_findings",
+      "childCollection": "scientific_questions",
+      "parentLabel": "Scientific Findings",
+      "childLabel": "Question Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "scientific_findings_session_ids",
+      "parentCollection": "scientific_findings",
+      "childCollection": "workshop_sessions",
+      "parentLabel": "Scientific Findings",
+      "childLabel": "Session Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "research_actions_question_ids",
+      "parentCollection": "research_actions",
+      "childCollection": "scientific_questions",
+      "parentLabel": "Research Actions",
+      "childLabel": "Question Ids",
+      "maxChildrenPerParent": null
+    },
+    {
+      "slug": "research_actions_session_ids",
+      "parentCollection": "research_actions",
+      "childCollection": "workshop_sessions",
+      "parentLabel": "Research Actions",
+      "childLabel": "Session Ids",
+      "maxChildrenPerParent": null
+    }
+  ]
+}

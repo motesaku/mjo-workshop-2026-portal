@@ -1,0 +1,1765 @@
+{
+  "format": "mjo-workshop-reviewed-content",
+  "schema_version": "1.0.0",
+  "purpose": "test_fixture",
+  "producer": "researcher_os",
+  "export_id": "test-export",
+  "exported_at": "2000-01-03T00:00:00Z",
+  "language": "en",
+  "records": {
+    "workshop_sessions": [
+      {
+        "external_id": "test-session-talk",
+        "record_version": 1,
+        "title": "TEST ONLY: test-session-talk",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_kind": "talk_session",
+        "starts_at": "2000-01-01T09:00:00+01:00",
+        "ends_at": "2000-01-01T10:00:00+01:00",
+        "timezone": "Europe/Rome",
+        "programme_order": 1,
+        "programme_evidence_ids": [
+          "test-programme-talk"
+        ],
+        "summary": []
+      },
+      {
+        "external_id": "test-session-discussion",
+        "record_version": 1,
+        "title": "TEST ONLY: test-session-discussion",
+        "topic_ids": [
+          "mjo_indices_and_diagnostics"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_kind": "discussion",
+        "starts_at": "2000-01-02T09:00:00+01:00",
+        "ends_at": "2000-01-02T10:00:00+01:00",
+        "timezone": "Europe/Rome",
+        "programme_order": 2,
+        "programme_evidence_ids": [
+          "test-programme-discussion"
+        ],
+        "summary": []
+      }
+    ],
+    "talks": [
+      {
+        "external_id": "test-talk",
+        "record_version": 1,
+        "title": "TEST ONLY: test-talk",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_id": "test-session-talk",
+        "programme_order": 1,
+        "programme_evidence_ids": [
+          "test-programme-talk"
+        ],
+        "speaker_names": [],
+        "summary": []
+      }
+    ],
+    "video_highlights": [
+      {
+        "external_id": "test-highlight",
+        "record_version": 1,
+        "title": "TEST ONLY: test-highlight",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_id": "test-session-talk",
+        "talk_id": "test-talk",
+        "youtube_id": null,
+        "video_kind": "highlight",
+        "representative_version": "TEST ONLY: no video selected",
+        "mapping_evidence_ids": [
+          "test-video-map"
+        ],
+        "mapping_verified": false,
+        "visually_reviewed": false,
+        "permission_verified": false,
+        "caption": []
+      }
+    ],
+    "scientific_questions": [
+      {
+        "external_id": "test-question-0",
+        "record_version": 1,
+        "title": "TEST ONLY: test-question-0",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_ids": [
+          "test-session-talk"
+        ],
+        "classification": "diverging_perspectives",
+        "classification_basis": {
+          "claim_id": "test-classification-0",
+          "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+          "kind": "interpretation",
+          "evidence_ids": [
+            "test-evidence-0-a",
+            "test-evidence-0-b"
+          ],
+          "session_ids": [
+            "test-session-talk"
+          ],
+          "attribution": {
+            "mode": "unattributed",
+            "talk_id": null
+          },
+          "verification": "unverified",
+          "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+        },
+        "background": [
+          {
+            "claim_id": "test-background-0",
+            "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+            "kind": "interpretation",
+            "evidence_ids": [
+              "test-evidence-0-a"
+            ],
+            "session_ids": [
+              "test-session-talk"
+            ],
+            "attribution": {
+              "mode": "unattributed",
+              "talk_id": null
+            },
+            "verification": "unverified",
+            "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+          }
+        ],
+        "position_ids": [
+          "test-position-0-a",
+          "test-position-0-b"
+        ],
+        "supporting_evidence_ids": [
+          "test-evidence-0-a",
+          "test-evidence-0-b"
+        ],
+        "uncertainties": [
+          {
+            "claim_id": "test-uncertainty-0",
+            "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+            "kind": "interpretation",
+            "evidence_ids": [
+              "test-evidence-0-a"
+            ],
+            "session_ids": [
+              "test-session-talk"
+            ],
+            "attribution": {
+              "mode": "unattributed",
+              "talk_id": null
+            },
+            "verification": "unverified",
+            "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+          }
+        ],
+        "scientific_interpretation": [],
+        "talk_ids": [
+          "test-talk"
+        ],
+        "video_ids": [
+          "test-highlight"
+        ],
+        "action_ids": [
+          "test-action"
+        ],
+        "finding_ids": [
+          "test-finding"
+        ]
+      },
+      {
+        "external_id": "test-question-1",
+        "record_version": 1,
+        "title": "TEST ONLY: test-question-1",
+        "topic_ids": [
+          "mjo_indices_and_diagnostics"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_ids": [
+          "test-session-discussion"
+        ],
+        "classification": "emerging_alignment",
+        "classification_basis": {
+          "claim_id": "test-classification-1",
+          "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+          "kind": "interpretation",
+          "evidence_ids": [
+            "test-evidence-1-a",
+            "test-evidence-1-b"
+          ],
+          "session_ids": [
+            "test-session-discussion"
+          ],
+          "attribution": {
+            "mode": "unattributed",
+            "talk_id": null
+          },
+          "verification": "unverified",
+          "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+        },
+        "background": [
+          {
+            "claim_id": "test-background-1",
+            "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+            "kind": "interpretation",
+            "evidence_ids": [
+              "test-evidence-1-a"
+            ],
+            "session_ids": [
+              "test-session-discussion"
+            ],
+            "attribution": {
+              "mode": "unattributed",
+              "talk_id": null
+            },
+            "verification": "unverified",
+            "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+          }
+        ],
+        "position_ids": [
+          "test-position-1-a",
+          "test-position-1-b"
+        ],
+        "supporting_evidence_ids": [
+          "test-evidence-1-a",
+          "test-evidence-1-b"
+        ],
+        "uncertainties": [
+          {
+            "claim_id": "test-uncertainty-1",
+            "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+            "kind": "interpretation",
+            "evidence_ids": [
+              "test-evidence-1-a"
+            ],
+            "session_ids": [
+              "test-session-discussion"
+            ],
+            "attribution": {
+              "mode": "unattributed",
+              "talk_id": null
+            },
+            "verification": "unverified",
+            "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+          }
+        ],
+        "scientific_interpretation": [],
+        "talk_ids": [],
+        "video_ids": [],
+        "action_ids": [],
+        "finding_ids": []
+      },
+      {
+        "external_id": "test-question-2",
+        "record_version": 1,
+        "title": "TEST ONLY: test-question-2",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_ids": [
+          "test-session-talk"
+        ],
+        "classification": "open_questions",
+        "classification_basis": {
+          "claim_id": "test-classification-2",
+          "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+          "kind": "interpretation",
+          "evidence_ids": [
+            "test-evidence-2-a",
+            "test-evidence-2-b"
+          ],
+          "session_ids": [
+            "test-session-talk"
+          ],
+          "attribution": {
+            "mode": "unattributed",
+            "talk_id": null
+          },
+          "verification": "unverified",
+          "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+        },
+        "background": [
+          {
+            "claim_id": "test-background-2",
+            "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+            "kind": "interpretation",
+            "evidence_ids": [
+              "test-evidence-2-a"
+            ],
+            "session_ids": [
+              "test-session-talk"
+            ],
+            "attribution": {
+              "mode": "unattributed",
+              "talk_id": null
+            },
+            "verification": "unverified",
+            "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+          }
+        ],
+        "position_ids": [
+          "test-position-2-a",
+          "test-position-2-b"
+        ],
+        "supporting_evidence_ids": [
+          "test-evidence-2-a",
+          "test-evidence-2-b"
+        ],
+        "uncertainties": [
+          {
+            "claim_id": "test-uncertainty-2",
+            "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+            "kind": "interpretation",
+            "evidence_ids": [
+              "test-evidence-2-a"
+            ],
+            "session_ids": [
+              "test-session-talk"
+            ],
+            "attribution": {
+              "mode": "unattributed",
+              "talk_id": null
+            },
+            "verification": "unverified",
+            "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+          }
+        ],
+        "scientific_interpretation": [],
+        "talk_ids": [
+          "test-talk"
+        ],
+        "video_ids": [
+          "test-highlight"
+        ],
+        "action_ids": [],
+        "finding_ids": []
+      },
+      {
+        "external_id": "test-question-3",
+        "record_version": 1,
+        "title": "TEST ONLY: test-question-3",
+        "topic_ids": [
+          "mjo_indices_and_diagnostics"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_ids": [
+          "test-session-discussion"
+        ],
+        "classification": "documented_agreements",
+        "classification_basis": {
+          "claim_id": "test-classification-3",
+          "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+          "kind": "documented_agreement",
+          "evidence_ids": [
+            "test-evidence-3-a",
+            "test-evidence-3-b"
+          ],
+          "session_ids": [
+            "test-session-discussion"
+          ],
+          "attribution": {
+            "mode": "unattributed",
+            "talk_id": null
+          },
+          "verification": "unverified",
+          "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+        },
+        "background": [
+          {
+            "claim_id": "test-background-3",
+            "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+            "kind": "interpretation",
+            "evidence_ids": [
+              "test-evidence-3-a"
+            ],
+            "session_ids": [
+              "test-session-discussion"
+            ],
+            "attribution": {
+              "mode": "unattributed",
+              "talk_id": null
+            },
+            "verification": "unverified",
+            "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+          }
+        ],
+        "position_ids": [
+          "test-position-3-a",
+          "test-position-3-b"
+        ],
+        "supporting_evidence_ids": [
+          "test-evidence-3-a",
+          "test-evidence-3-b"
+        ],
+        "uncertainties": [
+          {
+            "claim_id": "test-uncertainty-3",
+            "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+            "kind": "interpretation",
+            "evidence_ids": [
+              "test-evidence-3-a"
+            ],
+            "session_ids": [
+              "test-session-discussion"
+            ],
+            "attribution": {
+              "mode": "unattributed",
+              "talk_id": null
+            },
+            "verification": "unverified",
+            "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+          }
+        ],
+        "scientific_interpretation": [],
+        "talk_ids": [],
+        "video_ids": [],
+        "action_ids": [],
+        "finding_ids": []
+      }
+    ],
+    "scientific_positions": [
+      {
+        "external_id": "test-position-0-a",
+        "record_version": 1,
+        "title": "TEST ONLY: test-position-0-a",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "question_id": "test-question-0",
+        "session_ids": [
+          "test-session-talk"
+        ],
+        "position_kind": "hypothesis",
+        "statement": {
+          "claim_id": "test-claim-test-position-0-a",
+          "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+          "kind": "hypothesis",
+          "evidence_ids": [
+            "test-evidence-0-a"
+          ],
+          "session_ids": [
+            "test-session-talk"
+          ],
+          "attribution": {
+            "mode": "unattributed",
+            "talk_id": null
+          },
+          "verification": "unverified",
+          "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+        },
+        "supporting_evidence_ids": [
+          "test-evidence-0-a"
+        ],
+        "challenging_evidence_ids": [],
+        "talk_ids": []
+      },
+      {
+        "external_id": "test-position-0-b",
+        "record_version": 1,
+        "title": "TEST ONLY: test-position-0-b",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "question_id": "test-question-0",
+        "session_ids": [
+          "test-session-talk"
+        ],
+        "position_kind": "hypothesis",
+        "statement": {
+          "claim_id": "test-claim-test-position-0-b",
+          "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+          "kind": "hypothesis",
+          "evidence_ids": [
+            "test-evidence-0-b"
+          ],
+          "session_ids": [
+            "test-session-talk"
+          ],
+          "attribution": {
+            "mode": "unattributed",
+            "talk_id": null
+          },
+          "verification": "unverified",
+          "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+        },
+        "supporting_evidence_ids": [
+          "test-evidence-0-b"
+        ],
+        "challenging_evidence_ids": [],
+        "talk_ids": []
+      },
+      {
+        "external_id": "test-position-1-a",
+        "record_version": 1,
+        "title": "TEST ONLY: test-position-1-a",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "question_id": "test-question-1",
+        "session_ids": [
+          "test-session-discussion"
+        ],
+        "position_kind": "hypothesis",
+        "statement": {
+          "claim_id": "test-claim-test-position-1-a",
+          "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+          "kind": "hypothesis",
+          "evidence_ids": [
+            "test-evidence-1-a"
+          ],
+          "session_ids": [
+            "test-session-discussion"
+          ],
+          "attribution": {
+            "mode": "unattributed",
+            "talk_id": null
+          },
+          "verification": "unverified",
+          "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+        },
+        "supporting_evidence_ids": [
+          "test-evidence-1-a"
+        ],
+        "challenging_evidence_ids": [],
+        "talk_ids": []
+      },
+      {
+        "external_id": "test-position-1-b",
+        "record_version": 1,
+        "title": "TEST ONLY: test-position-1-b",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "question_id": "test-question-1",
+        "session_ids": [
+          "test-session-discussion"
+        ],
+        "position_kind": "hypothesis",
+        "statement": {
+          "claim_id": "test-claim-test-position-1-b",
+          "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+          "kind": "hypothesis",
+          "evidence_ids": [
+            "test-evidence-1-b"
+          ],
+          "session_ids": [
+            "test-session-discussion"
+          ],
+          "attribution": {
+            "mode": "unattributed",
+            "talk_id": null
+          },
+          "verification": "unverified",
+          "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+        },
+        "supporting_evidence_ids": [
+          "test-evidence-1-b"
+        ],
+        "challenging_evidence_ids": [],
+        "talk_ids": []
+      },
+      {
+        "external_id": "test-position-2-a",
+        "record_version": 1,
+        "title": "TEST ONLY: test-position-2-a",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "question_id": "test-question-2",
+        "session_ids": [
+          "test-session-talk"
+        ],
+        "position_kind": "hypothesis",
+        "statement": {
+          "claim_id": "test-claim-test-position-2-a",
+          "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+          "kind": "hypothesis",
+          "evidence_ids": [
+            "test-evidence-2-a"
+          ],
+          "session_ids": [
+            "test-session-talk"
+          ],
+          "attribution": {
+            "mode": "unattributed",
+            "talk_id": null
+          },
+          "verification": "unverified",
+          "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+        },
+        "supporting_evidence_ids": [
+          "test-evidence-2-a"
+        ],
+        "challenging_evidence_ids": [],
+        "talk_ids": []
+      },
+      {
+        "external_id": "test-position-2-b",
+        "record_version": 1,
+        "title": "TEST ONLY: test-position-2-b",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "question_id": "test-question-2",
+        "session_ids": [
+          "test-session-talk"
+        ],
+        "position_kind": "hypothesis",
+        "statement": {
+          "claim_id": "test-claim-test-position-2-b",
+          "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+          "kind": "hypothesis",
+          "evidence_ids": [
+            "test-evidence-2-b"
+          ],
+          "session_ids": [
+            "test-session-talk"
+          ],
+          "attribution": {
+            "mode": "unattributed",
+            "talk_id": null
+          },
+          "verification": "unverified",
+          "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+        },
+        "supporting_evidence_ids": [
+          "test-evidence-2-b"
+        ],
+        "challenging_evidence_ids": [],
+        "talk_ids": []
+      },
+      {
+        "external_id": "test-position-3-a",
+        "record_version": 1,
+        "title": "TEST ONLY: test-position-3-a",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "question_id": "test-question-3",
+        "session_ids": [
+          "test-session-discussion"
+        ],
+        "position_kind": "hypothesis",
+        "statement": {
+          "claim_id": "test-claim-test-position-3-a",
+          "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+          "kind": "hypothesis",
+          "evidence_ids": [
+            "test-evidence-3-a"
+          ],
+          "session_ids": [
+            "test-session-discussion"
+          ],
+          "attribution": {
+            "mode": "unattributed",
+            "talk_id": null
+          },
+          "verification": "unverified",
+          "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+        },
+        "supporting_evidence_ids": [
+          "test-evidence-3-a"
+        ],
+        "challenging_evidence_ids": [],
+        "talk_ids": []
+      },
+      {
+        "external_id": "test-position-3-b",
+        "record_version": 1,
+        "title": "TEST ONLY: test-position-3-b",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "question_id": "test-question-3",
+        "session_ids": [
+          "test-session-discussion"
+        ],
+        "position_kind": "hypothesis",
+        "statement": {
+          "claim_id": "test-claim-test-position-3-b",
+          "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+          "kind": "hypothesis",
+          "evidence_ids": [
+            "test-evidence-3-b"
+          ],
+          "session_ids": [
+            "test-session-discussion"
+          ],
+          "attribution": {
+            "mode": "unattributed",
+            "talk_id": null
+          },
+          "verification": "unverified",
+          "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+        },
+        "supporting_evidence_ids": [
+          "test-evidence-3-b"
+        ],
+        "challenging_evidence_ids": [],
+        "talk_ids": []
+      }
+    ],
+    "evidence_references": [
+      {
+        "external_id": "test-programme-talk",
+        "record_version": 1,
+        "title": "TEST ONLY: test-programme-talk",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_id": "test-session-talk",
+        "talk_id": null,
+        "contribution_id": "test-contribution-0",
+        "source_document": {
+          "source_id": "test-document-test-programme-talk",
+          "version": "fixture-1",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "title": "TEST ONLY: nonexistent source document",
+          "kind": "official_programme",
+          "review_status": "unreviewed",
+          "source_language": "en"
+        },
+        "passage": {
+          "locator": "TEST ONLY: section placeholder",
+          "description": "TEST ONLY: locator metadata, not a quotation."
+        },
+        "evidence_role": "programme",
+        "verification": "unverified",
+        "attribution": {
+          "mode": "unattributed",
+          "talk_id": null
+        }
+      },
+      {
+        "external_id": "test-programme-discussion",
+        "record_version": 1,
+        "title": "TEST ONLY: test-programme-discussion",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_id": "test-session-discussion",
+        "talk_id": null,
+        "contribution_id": "test-contribution-1",
+        "source_document": {
+          "source_id": "test-document-test-programme-discussion",
+          "version": "fixture-1",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "title": "TEST ONLY: nonexistent source document",
+          "kind": "official_programme",
+          "review_status": "unreviewed",
+          "source_language": "en"
+        },
+        "passage": {
+          "locator": "TEST ONLY: section placeholder",
+          "description": "TEST ONLY: locator metadata, not a quotation."
+        },
+        "evidence_role": "programme",
+        "verification": "unverified",
+        "attribution": {
+          "mode": "unattributed",
+          "talk_id": null
+        }
+      },
+      {
+        "external_id": "test-video-map",
+        "record_version": 1,
+        "title": "TEST ONLY: test-video-map",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_id": "test-session-talk",
+        "talk_id": "test-talk",
+        "contribution_id": "test-contribution-2",
+        "source_document": {
+          "source_id": "test-document-test-video-map",
+          "version": "fixture-1",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "title": "TEST ONLY: nonexistent source document",
+          "kind": "approved_publication_derivative",
+          "review_status": "unreviewed",
+          "source_language": "en"
+        },
+        "passage": {
+          "locator": "TEST ONLY: section placeholder",
+          "description": "TEST ONLY: locator metadata, not a quotation."
+        },
+        "evidence_role": "video_mapping",
+        "verification": "unverified",
+        "attribution": {
+          "mode": "unattributed",
+          "talk_id": null
+        }
+      },
+      {
+        "external_id": "test-evidence-0-a",
+        "record_version": 1,
+        "title": "TEST ONLY: test-evidence-0-a",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_id": "test-session-talk",
+        "talk_id": null,
+        "contribution_id": "test-contribution-3",
+        "source_document": {
+          "source_id": "test-document-test-evidence-0-a",
+          "version": "fixture-1",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "title": "TEST ONLY: nonexistent source document",
+          "kind": "reviewed_minutes",
+          "review_status": "unreviewed",
+          "source_language": "en"
+        },
+        "passage": {
+          "locator": "TEST ONLY: section placeholder",
+          "description": "TEST ONLY: locator metadata, not a quotation."
+        },
+        "evidence_role": "supports",
+        "verification": "unverified",
+        "attribution": {
+          "mode": "unattributed",
+          "talk_id": null
+        }
+      },
+      {
+        "external_id": "test-evidence-0-b",
+        "record_version": 1,
+        "title": "TEST ONLY: test-evidence-0-b",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_id": "test-session-talk",
+        "talk_id": null,
+        "contribution_id": "test-contribution-4",
+        "source_document": {
+          "source_id": "test-document-test-evidence-0-b",
+          "version": "fixture-1",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "title": "TEST ONLY: nonexistent source document",
+          "kind": "reviewed_minutes",
+          "review_status": "unreviewed",
+          "source_language": "en"
+        },
+        "passage": {
+          "locator": "TEST ONLY: section placeholder",
+          "description": "TEST ONLY: locator metadata, not a quotation."
+        },
+        "evidence_role": "supports",
+        "verification": "unverified",
+        "attribution": {
+          "mode": "unattributed",
+          "talk_id": null
+        }
+      },
+      {
+        "external_id": "test-evidence-1-a",
+        "record_version": 1,
+        "title": "TEST ONLY: test-evidence-1-a",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_id": "test-session-discussion",
+        "talk_id": null,
+        "contribution_id": "test-contribution-5",
+        "source_document": {
+          "source_id": "test-document-test-evidence-1-a",
+          "version": "fixture-1",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "title": "TEST ONLY: nonexistent source document",
+          "kind": "reviewed_minutes",
+          "review_status": "unreviewed",
+          "source_language": "en"
+        },
+        "passage": {
+          "locator": "TEST ONLY: section placeholder",
+          "description": "TEST ONLY: locator metadata, not a quotation."
+        },
+        "evidence_role": "supports",
+        "verification": "unverified",
+        "attribution": {
+          "mode": "unattributed",
+          "talk_id": null
+        }
+      },
+      {
+        "external_id": "test-evidence-1-b",
+        "record_version": 1,
+        "title": "TEST ONLY: test-evidence-1-b",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_id": "test-session-discussion",
+        "talk_id": null,
+        "contribution_id": "test-contribution-6",
+        "source_document": {
+          "source_id": "test-document-test-evidence-1-b",
+          "version": "fixture-1",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "title": "TEST ONLY: nonexistent source document",
+          "kind": "reviewed_minutes",
+          "review_status": "unreviewed",
+          "source_language": "en"
+        },
+        "passage": {
+          "locator": "TEST ONLY: section placeholder",
+          "description": "TEST ONLY: locator metadata, not a quotation."
+        },
+        "evidence_role": "supports",
+        "verification": "unverified",
+        "attribution": {
+          "mode": "unattributed",
+          "talk_id": null
+        }
+      },
+      {
+        "external_id": "test-evidence-2-a",
+        "record_version": 1,
+        "title": "TEST ONLY: test-evidence-2-a",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_id": "test-session-talk",
+        "talk_id": null,
+        "contribution_id": "test-contribution-7",
+        "source_document": {
+          "source_id": "test-document-test-evidence-2-a",
+          "version": "fixture-1",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "title": "TEST ONLY: nonexistent source document",
+          "kind": "reviewed_minutes",
+          "review_status": "unreviewed",
+          "source_language": "en"
+        },
+        "passage": {
+          "locator": "TEST ONLY: section placeholder",
+          "description": "TEST ONLY: locator metadata, not a quotation."
+        },
+        "evidence_role": "supports",
+        "verification": "unverified",
+        "attribution": {
+          "mode": "unattributed",
+          "talk_id": null
+        }
+      },
+      {
+        "external_id": "test-evidence-2-b",
+        "record_version": 1,
+        "title": "TEST ONLY: test-evidence-2-b",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_id": "test-session-talk",
+        "talk_id": null,
+        "contribution_id": "test-contribution-8",
+        "source_document": {
+          "source_id": "test-document-test-evidence-2-b",
+          "version": "fixture-1",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "title": "TEST ONLY: nonexistent source document",
+          "kind": "reviewed_minutes",
+          "review_status": "unreviewed",
+          "source_language": "en"
+        },
+        "passage": {
+          "locator": "TEST ONLY: section placeholder",
+          "description": "TEST ONLY: locator metadata, not a quotation."
+        },
+        "evidence_role": "supports",
+        "verification": "unverified",
+        "attribution": {
+          "mode": "unattributed",
+          "talk_id": null
+        }
+      },
+      {
+        "external_id": "test-evidence-3-a",
+        "record_version": 1,
+        "title": "TEST ONLY: test-evidence-3-a",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_id": "test-session-discussion",
+        "talk_id": null,
+        "contribution_id": "test-contribution-9",
+        "source_document": {
+          "source_id": "test-document-test-evidence-3-a",
+          "version": "fixture-1",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "title": "TEST ONLY: nonexistent source document",
+          "kind": "reviewed_minutes",
+          "review_status": "unreviewed",
+          "source_language": "en"
+        },
+        "passage": {
+          "locator": "TEST ONLY: section placeholder",
+          "description": "TEST ONLY: locator metadata, not a quotation."
+        },
+        "evidence_role": "explicit_agreement",
+        "verification": "unverified",
+        "attribution": {
+          "mode": "unattributed",
+          "talk_id": null
+        }
+      },
+      {
+        "external_id": "test-evidence-3-b",
+        "record_version": 1,
+        "title": "TEST ONLY: test-evidence-3-b",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "session_id": "test-session-discussion",
+        "talk_id": null,
+        "contribution_id": "test-contribution-10",
+        "source_document": {
+          "source_id": "test-document-test-evidence-3-b",
+          "version": "fixture-1",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "title": "TEST ONLY: nonexistent source document",
+          "kind": "reviewed_minutes",
+          "review_status": "unreviewed",
+          "source_language": "en"
+        },
+        "passage": {
+          "locator": "TEST ONLY: section placeholder",
+          "description": "TEST ONLY: locator metadata, not a quotation."
+        },
+        "evidence_role": "supports",
+        "verification": "unverified",
+        "attribution": {
+          "mode": "unattributed",
+          "talk_id": null
+        }
+      }
+    ],
+    "scientific_findings": [
+      {
+        "external_id": "test-finding",
+        "record_version": 1,
+        "title": "TEST ONLY: test-finding",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "question_ids": [
+          "test-question-0"
+        ],
+        "session_ids": [
+          "test-session-talk"
+        ],
+        "statement": {
+          "claim_id": "test-finding-claim",
+          "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+          "kind": "observation",
+          "evidence_ids": [
+            "test-evidence-0-a"
+          ],
+          "session_ids": [
+            "test-session-talk"
+          ],
+          "attribution": {
+            "mode": "unattributed",
+            "talk_id": null
+          },
+          "verification": "unverified",
+          "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+        }
+      }
+    ],
+    "research_actions": [
+      {
+        "external_id": "test-action",
+        "record_version": 1,
+        "title": "TEST ONLY: test-action",
+        "topic_ids": [
+          "ai_for_mjo_research"
+        ],
+        "coverage": {
+          "extent": "partial",
+          "limitations": "TEST ONLY: artificial record; no workshop coverage is asserted."
+        },
+        "scientific_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "publication_approval": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "language_review": {
+          "status": "pending",
+          "reviewer_id": null,
+          "reviewed_at": null,
+          "content_sha256": null
+        },
+        "question_ids": [
+          "test-question-0"
+        ],
+        "session_ids": [
+          "test-session-talk"
+        ],
+        "action_kind": "illustrative_ai_workflow",
+        "rationale": {
+          "claim_id": "test-rationale",
+          "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+          "kind": "proposal",
+          "evidence_ids": [
+            "test-evidence-0-a"
+          ],
+          "session_ids": [
+            "test-session-talk"
+          ],
+          "attribution": {
+            "mode": "unattributed",
+            "talk_id": null
+          },
+          "verification": "unverified",
+          "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+        },
+        "steps": [
+          {
+            "claim_id": "test-step",
+            "text": "TEST ONLY: structural validation placeholder; this is not a scientific statement.",
+            "kind": "proposal",
+            "evidence_ids": [
+              "test-evidence-0-a"
+            ],
+            "session_ids": [
+              "test-session-talk"
+            ],
+            "attribution": {
+              "mode": "unattributed",
+              "talk_id": null
+            },
+            "verification": "unverified",
+            "uncertainty": "TEST ONLY: no scientific interpretation has been evaluated."
+          }
+        ],
+        "expected_outputs": [],
+        "limitations": "TEST ONLY: no execution or outcome is asserted.",
+        "commitment": "not_a_commitment"
+      }
+    ]
+  }
+}

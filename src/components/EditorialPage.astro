@@ -1,0 +1,14 @@
+---
+import Base from "../layouts/Base.astro";
+import PageIntro from "./PageIntro.astro";
+import ScienceNavigation from "./ScienceNavigation.astro";
+import { editorialPages } from "../data/portal";
+interface Props { page: keyof typeof editorialPages }
+const page = editorialPages[Astro.props.page];
+---
+<Base title={page.title} description={page.description}>
+  <PageIntro title={page.title} eyebrow={page.eyebrow} description={page.description} />
+  <ScienceNavigation />
+  <section class="empty-state"><span class="badge draft">Awaiting scientific review</span><h2 style="margin-top:1rem">{page.emptyTitle}</h2><p>{page.emptyText}</p><a href="/about">Read the editorial method →</a></section>
+  <section><h2>Keep exploring</h2><div class="card-grid"><article class="card"><p class="eyebrow">By date</p><h3><a href="/program">Return to the workshop program</a></h3><p>Browse the verified session schedule across all five days.</p></article><article class="card"><p class="eyebrow">By discussion</p><h3><a href="/videos">Explore video highlights</a></h3><p>One supplied highlight is available. Reviewed scientific connections are in preparation.</p></article><article class="card"><p class="eyebrow">From questions to methods</p><h3><a href="/actions">Research Action Roadmap</a></h3><p>Explore the interface for illustrative research workflows.</p></article></div></section>
+</Base>
