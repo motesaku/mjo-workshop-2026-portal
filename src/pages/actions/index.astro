@@ -6,11 +6,16 @@ import RelatedVideos from "../../components/RelatedVideos.astro";
 import ClaimEntry from "../../components/ClaimEntry.astro";
 import RelationshipBadge from "../../components/RelationshipBadge.astro";
 import ThemeReferences from "../../components/ThemeReferences.astro";
+import DependencyGraph from "../../components/DependencyGraph.astro";
+import { PILOTS, PILOT_STATUS, DEPENDENCIES, EXTERNAL_PREREQUISITES, PARALLEL_START, PRIORITIZATION_CRITERIA_V2, PILOT_ASSESSMENTS, ASSESSMENT_LEVELS } from "../../science/phase9/roadmap.mjs";
 import { loadThemeReview } from "../../science/theme-review";
 import {
 	priorityAreas, areaIssueIds, getIssue, actionForIssue, actionChain, videosForIssues, getClaim,
-	phase8Label, PRIORITIZATION_CRITERIA, PRIORITIZATION_NOTE, ROADMAP_STATUS, type Claim,
+	phase8Label, phase9Label, getActionById, PRIORITIZATION_CRITERIA, PRIORITIZATION_NOTE, ROADMAP_STATUS, type Claim,
 } from "../../science/phase8";
+const draft9 = phase9Label();
+const actionTitle = (id: string) => getActionById(id)?.title ?? id;
+const actionHref = (id: string) => `/actions/${id.replace("action-", "")}`;
 const areas = priorityAreas();
 const review = loadThemeReview();
 const draft = phase8Label();
@@ -23,7 +28,7 @@ const unresolvedOf = (issueId: string) => {
 <Base title="Research Action Roadmap" description="Four strategic research areas built from the workshop's scientific questions, with twelve illustrative implementation workflows.">
   <PageIntro title="Research Action Roadmap" eyebrow="From questions to possible research" description="Four strategic research areas defined by the scientific questions they address. The twelve detailed workflows remain available as possible implementation routes, in which AI agents are tools rather than objectives." />
   <ContextNote label="Editorial proposal">{ROADMAP_STATUS} Not commitments, owners or deadlines.</ContextNote>
-  <nav class="area-toc" aria-label="Priority areas">{areas.map((area) => <a href={`#${area.id}`}><span>{area.numeral}</span>{area.title}</a>)}<a href="#workflows"><span>+</span>All 12 workflows</a><a href="#prioritization"><span>?</span>Prioritization criteria</a></nav>
+  <nav class="area-toc" aria-label="Priority areas">{areas.map((area) => <a href={`#${area.id}`}><span>{area.numeral}</span>{area.title}</a>)}<a href="#pilots"><span>P</span>Three pilot projects</a><a href="#dependencies"><span>→</span>Research dependencies</a><a href="#workflows"><span>+</span>All 12 workflows</a><a href="#prioritization"><span>?</span>Prioritization criteria</a></nav>
 
   <section class="chain-explainer" aria-label="How each investigation is structured">
     <h2>How each investigation is structured</h2>
@@ -86,6 +91,41 @@ const unresolvedOf = (issueId: string) => {
     );
   })}
 
+  <section id="pilots">
+    <p class="eyebrow">Phase 9 · Editorial proposal</p>
+    <h2>Three candidate pilot projects</h2>
+    <p class="lead-sm">{PILOT_STATUS}</p>
+    <p class="small">Navigation: Research area → Pilot project → Scientific question → Evidence → Existing workflow.</p>
+    <div class="pilot-grid">
+      {PILOTS.map((pilot) => (
+        <article class="pilot-card" id={pilot.id}>
+          <p class="eyebrow">Pilot {pilot.letter} · {pilot.areas.map((a) => areas.find((x) => x.id === a)?.shortTitle).join(" · ")}</p>
+          <h3><a href={`/actions/pilots/${pilot.slug}`}>{pilot.title}</a></h3>
+          <p>{pilot.objective}</p>
+          <p class="small">Questions: {pilot.questions.map((q, i) => <>{i > 0 && " · "}<a href={`/questions/themes/${q}`}>{q.toUpperCase()}</a></>)}</p>
+          <p class="small">Workflows: {pilot.workflows.map((w, i) => <>{i > 0 && " · "}<a href={actionHref(w)}>{actionTitle(w)}</a></>)}</p>
+          <a href={`/actions/pilots/${pilot.slug}`}>Hypotheses, data, metrics and 90-day plan →</a>
+        </article>
+      ))}
+    </div>
+    <p class="small"><span class="tag">New research proposal</span> {draft9.short}. No data access or computing resources are assumed.</p>
+  </section>
+
+  <section id="dependencies">
+    <h2>Research dependencies</h2>
+    <p class="lead-sm">Some workflows must come first: definitions before lifecycle statistics, agreed diagnostics before interpreting skill differences, independence checks before judging generalization, process budgets before mechanism claims, and a defined hazard or decision target before regional value is assessed. Others can proceed in parallel.</p>
+    <div class="dep-scroll"><DependencyGraph /></div>
+    <h3>Can start in parallel</h3>
+    <p>{PARALLEL_START.map((id, i) => <>{i > 0 && " · "}<a href={actionHref(id)}>{actionTitle(id)}</a></>)}</p>
+    <details class="area-details" open><summary>All prerequisite relations ({DEPENDENCIES.length})</summary>
+      <ul class="dep-list">{DEPENDENCIES.map((d) => <li><a href={actionHref(d.from)}>{actionTitle(d.from)}</a> → <a href={actionHref(d.to)}>{actionTitle(d.to)}</a> <span class:list={["state", d.strength === "required" ? "state-recorded" : "state-partial"]}>{d.strength}</span><span class="small block">{d.reason}</span></li>)}</ul>
+    </details>
+    <details class="area-details"><summary>Prerequisites outside the twelve workflows</summary>
+      <ul class="dep-list">{Object.entries(EXTERNAL_PREREQUISITES).map(([id, items]) => <li><a href={actionHref(id)}>{actionTitle(id)}</a><span class="small block">{items.join("; ")}. Not assumed to be available.</span></li>)}</ul>
+    </details>
+    <p class="small"><span class="tag">Editorial synthesis</span> {draft9.short}. Dependencies are derived from each workflow's own steps and evaluation criteria.</p>
+  </section>
+
   <section id="workflows">
     <h2>Detailed implementation workflows</h2>
     <p>The twelve original workflows, grouped by area. Each is an illustrative sketch of how researchers might implement an investigation with auditable AI-agent support.</p>
@@ -106,7 +146,14 @@ const unresolvedOf = (issueId: string) => {
 
   <section id="prioritization">
     <h2>A qualitative prioritization framework</h2>
-    <p>Readers planning their own work may weigh the investigations above against four criteria.</p>
+    <p>The three pilots assessed against six criteria. Levels are qualitative; where evidence is unavailable the criterion is marked unknown. No numerical scores are assigned.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th scope="col">Criterion</th>{PILOTS.map((p) => <th scope="col"><a href={`/actions/pilots/${p.slug}`}>Pilot {p.letter}</a></th>)}</tr></thead>
+        <tbody>{PRIORITIZATION_CRITERIA_V2.map((c) => <tr><th scope="row">{c.label}</th>{PILOTS.map((p) => { const a = (PILOT_ASSESSMENTS as Record<string, Record<string, { level: keyof typeof ASSESSMENT_LEVELS; text: string }>>)[p.id][c.id]; return <td><span class:list={["level", `level-${a.level}`]}>{ASSESSMENT_LEVELS[a.level]}</span><p class="small">{a.text}</p></td>; })}</tr>)}</tbody>
+      </table>
+    </div>
+    <h3>Questions for weighing the twelve workflows</h3>
     <dl class="method-list">{PRIORITIZATION_CRITERIA.map((c) => <><dt>{c.label}</dt><dd>{c.question}</dd></>)}</dl>
     <p class="notice">{PRIORITIZATION_NOTE}</p>
   </section>

@@ -1,0 +1,104 @@
+---
+import Base from "../../../layouts/Base.astro";
+import PageIntro from "../../../components/PageIntro.astro";
+import ContextNote from "../../../components/ContextNote.astro";
+import Journey from "../../../components/Journey.astro";
+import ClaimEntry from "../../../components/ClaimEntry.astro";
+import ThemeReferences from "../../../components/ThemeReferences.astro";
+import { loadThemeReview } from "../../../science/theme-review";
+import { priorityAreas, getIssue, getActionById, basisClaims, basisSourceLabels, phase9Label } from "../../../science/phase8";
+import { PILOTS, PILOT_STATUS, PILOT_ASSESSMENTS, PRIORITIZATION_CRITERIA_V2, ASSESSMENT_LEVELS, DEPENDENCIES } from "../../../science/phase9/roadmap.mjs";
+const pilot = PILOTS.find((p) => p.slug === Astro.params.pilot);
+if (!pilot) return Astro.rewrite("/404");
+const review = loadThemeReview();
+const draft = phase9Label();
+const areas = priorityAreas().filter((a) => pilot.areas.includes(a.id));
+const actionHref = (id: string) => `/actions/${id.replace("action-", "")}`;
+const actionTitle = (id: string) => getActionById(id)?.title ?? id;
+const from = (ids: string[]) => basisSourceLabels(ids).map((s) => s.label).join("; ");
+const prerequisites = DEPENDENCIES.filter((d) => pilot.workflows.includes(d.to) && !pilot.workflows.includes(d.from));
+const internal = DEPENDENCIES.filter((d) => pilot.workflows.includes(d.to) && pilot.workflows.includes(d.from));
+const assessment = (PILOT_ASSESSMENTS as Record<string, Record<string, { level: keyof typeof ASSESSMENT_LEVELS; text: string }>>)[pilot.id];
+const evidenceRows = basisClaims(pilot.evidence);
+const refIds = [...new Set([...evidenceRows.flatMap((r) => r.claim.evidence_ids ?? []), ...basisClaims(pilot.hypotheses.flatMap((h) => h.basis)).flatMap((r) => r.claim.evidence_ids ?? [])])];
+const extra = pilot as unknown as { protocol?: { title: string; text: string }[]; components?: { title: string; text: string }[]; dimensions?: string[] };
+---
+<Base title={`Pilot ${pilot.letter} · ${pilot.title}`} description={pilot.objective}>
+  <PageIntro title={pilot.title} eyebrow={`Candidate pilot project ${pilot.letter} · Editorial proposal`} description={pilot.objective} />
+  <Journey
+    label="From research area to existing workflow"
+    steps={[
+      { label: areas[0] ? `Research area ${areas[0].numeral}` : "Research roadmap", href: areas[0] ? `/actions#${areas[0].id}` : "/actions" },
+      { label: `Pilot ${pilot.letter}`, current: true },
+      { label: `${pilot.questions[0].toUpperCase()} · Scientific question`, href: `/questions/themes/${pilot.questions[0]}` },
+      { label: "Evidence", href: "#evidence" },
+      { label: "Existing workflow", href: actionHref(pilot.workflows[0]) },
+    ]}
+  />
+  <ContextNote label="Editorial proposal">{PILOT_STATUS}</ContextNote>
+  <div class="content-columns">
+    <div class="reading">
+      <section id="status"><h2>Starting point</h2><p>{pilot.status}</p></section>
+      <section id="hypotheses">
+        <h2>Testable hypotheses</h2>
+        <dl class="method-list">{pilot.hypotheses.map((h) => <><dt id={`h-${h.id.toLowerCase()}`}>{h.id}</dt><dd>{h.text}<span class="small block">Motivated by: {from(h.basis)}</span></dd></>)}</dl>
+      </section>
+      {extra.dimensions && <section id="dimensions"><h2>Candidate dimensions</h2><ul>{extra.dimensions.map((d) => <li>{d}</li>)}</ul></section>}
+      {extra.protocol && <section id="protocol"><h2>Reproducible comparison protocol</h2><dl class="method-list">{extra.protocol.map((p) => <><dt>{p.title}</dt><dd>{p.text}</dd></>)}</dl></section>}
+      {extra.components && <section id="components"><h2>Question-driven gap analysis</h2><dl class="method-list">{extra.components.map((p) => <><dt>{p.title}</dt><dd>{p.text}</dd></>)}</dl></section>}
+      <section id="design">
+        <h2>Research design</h2>
+        <dl class="method-list">
+          <dt>Required datasets (not assumed to be accessible)</dt><dd><ul>{pilot.data.map((d) => <li>{d}</li>)}</ul></dd>
+          <dt>Required processing tools</dt><dd><ul>{pilot.tools.map((d) => <li>{d}</li>)}</ul></dd>
+          <dt>Event or case classification</dt><dd>{pilot.classification}</dd>
+          <dt>Evaluation metrics</dt><dd><ul>{pilot.metrics.map((d) => <li>{d}</li>)}</ul></dd>
+          <dt>Uncertainty estimation</dt><dd>{pilot.uncertainty}</dd>
+          <dt>Minimum viable experiment</dt><dd>{pilot.mve}</dd>
+          <dt>Scientific evaluation criteria</dt><dd><ul>{pilot.criteria.map((d) => <li>{d}</li>)}</ul></dd>
+          <dt>Expected outputs</dt><dd><ul>{pilot.outputs.map((d) => <li>{d}</li>)}</ul></dd>
+          <dt>Main risks</dt><dd><ul>{pilot.risks.map((d) => <li>{d}</li>)}</ul></dd>
+        </dl>
+      </section>
+      <section id="plan">
+        <h2>Planning horizons</h2>
+        <p class="small">Planning horizons, not promised completion dates.</p>
+        <div class="plan-grid">
+          <article><h4>First 30 days</h4><ul>{pilot.plan.d30.map((d) => <li>{d}</li>)}</ul></article>
+          <article><h4>Days 31–60</h4><ul>{pilot.plan.d60.map((d) => <li>{d}</li>)}</ul></article>
+          <article><h4>Days 61–90</h4><ul>{pilot.plan.d90.map((d) => <li>{d}</li>)}</ul></article>
+        </div>
+      </section>
+      <section id="collaboration"><h2>Potential collaboration roles</h2><p class="small">Roles that such a project would need. No participant has been asked or assigned.</p><ul>{pilot.roles.map((r) => <li>{r}</li>)}</ul></section>
+      <section id="dependencies">
+        <h2>Dependencies on other work</h2>
+        <ul class="dep-list">
+          {internal.map((d) => <li>Within this pilot: <a href={actionHref(d.from)}>{actionTitle(d.from)}</a> → <a href={actionHref(d.to)}>{actionTitle(d.to)}</a> ({d.strength})<span class="small block">{d.reason}</span></li>)}
+          {prerequisites.map((d) => <li>From outside: <a href={actionHref(d.from)}>{actionTitle(d.from)}</a> → <a href={actionHref(d.to)}>{actionTitle(d.to)}</a> ({d.strength})<span class="small block">{d.reason}</span></li>)}
+        </ul>
+        {internal.length + prerequisites.length === 0 && <p>No prerequisite among the twelve workflows; this pilot can start in parallel.</p>}
+      </section>
+      <section id="assessment">
+        <h2>Qualitative assessment</h2>
+        <dl class="audit-list">{PRIORITIZATION_CRITERIA_V2.map((c) => <><dt>{c.label}: <span class:list={["level", `level-${assessment[c.id].level}`]}>{ASSESSMENT_LEVELS[assessment[c.id].level]}</span></dt><dd>{assessment[c.id].text}</dd></>)}</dl>
+      </section>
+      <section id="evidence">
+        <h2>Evidence behind the pilot</h2>
+        <p class="small">Workshop statements that motivate this pilot. They motivate the questions; they are not results of the pilot.</p>
+        {evidenceRows.map((row) => <ClaimEntry claim={row.claim} context={row.issueId.toUpperCase()} />)}
+      </section>
+      <p class="small"><span class="tag">New research proposal</span> {draft.long}</p>
+    </div>
+    <aside>
+      <h2>Trace the context</h2>
+      <dl class="metadata">
+        <dt>Research area</dt><dd>{areas.map((a, i) => <>{i > 0 && " · "}<a href={`/actions#${a.id}`}>{a.numeral} · {a.title}</a></>)}</dd>
+        <dt>Scientific questions</dt><dd>{pilot.questions.map((q, i) => <>{i > 0 && " · "}<a href={`/questions/themes/${q}`}>{q.toUpperCase()} · {getIssue(q)?.title}</a></>)}</dd>
+        <dt>Existing workflows</dt><dd>{pilot.workflows.map((w, i) => <>{i > 0 && " · "}<a href={actionHref(w)}>{actionTitle(w)}</a></>)}</dd>
+        <dt>Other pilots</dt><dd>{PILOTS.filter((p) => p.id !== pilot.id).map((p, i) => <>{i > 0 && " · "}<a href={`/actions/pilots/${p.slug}`}>Pilot {p.letter}</a></>)}</dd>
+        <dt>Nature of this page</dt><dd>Editorial proposal; not a commitment</dd>
+      </dl>
+    </aside>
+  </div>
+  {review && <ThemeReferences review={review} ids={refIds} />}
+</Base>

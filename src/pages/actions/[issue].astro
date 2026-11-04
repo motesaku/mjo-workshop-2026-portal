@@ -23,7 +23,7 @@ const draft = phase8Label();
     label="From question to possible research"
     steps={[
       { label: `${issue.id.toUpperCase()} · Scientific question`, href: `/questions/themes/${issue.id}` },
-      { label: "Video evidence", href: videos[0] ? `/videos/${videos[0].highlight.slug}` : undefined },
+      { label: "Related video highlights", href: videos[0] ? `/videos/${videos[0].highlight.slug}` : undefined },
       { label: "This research action", current: true },
       { label: area ? `Priority area ${area.numeral}` : "Research roadmap", href: area ? `/actions#${area.id}` : "/actions" },
     ]}
