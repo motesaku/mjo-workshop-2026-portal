@@ -163,3 +163,44 @@ export const SUMMARY_STATUS_LABELS: Record<SummaryStatus, { badge: string; text:
 };
 
 export const isRecordField = (field: string) => RECORD_FIELDS.has(field);
+
+// ---- 8C: classification layer -------------------------------------------
+import { RELATIONSHIP_TYPES, ISSUE_RELATIONSHIPS, DIVERGENCE_ANALYSES, ALIGNMENT_ANALYSES, INDEPENDENCE_NOTE } from "./phase8/editorial-classification.mjs";
+export { RELATIONSHIP_TYPES, INDEPENDENCE_NOTE };
+
+export type RelationshipKey = keyof typeof RELATIONSHIP_TYPES;
+export interface RelationshipType { label: string; code: string; genuineDisagreement: boolean | null; description: string }
+export interface IssueRelationship { primary: RelationshipKey; secondary: RelationshipKey[]; note: string; basis: string[] }
+export interface DivergenceAnalysis {
+	reassessment: Basis;
+	positions: { label: string; claimIds: string[] }[];
+	nature: Basis;
+	comparisonClaim: string;
+	evidence: string[];
+	compatibility: Basis;
+	distinguishing: string[];
+	uncertainty: string[];
+}
+export interface AlignmentAnalysis { direction: string; support: string[]; limitations: string; strongerConfidence: Basis }
+
+export const relationshipType = (key: RelationshipKey) => RELATIONSHIP_TYPES[key] as RelationshipType;
+export const issueRelationship = (issueId: string) => (ISSUE_RELATIONSHIPS as Record<string, IssueRelationship>)[issueId];
+export const divergenceAnalysis = (issueId: string) => (DIVERGENCE_ANALYSES as Record<string, DivergenceAnalysis>)[issueId];
+export const alignmentAnalysis = (issueId: string) => (ALIGNMENT_ANALYSES as Record<string, AlignmentAnalysis>)[issueId];
+
+/** Plain-language verdict: is this a genuine disagreement? */
+export function disagreementVerdict(issueId: string): "genuine" | "partial" | "complementary" | "undetermined" {
+	const rel = issueRelationship(issueId);
+	if (!rel) return "undetermined";
+	const primary = relationshipType(rel.primary).genuineDisagreement;
+	const secondary = rel.secondary.some((k) => relationshipType(k).genuineDisagreement);
+	if (primary === true) return "genuine";
+	if (primary === false) return secondary ? "partial" : "complementary";
+	return "undetermined";
+}
+export const VERDICT_LABELS = {
+	genuine: "Genuine scientific disagreement",
+	partial: "Mostly complementary, with a residual disagreement",
+	complementary: "Complementary approaches, not disagreement",
+	undetermined: "Relationship not yet determinable",
+} as const;

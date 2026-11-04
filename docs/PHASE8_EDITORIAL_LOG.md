@@ -67,3 +67,36 @@ Editorial framing of scientific significance, `ISSUE_SIGNIFICANCE` in `editorial
 ### Action cross-links (8)
 
 Each existing action keeps its primary question. Added "also informs" links: action Q03 → Q01; Q02 → Q09; Q08 → Q07; Q09 → Q07; Q06 → Q08; Q06 → Q11; Q10 → Q03; Q12 → Q06. Rationales and basis claims are in `ACTION_CROSS_LINKS`.
+
+## 8C — Classification layer (2026-11-04)
+
+File: `src/science/phase8/editorial-classification.mjs`. Primary classes in the package are unchanged.
+
+### Relationship subcategories (all 12 questions)
+
+| Q | Primary class (unchanged) | Relationship among positions | Basis |
+| --- | --- | --- | --- |
+| Q01 | Diverging perspectives | **B · Different evaluation standards** (secondary: A competing hypotheses) | q01-c07, q01-c01 |
+| Q02 | Open questions | C · Complementary perspectives | q02-c07 |
+| Q03 | Diverging perspectives | **A · Competing hypotheses** | q03-c06, q03-c05 |
+| Q04 | Open questions | Not yet determinable | q04-c06 |
+| Q05 | Open questions | A · Competing hypotheses (candidate pathways that may interact) | q05-c05 |
+| Q06 | Emerging alignment | C · Complementary perspectives | q06-c07 |
+| Q07 | Diverging perspectives | **C · Complementary perspectives** (secondary: B) | q07-c07, q07-c05 |
+| Q08 | Emerging alignment | C · Complementary (secondary: B — common vs AI-specific metrics) | q08-c07, q08-c04 |
+| Q09 | Open questions | A · Competing hypotheses (unranked candidates) | q09-c08, q09-c05, q09-c06 |
+| Q10 | Open questions | C · Complementary (target-dependent trade-off) | q10-c07, q10-c06 |
+| Q11 | Emerging alignment | C · Complementary perspectives | q11-c07 |
+| Q12 | Open questions | Not yet determinable (different quantities) | q12-c07 |
+
+A and B count as genuine scientific disagreement; C does not.
+
+### Reassessment of Q01, Q03 and Q07
+
+- **Q01** stays under Diverging Perspectives; subcategory B. New text: nature of the difference (basis q01-c07, c01, c04, c05) and compatibility (q01-c07, c06). Distinguishing tests reuse q01-c09 and q01-c15; uncertainty reuses q01-c10.
+- **Q03** stays under Diverging Perspectives; subcategory A. Temperature contributions (q03-c02) are presented as a separate scope question, not a third pathway; the withheld percentages remain withheld. New text: nature (q03-c06, c04, c05, c08) and compatibility (q03-c05, c07).
+- **Q07** stays under Diverging Perspectives because the final-day record explicitly contrasted the positions (q07-c01), but its subcategory is **complementary perspectives** with a residual evaluation-standard difference and an empirical dispute on observation sufficiency (q07-c06, q07-c07). New text: nature (q07-c07, c04, c05, c06) and compatibility (q07-c07, c08).
+
+### Emerging alignment (Q06, Q08, Q11)
+
+Each page now shows the direction (existing alignment claim), supporting workshop records, contribution groups (overlapping breakout/plenary/extended minutes and final-day/closing records counted once), the existing limitation claim, and a new "what would strengthen confidence" statement (Q06: q06-c15, c09 · Q08: q08-c08, c15 · Q11: q11-c09, c15). No agreement score is computed.

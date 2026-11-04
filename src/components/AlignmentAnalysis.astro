@@ -1,0 +1,31 @@
+---
+// Emerging-alignment assessment: direction, contributions, independence, limits (Phase 8C).
+import ClaimEntry from "./ClaimEntry.astro";
+import { alignmentAnalysis, contributionGroups, getClaim, phase8Label, sourceLabel, INDEPENDENCE_NOTE, type Claim } from "../science/phase8";
+import type { ReviewIssue } from "../science/theme-review";
+interface Props { issue: ReviewIssue }
+const { issue } = Astro.props;
+const a = alignmentAnalysis(issue.id);
+const claim = (id: string) => getClaim(id)?.claim as Claim | undefined;
+const groups = a ? contributionGroups([a.direction, ...a.support]) : [];
+const draft = phase8Label();
+---
+{a && (
+  <section id="alignment" class="analysis">
+    <h2>Assessing the emerging alignment</h2>
+    <p class="small">Alignment here is a direction recurring across records in this personal reading. It is not formal consensus, and no agreement score is computed.</p>
+    <ol class="analysis-steps">
+      <li><h3>Direction of possible convergence</h3>{claim(a.direction) && <ClaimEntry claim={claim(a.direction)!} />}</li>
+      <li><h3>Supporting contributions</h3>{a.support.map((id) => { const c = claim(id); return c && <ClaimEntry claim={c} />; })}</li>
+      <li>
+        <h3>Are the contributions independent?</h3>
+        <ul class="independence">
+          {groups.map((g) => <li><strong>{g.label}</strong>{g.overlapReason ? <> — counted once: {g.overlapReason} <span class="small">({g.sourceIds.map(sourceLabel).join("; ")})</span></> : <span class="small"> — separate programme talk</span>}</li>)}
+        </ul>
+        <p class="small">{INDEPENDENCE_NOTE}</p>
+      </li>
+      <li><h3>Remaining limitations</h3>{claim(a.limitations) && <ClaimEntry claim={claim(a.limitations)!} />}</li>
+      <li><h3>What would strengthen confidence?</h3><p>{a.strongerConfidence.text}</p><p class="small"><span class="tag">Editorial synthesis</span> {draft.long}</p></li>
+    </ol>
+  </section>
+)}

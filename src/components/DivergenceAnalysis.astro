@@ -1,0 +1,34 @@
+---
+// Eight-part structure for a diverging-perspective question (Phase 8C).
+import ClaimEntry from "./ClaimEntry.astro";
+import RelationshipBadge from "./RelationshipBadge.astro";
+import { divergenceAnalysis, getClaim, phase8Label, disagreementVerdict, VERDICT_LABELS, type Claim } from "../science/phase8";
+import type { ReviewIssue } from "../science/theme-review";
+interface Props { issue: ReviewIssue }
+const { issue } = Astro.props;
+const a = divergenceAnalysis(issue.id);
+const claim = (id: string) => getClaim(id)?.claim as Claim | undefined;
+const draft = phase8Label();
+const verdict = VERDICT_LABELS[disagreementVerdict(issue.id)];
+---
+{a && (
+  <section id="analysis" class="analysis">
+    <h2>Structure of the difference</h2>
+    <div class="analysis-head">
+      <p class="eyebrow">{verdict}</p>
+      <RelationshipBadge issueId={issue.id} />
+      <p class="small"><span class="tag">Editorial synthesis</span> {a.reassessment.text} {draft.short}.</p>
+    </div>
+    <ol class="analysis-steps">
+      <li><h3>Central scientific question</h3><p>{issue.question}</p></li>
+      {a.positions.map((pos, i) => (
+        <li><h3>{i < 2 ? `Position ${String.fromCharCode(65 + i)}: ` : ""}{pos.label}</h3>{pos.claimIds.map((id) => { const c = claim(id); return c && <ClaimEntry claim={c} />; })}</li>
+      ))}
+      <li><h3>Nature of the difference</h3><p>{a.nature.text}</p><p class="small"><span class="tag">Editorial synthesis</span> {draft.long}</p>{claim(a.comparisonClaim) && <details class="nested"><summary>Existing editorial comparison (personal synthesis v1.0.0)</summary><ClaimEntry claim={claim(a.comparisonClaim)!} /></details>}</li>
+      <li><h3>Supporting evidence</h3><p class="small">Workshop records paraphrased from the minutes. Plenary reports may repeat breakout material and are not additional votes.</p>{a.evidence.map((id) => { const c = claim(id); return c && <ClaimEntry claim={c} />; })}</li>
+      <li><h3>Compatibility or contradiction</h3><p>{a.compatibility.text}</p><p class="small"><span class="tag">Editorial synthesis</span> {draft.short}.</p></li>
+      <li><h3>What would distinguish the interpretations?</h3>{a.distinguishing.map((id) => { const c = claim(id); return c && <ClaimEntry claim={c} />; })}</li>
+      <li><h3>Remaining uncertainty</h3>{a.uncertainty.map((id) => { const c = claim(id); return c && <ClaimEntry claim={c} />; })}</li>
+    </ol>
+  </section>
+)}

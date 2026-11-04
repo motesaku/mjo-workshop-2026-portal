@@ -175,3 +175,51 @@ test("contribution grouping counts overlapping discussion records once", () => {
 	assert.ok(groups.some((g) => g.key === "final-day-discussion"));
 	for (const claimRow of pkg.issues.flatMap(issueClaims)) assert.ok(index.claims.has(claimRow.claim.claim_id));
 });
+
+// ---- 8C classification layer ----
+const cls = await import("../src/science/phase8/editorial-classification.mjs");
+
+test("every question has a relationship subcategory with traceable basis", () => {
+	assert.deepEqual(Object.keys(cls.ISSUE_RELATIONSHIPS).sort(), pkg.issues.map((i) => i.id).sort());
+	for (const [id, rel] of Object.entries(cls.ISSUE_RELATIONSHIPS)) {
+		assert.ok(cls.RELATIONSHIP_TYPES[rel.primary], `${id}: ${rel.primary}`);
+		for (const k of rel.secondary) { assert.ok(cls.RELATIONSHIP_TYPES[k]); assert.notEqual(k, rel.primary); }
+		for (const b of rel.basis) assert.ok(known(b), `${id}: ${b}`);
+		assert.ok(rel.basis.some((b) => b.startsWith(id + "-")), `${id}: basis must include its own claims`);
+	}
+	// Q07 reassessment: compatible objectives are not counted as primary disagreement.
+	assert.equal(cls.ISSUE_RELATIONSHIPS.q07.primary, "complementary_perspectives");
+	assert.equal(cls.ISSUE_RELATIONSHIPS.q01.primary, "different_evaluation_standards");
+	assert.equal(cls.ISSUE_RELATIONSHIPS.q03.primary, "competing_hypotheses");
+	assert.equal(cls.RELATIONSHIP_TYPES.complementary_perspectives.genuineDisagreement, false);
+});
+
+test("divergence and alignment analyses cover the right questions and cite existing claims", () => {
+	const diverging = pkg.issues.filter((i) => i.classification === "diverging perspectives").map((i) => i.id).sort();
+	const aligning = pkg.issues.filter((i) => i.classification === "emerging alignment").map((i) => i.id).sort();
+	assert.deepEqual(Object.keys(cls.DIVERGENCE_ANALYSES).sort(), diverging);
+	assert.deepEqual(Object.keys(cls.ALIGNMENT_ANALYSES).sort(), aligning);
+	for (const [id, a] of Object.entries(cls.DIVERGENCE_ANALYSES)) {
+		const ids = [...a.positions.flatMap((p) => p.claimIds), a.comparisonClaim, ...a.evidence, ...a.distinguishing, ...a.uncertainty, ...a.nature.basis, ...a.compatibility.basis, ...a.reassessment.basis];
+		for (const c of ids) assert.ok(index.claims.has(c), `${id}: ${c}`);
+		assert.ok(a.positions.length >= 2, `${id}: two positions`);
+		for (const p of a.positions) for (const c of p.claimIds) assert.equal(index.claims.get(c).issueId, id);
+		for (const c of a.evidence) assert.equal(index.claims.get(c).field, "records", `${id}: evidence must be workshop records`);
+		assert.ok(a.distinguishing.some((c) => index.claims.get(c).field === "proposal.discriminating_result"));
+	}
+	for (const [id, a] of Object.entries(cls.ALIGNMENT_ANALYSES)) {
+		assert.equal(index.claims.get(a.direction).field, "emerging_alignment", id);
+		assert.equal(index.claims.get(a.limitations).field, "limitations", id);
+		for (const c of [...a.support, ...a.strongerConfidence.basis]) assert.ok(index.claims.has(c), `${id}: ${c}`);
+		for (const c of a.support) assert.equal(index.claims.get(c).field, "records", `${id}: ${c}`);
+		const groups = index.contributionGroups([a.direction, ...a.support]);
+		const sourcesInGroups = groups.flatMap((g) => g.sourceIds);
+		assert.equal(new Set(sourcesInGroups).size, sourcesInGroups.length, `${id}: a source belongs to one group`);
+	}
+	// Q08: final-day and closing records collapse into one contribution.
+	const q08 = index.contributionGroups([cls.ALIGNMENT_ANALYSES.q08.direction, ...cls.ALIGNMENT_ANALYSES.q08.support]);
+	assert.deepEqual(q08.find((g) => g.key === "final-day-discussion").sourceIds.sort(), ["src-closing", "src-final"]);
+	const text = readFileSync(new URL("../src/science/phase8/editorial-classification.mjs", import.meta.url), "utf8");
+	assert.doesNotMatch(text, /[぀-ヿ㐀-鿿]/);
+	assert.doesNotMatch(text, /\b(consensus was reached|the workshop agreed|proves|settled)\b/i);
+});

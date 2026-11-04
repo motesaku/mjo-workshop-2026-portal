@@ -1,0 +1,12 @@
+---
+import { issueRelationship, relationshipType } from "../science/phase8";
+interface Props { issueId: string; withNote?: boolean }
+const { issueId, withNote = false } = Astro.props;
+const rel = issueRelationship(issueId);
+---
+{rel && (
+  <div class="relationship">
+    <p class="relationship-badges"><span class:list={["rel-badge", `rel-${rel.primary}`]} title={relationshipType(rel.primary).description}>{relationshipType(rel.primary).code !== "–" && <b>{relationshipType(rel.primary).code}</b>}{relationshipType(rel.primary).label}</span>{rel.secondary.map((key) => <span class:list={["rel-badge", "rel-secondary", `rel-${key}`]} title={relationshipType(key).description}><b>{relationshipType(key).code}</b>{relationshipType(key).label} (secondary)</span>)}</p>
+    {withNote && <p class="small">{rel.note}</p>}
+  </div>
+)}

@@ -5,8 +5,11 @@ import ContextNote from '../../../components/ContextNote.astro';
 import ClaimEntry from '../../../components/ClaimEntry.astro';
 import RelatedVideos from '../../../components/RelatedVideos.astro';
 import ThemeReferences from '../../../components/ThemeReferences.astro';
+import RelationshipBadge from '../../../components/RelationshipBadge.astro';
+import DivergenceAnalysis from '../../../components/DivergenceAnalysis.astro';
+import AlignmentAnalysis from '../../../components/AlignmentAnalysis.astro';
 import { loadThemeReview, themeRoutes, CLASSIFICATION_ROUTES } from '../../../science/theme-review';
-import { actionsForIssue, issueSignificance, phase8Label, videosForIssue, withheldForIssue, sourceLabel, type Claim } from '../../../science/phase8';
+import { actionsForIssue, issueSignificance, phase8Label, videosForIssue, withheldForIssue, sourceLabel, divergenceAnalysis, alignmentAnalysis, disagreementVerdict, VERDICT_LABELS, type Claim } from '../../../science/phase8';
 import { issueClaims } from '../../../science/phase8/relations.mjs';
 const review = loadThemeReview();
 const issue = review?.issues.find(q => q.id === Astro.params.issue);
@@ -25,21 +28,28 @@ const why = issueSignificance(issue.id);
 const draft = phase8Label();
 const classHref = CLASSIFICATION_ROUTES[issue.classification] ?? '/questions';
 const primaryAction = actions.find(a => a.relation === 'primary')?.action;
+const divergence = divergenceAnalysis(issue.id);
+const alignmentView = alignmentAnalysis(issue.id);
 ---
 <Base title={issue.title} description={issue.question}>
   <PageIntro title={issue.title} eyebrow={`${issue.id.toUpperCase()} · Cross-session scientific question`} description={issue.question} />
   <ContextNote><a href={classHref}>{issue.classification}</a> (provisional editorial class) · Coverage: {issue.coverage}. Paraphrased from converted minutes; not a workshop consensus.</ContextNote>
-  <nav class="subnav" aria-label="On this page"><a href="#why">Why it matters</a><a href="#record">Workshop record</a>{comparison && <a href="#comparison">Comparison</a>}<a href="#videos">Video evidence</a><a href="#actions">Research actions</a><a href="#references">Sources</a></nav>
+  <nav class="subnav" aria-label="On this page"><a href="#why">Why it matters</a>{divergence ? <a href="#analysis">Structure of the difference</a> : <a href="#record">Workshop record</a>}{alignmentView && <a href="#alignment">Emerging alignment</a>}<a href="#videos">Video evidence</a><a href="#actions">Research actions</a><a href="#references">Sources</a></nav>
 
   {why && <section id="why"><h2>Why it matters</h2><p class="lead-sm">{why.text}</p><p class="small"><span class="tag">Editorial synthesis</span> {draft.long}</p></section>}
 
+  {!divergence && <section id="relationship"><h2>How the positions relate</h2><p class="eyebrow">{VERDICT_LABELS[disagreementVerdict(issue.id)]}</p><RelationshipBadge issueId={issue.id} withNote /><p class="small"><span class="tag">Editorial synthesis</span> {draft.short}. Subcategories are defined on the <a href="/questions#classification">Scientific Questions</a> page.</p></section>}
+
+  {divergence ? <DivergenceAnalysis issue={issue} /> : <>
   <section id="record"><h2>Workshop record</h2><p class="small">Edited paraphrases from converted minutes, selected for this personal report. Overlapping records are retained; they are not independent replications.</p>{issue.records.map(c => <ClaimEntry claim={c as Claim} />)}</section>
 
   {issue.positions && issue.positions.length > 0 && <section id="positions"><h2>Positions in dialogue</h2><p class="small">Positions are described without attribution to individual discussion participants.</p>{issue.positions.map(c => <ClaimEntry claim={c as Claim} />)}</section>}
   {comparison && <section id="comparison"><h2>Editorial comparison</h2><ClaimEntry claim={comparison} /></section>}
-  {alignment && <section id="alignment"><h2>Emerging alignment (provisional)</h2><ClaimEntry claim={alignment} /></section>}
+  {alignmentView ? <AlignmentAnalysis issue={issue} /> : alignment && <section id="alignment"><h2>Emerging alignment (provisional)</h2><ClaimEntry claim={alignment} /></section>}
   {unresolved.length > 0 && <section id="unresolved"><h2>Unresolved questions</h2>{unresolved.map(c => <ClaimEntry claim={c} />)}</section>}
-  {limitations && <section id="limitations"><h2>Limitations</h2><ClaimEntry claim={limitations} /></section>}
+  {limitations && !alignmentView && <section id="limitations"><h2>Limitations</h2><ClaimEntry claim={limitations} /></section>}
+  </>}
+  {divergence && alignment && <section id="alignment"><h2>Emerging alignment (provisional)</h2><ClaimEntry claim={alignment} /></section>}
 
   <section id="videos">
     <h2>Related video highlights</h2>
