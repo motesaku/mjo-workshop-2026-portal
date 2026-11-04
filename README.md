@@ -38,6 +38,7 @@ Participants may fork this project and rearrange pages, styling, and personal sy
 2. Replace authorship in `src/data/portal.ts`.
 3. Start blank with `examples/personal-synthesis.empty.json`, or adapt `examples/personal-synthesis.qoosaku-moteki.json`.
 4. Create **your own** Cloudflare D1/R2 and `wrangler.site.jsonc` (gitignored). Never reuse another person’s database UUID or encryption key.
+5. Before your Worker gets a public URL, protect it with Cloudflare Access and finish the EmDash setup wizard yourself. On an empty database, the first visitor to finish setup becomes administrator (`docs/FORKING.md`).
 
 Committed `wrangler.jsonc` is a **template without production resource IDs**.
 
@@ -57,8 +58,8 @@ npm run science:check
 npm run verify:local  # Requires the local dev server
 node scripts/verify-phase4-http.mjs
 node scripts/verify-phase6.mjs dev
-npm run build         # prefers wrangler.site.jsonc when present
-npm run deploy        # Cloudflare Worker; needs your bindings overlay
+npm run build         # reads wrangler.site.jsonc in place when present; never rewrites wrangler.jsonc
+npm run deploy        # Cloudflare Worker; refuses unless the build came from your complete overlay
 ```
 
 | Path | Purpose |

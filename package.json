@@ -13,12 +13,12 @@
   "scripts": {
     "dev": "astro dev --host 127.0.0.1",
     "dev:node": "astro dev --host 127.0.0.1 --config astro.config.node.mjs",
-    "build": "node scripts/with-site-wrangler.mjs npx astro build",
+    "build": "node scripts/with-site-wrangler.mjs build npx astro build",
     "build:node": "astro build --config astro.config.node.mjs",
     "preview": "astro preview --host 127.0.0.1",
     "start": "HOST=127.0.0.1 node --env-file=.env ./dist/server/entry.mjs",
-    "deploy": "node scripts/with-site-wrangler.mjs npx wrangler deploy",
-    "cf:dev": "node scripts/with-site-wrangler.mjs npx wrangler dev --ip 127.0.0.1 --port 8787",
+    "deploy": "node scripts/with-site-wrangler.mjs deploy npx wrangler deploy",
+    "cf:dev": "node scripts/with-site-wrangler.mjs local npx wrangler dev --ip 127.0.0.1 --port 8787",
     "typecheck": "astro check",
     "verify:local": "node scripts/verify-local.mjs",
     "test:science": "node --test tests/science.test.mjs",
@@ -45,6 +45,17 @@
     "node": "^24.22.2",
     "typescript": "^6.0.3",
     "wrangler": "^4.157.0"
+  },
+  "overrides": {
+    "emdash": {
+      "zod": "4.6.7"
+    },
+    "@emdash-cms/auth": {
+      "zod": "4.6.7"
+    },
+    "@emdash-cms/plugin-types": {
+      "zod": "4.6.7"
+    }
   },
   "engines": {
     "node": "^24.15.0"
