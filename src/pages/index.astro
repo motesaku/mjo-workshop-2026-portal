@@ -14,7 +14,7 @@ const linkedClips = highlights.filter((h) => issuesForVideo(h.slug).length > 0).
   <div class="meta-strip"><span>5 workshop days</span><span>6 program themes</span><span>{allIssues().length} scientific questions</span><span>{highlights.length} one-minute highlights ({linkedClips} linked to questions)</span><span>{priorityAreas().length} research areas · {allActions().length} workflows</span></div>
 
   <section aria-labelledby="ways-in"><div class="section-head"><h2 id="ways-in">Three ways into the workshop</h2></div><div class="card-grid">
-    <article class="card goal-card"><span class="card-number">01</span><h3><a href="/workshop-synthesis">Understand the scientific outcomes</a></h3><p>Seven insights, the disputes that remain open, and four directions for future research, each linked to its evidence.</p><a href="/workshop-synthesis">Workshop Synthesis →</a></article>
+    <article class="card goal-card"><span class="card-number">01</span><h3><a href="/workshop-synthesis">Understand the scientific outcomes</a></h3><p>{insights().length} insights, the disputes that remain open, four research areas and three candidate pilot projects, each linked to its evidence.</p><a href="/workshop-synthesis">Workshop Synthesis →</a></article>
     <article class="card goal-card"><span class="card-number">02</span><h3><a href="/videos">Explore supporting talks and highlights</a></h3><p>Follow the programme day by day, or watch one-minute highlights linked to the questions their talks inform.</p><a href="/videos">Video Highlights →</a> · <a href="/program">Program &amp; Sessions →</a></article>
     <article class="card goal-card"><span class="card-number">03</span><h3><a href="/actions">Investigate proposed future research</a></h3><p>Four strategic research areas built from the scientific questions, with testable hypotheses and illustrative workflows.</p><a href="/actions">Research Action Roadmap →</a></article>
   </div></section>
@@ -23,14 +23,14 @@ const linkedClips = highlights.filter((h) => issuesForVideo(h.slug).length > 0).
     <ol class="progression">
       <li><a href="/workshop-synthesis"><strong>Workshop Synthesis</strong><span>What was learned and what remains open</span></a></li>
       <li><a href="/questions"><strong>Scientific Questions</strong><span>Twelve questions, with the evidence and how positions relate</span></a></li>
-      <li><a href="/videos"><strong>Video Evidence</strong><span>Highlights from the talks and sessions behind each question</span></a></li>
+      <li><a href="/videos"><strong>Related Video Highlights</strong><span>One-minute clips from the talks and sessions whose minutes each question cites</span></a></li>
       <li><a href="/actions"><strong>Research Actions</strong><span>Objectives, hypotheses and possible workflows</span></a></li>
     </ol>
   </section>
 
   <section aria-labelledby="learned"><div class="section-head"><h2 id="learned">What we learned — at a glance</h2><a href="/workshop-synthesis#learned">Read the synthesis →</a></div>
     <ol class="glance">{insights().map((insight) => <li><a href={`/workshop-synthesis#${insight.id}`}>{insight.title}</a></li>)}</ol>
-    <p class="small">Editorial synthesis of reviewed minutes; not a workshop consensus.</p>
+    <p class="small">Editorial synthesis of converted, ASR-derived minutes (Phase 9 draft, awaiting the author&apos;s review); not a workshop consensus.</p>
   </section>
 
   <section><div class="section-head"><h2>A moment from the discussion</h2><a href="/videos">All highlights →</a></div><HighlightCard /></section>

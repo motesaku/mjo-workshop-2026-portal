@@ -1,6 +1,9 @@
 ---
 import type { ThemeReview } from '../science/theme-review';
-import { getEvidence, getSource, sourceLabel, type EvidenceRecord, type SourceRecord } from '../science/phase8';
+import { getEvidence, getSource, sourceLabel, sourceQualityOf, SOURCE_QUALITY, type EvidenceRecord, type SourceRecord } from '../science/phase8';
+import { phase9Evidence, phase9Sources } from '../science/phase9/provenance.mjs';
+const phase9Ids = new Set([...phase9Evidence.map(e => e.evidence_id), ...phase9Sources.map(s => s.source_id)]);
+const quality = (id: string) => SOURCE_QUALITY[sourceQualityOf(id) as keyof typeof SOURCE_QUALITY];
 interface Props { review: ThemeReview; ids: string[] }
 const { review, ids } = Astro.props;
 const evidence = [...new Set(ids)].map(getEvidence).filter((e): e is EvidenceRecord => !!e);
@@ -19,11 +22,11 @@ const dateLabel = (d: string | null) => d ? new Date(`${d}T12:00:00Z`).toLocaleD
   {sources.length > 0 && <>
     <h3>Workshop records cited ({sources.length})</h3>
     <p class="small">Each record is a private set of minutes kept offline; only edited paraphrases appear on this site. Discussion participants remain anonymous. Breakout, plenary and final-day records may describe the same discussion and are not independent votes.</p>
-    <div class="source-list">{sources.map(source => <article id={source.source_id}><h4>{sourceLabel(source.source_id)}</h4><p class="small">{dateLabel(source.session_date)} · {source.attribution_mode === 'named_talk' ? 'Programme talk' : 'Discussion record (unattributed)'} · Coverage: {source.coverage} · Independent source review: {source.source_review_status === 'not_established' ? 'not established' : source.source_review_status.replaceAll('_', ' ')}</p><p class="small">{source.limitations}</p></article>)}</div>
+    <div class="source-list">{sources.map(source => <article id={source.source_id}><h4>{sourceLabel(source.source_id)}</h4><p class="small">{dateLabel(source.session_date)} · {source.attribution_mode === 'named_talk' ? 'Programme talk' : 'Discussion record (unattributed)'} · Coverage: {source.coverage} · Independent source review: {source.source_review_status === 'not_established' ? 'not established' : source.source_review_status.replaceAll('_', ' ')}{phase9Ids.has(source.source_id) && ' · added in Phase 9'}</p><p class="small"><span title={quality(source.source_id).description}>Record type: {quality(source.source_id).label}.</span> {source.limitations}</p></article>)}</div>
   </>}
   {evidence.length > 0 && <details><summary>Claim-level source locators ({evidence.length})</summary>
-    <p class="small">Each identifier names a passage in a private record. Locators support editorial traceability; they are not a correctness proof and do not expose file hashes. Locators marked “supplied in Phase 8” were missing from the original public package.</p>
-    <dl>{evidence.map(e => <div id={e.evidence_id}><dt>{e.evidence_id}</dt><dd>{sourceLabel(e.source_id)} · {e.locator} · lines {e.line_start}–{e.line_end}{e.supplemental && ' · supplied in Phase 8'}</dd></div>)}</dl>
+    <p class="small">Each identifier names a passage in a private record. Locators support editorial traceability; they are not a correctness proof and do not expose file hashes. Locators marked “supplied in Phase 8” were missing from the original public package; those marked “added in Phase 9” cite sections of the minutes first used in Phase 9.</p>
+    <dl>{evidence.map(e => <div id={e.evidence_id}><dt>{e.evidence_id}</dt><dd>{sourceLabel(e.source_id)} · {e.locator} · lines {e.line_start}–{e.line_end}{e.supplemental && (phase9Ids.has(e.evidence_id) ? ' · added in Phase 9' : ' · supplied in Phase 8')}</dd></div>)}</dl>
   </details>}
 </section>
 <style>

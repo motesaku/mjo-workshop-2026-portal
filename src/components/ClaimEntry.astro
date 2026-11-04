@@ -1,19 +1,32 @@
 ---
 // One synthesis statement: text first, then readable provenance; identifiers on demand.
-import { getEvidence, interpretationOf, sourceIdsOfClaim, sourceLabel, type Claim } from "../science/phase8";
+// Phase 9: three separate review dimensions (source fidelity, interpretation, publication).
+import {
+	claimReview, getEvidence, interpretationOf, sourceIdsOfClaim, sourceLabel,
+	SOURCE_FIDELITY, INTERPRETATION_LEVELS, PUBLICATION_STATES, CHECK_METHOD, type Claim,
+} from "../science/phase8";
 interface Props { claim: Claim; context?: string; showText?: boolean }
 const { claim, context, showText = true } = Astro.props;
 const type = interpretationOf(claim.origin);
 const sourceIds = sourceIdsOfClaim(claim);
 const ids = claim.evidence_ids ?? [];
+const review = claimReview(claim.claim_id);
+const fidelity = SOURCE_FIDELITY[review.fidelity];
+const flagged = review.fidelity !== "verified_against_source";
+const isPhase9 = claim.claim_id.startsWith("p9-");
 ---
 <div class="claim">
   {showText && <p class="claim-text">{claim.text}</p>}
   <p class="claim-meta">
     <span class="tag">{type.label}</span>
+    {isPhase9 && <span class="tag tag-muted">Added in Phase 9</span>}
     {context && context !== type.label && <span>{context}</span>}
     {sourceIds.length > 0 && <span>From: {sourceIds.map((id, i) => <>{i > 0 && "; "}<a href={`#${id}`}>{sourceLabel(id)}</a></>)}</span>}
-    <span class="tag tag-muted">Source check pending</span>
+    <span class:list={["tag", flagged ? "tag-alert" : "tag-muted"]} title={fidelity.description}>{fidelity.label}</span>
   </p>
-  <details class="claim-ids"><summary>Identifiers</summary><p class="small">Statement {claim.claim_id} · locators {ids.map((id) => { const e = getEvidence(id); return e ? `${id} (${e.locator.startsWith('Section near') ? e.locator : `${e.locator}, lines ${e.line_start}–${e.line_end}`})` : `${id} (not in public package)`; }).join(" · ")}</p></details>
+  {review.note && flagged && <p class="small claim-note">Phase 9 review: {review.note}</p>}
+  <details class="claim-ids"><summary>Review state and identifiers</summary>
+    <p class="small">Source fidelity: {fidelity.label}. Interpretation: {INTERPRETATION_LEVELS[review.interpretation].label}. Publication: {PUBLICATION_STATES[review.publication].label}. Method: {CHECK_METHOD.label}, {CHECK_METHOD.date}; not the author's sign-off.{review.note && !flagged && <> Note: {review.note}</>}</p>
+    <p class="small">Statement {claim.claim_id} · locators {ids.map((id) => { const e = getEvidence(id); return e ? `${id} (${e.locator.startsWith('Section near') ? e.locator : `${e.locator}, lines ${e.line_start}–${e.line_end}`})` : `${id} (not in public package)`; }).join(" · ")}</p>
+  </details>
 </div>

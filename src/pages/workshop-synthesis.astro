@@ -7,16 +7,22 @@ import RelationshipBadge from "../components/RelationshipBadge.astro";
 import ThemeReferences from "../components/ThemeReferences.astro";
 import { loadThemeReview } from "../science/theme-review";
 import {
-	SYNTHESIS_INTRO, EXECUTIVE_SYNTHESIS, INTERPRETATION_TYPES, insights, contestedTopics, priorityAreas, areaIssueIds,
-	basisClaims, basisSourceLabels, videosForClaims, videosForIssues, getIssue, actionForIssue, phase8Label,
-	disagreementVerdict, VERDICT_LABELS, ROADMAP_STATUS,
+	SYNTHESIS_INTRO, EXECUTIVE_SYNTHESIS, EXECUTIVE_SYNTHESIS_V2, OVERARCHING_QUESTION, INTERPRETATION_TYPES, EVIDENCE_STRENGTH,
+	REGIONAL_VALUE_LEVELS, insights, phase8Insights, contestedTopics, priorityAreas, areaIssueIds,
+	basisClaims, basisSourceLabels, videosForClaims, videosForIssues, getIssue, actionForIssue, contributionGroups,
+	disagreementVerdict, VERDICT_LABELS, ROADMAP_STATUS, phase9Label,
 } from "../science/phase8";
-const draft = phase8Label();
+import { THEME_COVERAGE, CROSS_CUTTING_GAPS, COVERAGE_LEVELS, SYNTHESIS_PRESENCE } from "../science/phase9/coverage.mjs";
+import { PILOTS } from "../science/phase9/roadmap.mjs";
+const draft = phase9Label();
 const areas = priorityAreas();
+const previousById = new Map(phase8Insights().map((i) => [i.id, i]));
 const sourceList = (ids: string[]) => basisSourceLabels(ids).map((s) => s.label).join("; ");
 const review = loadThemeReview();
-const allBasis = [...EXECUTIVE_SYNTHESIS.basis, ...insights().flatMap((i) => i.basis), ...contestedTopics().flatMap((t) => t.basis)];
+const coverageBasis = THEME_COVERAGE.flatMap((t) => [...t.findings.basis, ...t.debates.basis, ...t.unresolved.basis]);
+const allBasis = [...EXECUTIVE_SYNTHESIS_V2.basis, ...insights().flatMap((i) => i.basis), ...contestedTopics().flatMap((t) => t.basis), ...REGIONAL_VALUE_LEVELS.flatMap((l) => l.records.basis), ...coverageBasis];
 const refIds = [...new Set([...allBasis.filter((id) => id.startsWith("e-")), ...basisClaims(allBasis).flatMap((row) => row.claim.evidence_ids ?? [])])];
+const CHANGE_LABELS = { merged: "Merged in Phase 9", revised: "Revised in Phase 9", new: "New in Phase 9", retained: "Retained (minor wording)" } as const;
 ---
 <Base title={SYNTHESIS_INTRO.title} description={SYNTHESIS_INTRO.description}>
   <div class="page-intro synthesis-intro">
@@ -25,38 +31,63 @@ const refIds = [...new Set([...allBasis.filter((id) => id.startsWith("e-")), ...
     <p class="synthesis-subtitle">{SYNTHESIS_INTRO.subtitle}</p>
     <p class="lead">{SYNTHESIS_INTRO.description}</p>
   </div>
-  <ContextNote>An independent synthesis by one participant from converted minutes. Not an official ICTP workshop report or a multi-author consensus.</ContextNote>
+  <ContextNote label={draft.short}>An independent synthesis by one participant from converted minutes, revised in Phase 9 and awaiting the author's review. Not an official ICTP workshop report or a multi-author consensus.</ContextNote>
   <nav class="synthesis-nav" aria-label="Sections of the synthesis">
     <a href="#learned"><span>A</span>What did we learn?</a>
     <a href="#contested"><span>B</span>What remains contested or unresolved?</a>
     <a href="#next"><span>C</span>What should we investigate next?</a>
+    <a href="#coverage"><span>D</span>How representative is this synthesis?</a>
   </nav>
 
   <section id="executive" class="executive">
     <h2>In brief</h2>
-    <p class="executive-text">{EXECUTIVE_SYNTHESIS.text}</p>
-    <p class="small"><span class="tag">Editorial synthesis</span> {draft.long} Draws on {basisSourceLabels(EXECUTIVE_SYNTHESIS.basis).length} workshop records across the twelve <a href="/questions">scientific questions</a>.</p>
+    <p class="overarching"><span class="tag">Guiding question</span> {OVERARCHING_QUESTION}</p>
+    <p class="executive-text">{EXECUTIVE_SYNTHESIS_V2.text}</p>
+    <p class="small"><span class="tag">Editorial synthesis</span> {draft.long} Draws on {basisSourceLabels(EXECUTIVE_SYNTHESIS_V2.basis).length} workshop records across the twelve <a href="/questions">scientific questions</a>.</p>
+    <details class="nested"><summary>Previous wording (Phase 8)</summary><p class="small">{EXECUTIVE_SYNTHESIS.text}</p></details>
   </section>
 
   <section id="learned">
     <p class="eyebrow">Section A</p>
     <h2>What did we learn?</h2>
-    <p class="lead-sm">Seven insights that recur in the reviewed records. Each states its evidence basis, the kind of statement it is, and how far it has been checked.</p>
+    <p class="lead-sm">{insights().length} insights drawn from the converted minutes. Each states its evidence basis, the kind of statement it is, how much independent support it has and how far it has been checked. The minutes themselves are ASR-derived and have not been reviewed by the speakers.</p>
     <ol class="insights">
       {insights().map((insight) => {
         const videos = videosForClaims(insight.basis);
+        const groups = contributionGroups(insight.basis);
+        const previous = insight.previous.map((id) => previousById.get(id)).filter(Boolean);
         return (
           <li id={insight.id} class="insight">
+            {insight.aliases.map((alias) => <span id={alias} class="anchor-alias"></span>)}
+            <p class="insight-change"><span class="tag tag-muted">{CHANGE_LABELS[insight.change]}</span></p>
             <h3>{insight.title}</h3>
             <p>{insight.text}</p>
             <dl class="provenance">
               <dt>Evidence basis</dt><dd>{sourceList(insight.basis)}</dd>
-              <dt>Interpretation type</dt><dd>{INTERPRETATION_TYPES[insight.type].label}{insight.type === "workshop_record" ? " (paraphrased and condensed in Phase 8)" : " built on workshop records"}</dd>
-              <dt>Review status</dt><dd>Underlying records: personal synthesis, source check pending. This wording: {draft.short}.</dd>
+              <dt>Independent support</dt><dd>{EVIDENCE_STRENGTH[insight.strength]} ({groups.length} contribution group{groups.length === 1 ? "" : "s"}; overlapping records counted once — not a measure of agreement)</dd>
+              <dt>Interpretation type</dt><dd>{INTERPRETATION_TYPES[insight.type].label}{insight.type === "workshop_record" ? " (paraphrased and condensed)" : " built on workshop records"}</dd>
+              <dt>Review status</dt><dd>Underlying statements checked against the cited minutes (AI-assisted). This wording: {draft.short}.</dd>
+              <dt>Programme themes</dt><dd>{insight.themes.map((n) => THEME_COVERAGE.find((t) => t.number === n)?.title).join(" · ")}</dd>
               <dt>Questions</dt><dd>{insight.issues.map((id, i) => <>{i > 0 && " · "}<a href={`/questions/themes/${id}`}>{id.toUpperCase()} · {getIssue(id)?.title}</a></>)}</dd>
             </dl>
+            {insight.id === "insight-regional" && (
+              <div class="value-levels">
+                <h4>Four different things a forecast can be good at</h4>
+                <ol>
+                  {REGIONAL_VALUE_LEVELS.map((level) => (
+                    <li id={`value-${level.id}`}>
+                      <strong>{level.title}.</strong> {level.meaning}
+                      <p class="small"><span class="tag">Workshop records</span> {level.records.text}</p>
+                      <p class="small"><span class="tag tag-muted">Not shown</span> {level.notShown}</p>
+                    </li>
+                  ))}
+                </ol>
+                <p class="small">Skill at one level does not imply skill at the next. The records support the distinction; they contain no demonstration of realized societal benefit.</p>
+              </div>
+            )}
             {videos.length > 0 && <RelatedVideos links={videos} context="this insight" limit={3} />}
-            <details class="nested"><summary>Underlying statements ({insight.basis.length})</summary>{basisClaims(insight.basis).map((row) => <ClaimEntry claim={row.claim} context={row.issueId.toUpperCase()} />)}</details>
+            <details class="nested"><summary>Underlying statements ({basisClaims(insight.basis).length})</summary>{basisClaims(insight.basis).map((row) => <ClaimEntry claim={row.claim} context={row.issueId.toUpperCase()} />)}</details>
+            <details class="nested"><summary>Change from Phase 8</summary><p class="small">{insight.reason}</p>{previous.length > 0 ? previous.map((p) => <p class="small"><strong>Previous: {p!.title}.</strong> {p!.text}</p>) : <p class="small">No Phase 8 counterpart.</p>}</details>
           </li>
         );
       })}
@@ -66,7 +97,7 @@ const refIds = [...new Set([...allBasis.filter((id) => id.startsWith("e-")), ...
   <section id="contested">
     <p class="eyebrow">Section B</p>
     <h2>What remains contested or unresolved?</h2>
-    <p class="lead-sm">Genuine disagreement is distinguished from approaches that serve different purposes. Labels: <strong>A</strong> competing hypotheses and <strong>B</strong> different evaluation standards count as disagreement; <strong>C</strong> complementary perspectives does not. <a href="/questions#classification">Definitions →</a></p>
+    <p class="lead-sm">Genuine disagreement is distinguished from approaches that serve different purposes. Labels: <strong>A</strong> competing hypotheses and <strong>B</strong> different evaluation standards count as disagreement; <strong>C</strong> complementary perspectives does not. <a href="/questions#disagreement-matrix">Disagreement matrix →</a></p>
     <div class="contested">
       {contestedTopics().map((topic) => (
         <article id={topic.id} class="contested-topic">
@@ -75,7 +106,8 @@ const refIds = [...new Set([...allBasis.filter((id) => id.startsWith("e-")), ...
           <ul class="contested-issues">
             {topic.issues.map((id) => <li><a href={`/questions/themes/${id}`}>{id.toUpperCase()} · {getIssue(id)?.title}</a><span class="small"> — {VERDICT_LABELS[disagreementVerdict(id)]}</span><RelationshipBadge issueId={id} /></li>)}
           </ul>
-          <p class="small"><span class="tag">Editorial synthesis</span> Evidence basis: {sourceList(topic.basis)}. {draft.short}.</p>
+          <p class="small"><span class="tag">Editorial synthesis</span> Evidence basis: {sourceList(topic.basis)}. {topic.revisedInPhase9 ? draft.short : "Phase 8 draft · awaiting author review"}.</p>
+          {topic.previousText && <details class="nested"><summary>Previous wording (Phase 8)</summary><p class="small">{topic.previousText}</p></details>}
         </article>
       ))}
     </div>
@@ -84,10 +116,11 @@ const refIds = [...new Set([...allBasis.filter((id) => id.startsWith("e-")), ...
   <section id="next">
     <p class="eyebrow">Section C</p>
     <h2>What should we investigate next?</h2>
-    <p class="lead-sm">Four strategic research areas, defined by the scientific questions they address. {ROADMAP_STATUS}</p>
+    <p class="lead-sm">Four strategic research areas, defined by the scientific questions they address, and three candidate pilot projects. {ROADMAP_STATUS}</p>
     <div class="next-areas">
       {areas.map((area) => {
         const videos = videosForIssues(area.coreIssues);
+        const pilots = PILOTS.filter((p) => p.areas.includes(area.id));
         return (
           <article id={`next-${area.id}`} class="next-area">
             <p class="eyebrow">Area {area.numeral} · {area.coreIssues.map((q) => q.toUpperCase()).join(", ")}{area.crossCuttingIssues.length > 0 && ` (+ ${area.crossCuttingIssues.map((q) => q.toUpperCase()).join(", ")})`}</p>
@@ -97,6 +130,7 @@ const refIds = [...new Set([...allBasis.filter((id) => id.startsWith("e-")), ...
               <dt>Critical knowledge gap</dt><dd>{area.gap.text}</dd>
               <dt>A feasible next investigation</dt><dd>{area.nextInvestigation.text}</dd>
               <dt>Expected deliverable</dt><dd>{area.deliverable.text}</dd>
+              {pilots.length > 0 && <><dt>Candidate pilot</dt><dd>{pilots.map((p, i) => <>{i > 0 && " · "}<a href={`/actions/pilots/${p.slug}`}>Pilot {p.letter} · {p.title}</a></>)}</dd></>}
             </dl>
             <p class="small">Detailed workflows: {areaIssueIds(area).map((id, i) => { const a = actionForIssue(id); return a && <>{i > 0 && " · "}<a href={`/actions/${a.issue_id}`}>{a.title}</a></>; })}</p>
             {videos.length > 0 && <RelatedVideos links={videos} context="this area's questions" limit={2} />}
@@ -104,23 +138,49 @@ const refIds = [...new Set([...allBasis.filter((id) => id.startsWith("e-")), ...
         );
       })}
     </div>
-    <p class="small"><span class="tag">New research proposal</span> Proposed investigations are suggestions in this report, not an official workshop action plan. No experiment has been executed.</p>
+    <p class="small"><span class="tag">New research proposal</span> Proposed investigations and pilots are suggestions in this report, not an official workshop action plan. No experiment has been executed. <a href="/actions#dependencies">Research dependencies →</a></p>
+  </section>
+
+  <section id="coverage">
+    <p class="eyebrow">Section D</p>
+    <h2>How representative is this synthesis?</h2>
+    <p class="lead-sm">Coverage of the six official programme themes. Source coverage describes which records exist; a thin record is not evidence that a topic was not discussed, and the number of talks does not define scientific importance.</p>
+    <div class="table-scroll">
+      <table class="coverage-table">
+        <thead><tr><th scope="col">Theme</th><th scope="col">Main questions</th><th scope="col">Records</th><th scope="col">In the synthesis</th></tr></thead>
+        <tbody>
+          {THEME_COVERAGE.map((t) => (
+            <tr id={t.id}>
+              <th scope="row">{t.number} · {t.title}<span class="small block">{t.talks.join(", ")}</span></th>
+              <td>{t.questions}<details class="nested"><summary>Findings, debates and open issues</summary><p class="small"><strong>Reported results.</strong> {t.findings.text}</p><p class="small"><strong>Methodological debates.</strong> {t.debates.text}</p><p class="small"><strong>Unresolved.</strong> {t.unresolved.text}</p><p class="small">Questions: {t.issues.map((id, i) => <>{i > 0 && " · "}<a href={`/questions/themes/${id}`}>{id.toUpperCase()}</a></>)}</p></details></td>
+              <td><span class="tag tag-muted">{COVERAGE_LEVELS[t.sourceCoverage as keyof typeof COVERAGE_LEVELS]}</span><p class="small">{t.sourceNote}</p></td>
+              <td><span class="tag">{SYNTHESIS_PRESENCE[t.presence as keyof typeof SYNTHESIS_PRESENCE]}</span><p class="small">{t.omission}</p></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <h3>Cross-cutting gaps</h3>
+    <ul>{CROSS_CUTTING_GAPS.map((g) => <li><strong>{g.title}.</strong> {g.text}</li>)}</ul>
+    <p class="small"><span class="tag">Editorial synthesis</span> {draft.short}.</p>
   </section>
 
   <section id="method">
     <h2>How this synthesis was made</h2>
-    <p>Statements come from the author's English paraphrases of ASR-derived minutes for the talks and discussions listed in the <a href="/program">programme</a>. Phase 8 wording condenses those statements; every item lists the records it rests on, and detailed identifiers remain in the expandable sections. Overlapping breakout, plenary and closing records are not counted as independent support. Video highlights are linked only where a statement cites the minutes of the same talk or session; the clips themselves were not checked against the statements.</p>
+    <p>Statements come from the author's English paraphrases of ASR-derived minutes for the talks and discussions listed in the <a href="/program">programme</a>. In Phase 9 every statement was compared with the passage it cites (an AI-assisted check, not the author's sign-off), and sections of the minutes not used before were added where they bear on representativeness. Overlapping breakout, plenary and closing records are not counted as independent support. Video highlights are linked only where a statement cites the minutes of the same talk or session; the clips themselves were not checked against the statements.</p>
     <p><a href="/about#reading-labels">How to read the labels →</a> · <a href="/questions">All scientific questions →</a> · <a href="/actions">Research Action Roadmap →</a></p>
   </section>
   {review && <ThemeReferences review={review} ids={refIds} />}
 </Base>
 <style>
 .synthesis-subtitle{font-family:var(--serif);font-size:clamp(1.3rem,2.4vw,1.75rem);color:var(--teal-dark);margin:-.4rem 0 1rem;max-width:40ch}
-.synthesis-nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:.6rem;margin:1.6rem 0}.synthesis-nav a{display:flex;gap:.8rem;align-items:baseline;padding:.9rem 1rem;background:#fff;border:1px solid var(--line);border-top:3px solid var(--teal);text-decoration:none;color:var(--ink);font-weight:600;font-size:.92rem}.synthesis-nav span{font-family:var(--serif);font-size:1.3rem;color:var(--teal)}
-.executive{background:#fff;border:1px solid var(--line);padding:1.6rem 1.8rem}.executive h2{font-size:1.4rem}.executive-text{font-family:var(--serif);font-size:1.18rem;line-height:1.6;max-width:72ch}
-.insights{list-style:none;padding:0;counter-reset:ins;margin:1.4rem 0 0}.insight{counter-increment:ins;position:relative;padding:1.6rem 0 1.6rem 3.4rem;border-top:1px solid var(--line);margin:0;scroll-margin-top:1rem}.insight:before{content:counter(ins);position:absolute;left:0;top:1.4rem;font-family:var(--serif);font-size:2rem;color:var(--teal);line-height:1}.insight h3{font-family:var(--serif);font-weight:400;font-size:1.45rem;margin-bottom:.7rem}.insight>p{max-width:78ch}
+.synthesis-nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:.6rem;margin:1.6rem 0}.synthesis-nav a{display:flex;gap:.8rem;align-items:baseline;padding:.9rem 1rem;background:#fff;border:1px solid var(--line);border-top:3px solid var(--teal);text-decoration:none;color:var(--ink);font-weight:600;font-size:.92rem}.synthesis-nav span{font-family:var(--serif);font-size:1.3rem;color:var(--teal)}
+.executive{background:#fff;border:1px solid var(--line);padding:1.6rem 1.8rem}.executive h2{font-size:1.4rem}.executive-text{font-family:var(--serif);font-size:1.12rem;line-height:1.6;max-width:72ch}.overarching{font-weight:600;max-width:72ch}
+.insights{list-style:none;padding:0;counter-reset:ins;margin:1.4rem 0 0}.insight{counter-increment:ins;position:relative;padding:1.6rem 0 1.6rem 3.4rem;border-top:1px solid var(--line);margin:0;scroll-margin-top:1rem}.insight:before{content:counter(ins);position:absolute;left:0;top:1.4rem;font-family:var(--serif);font-size:2rem;color:var(--teal);line-height:1}.insight h3{font-family:var(--serif);font-weight:400;font-size:1.45rem;margin-bottom:.7rem}.insight>p{max-width:78ch}.insight-change{margin:0 0 .4rem}.anchor-alias{display:block;position:relative;top:-1rem}
 .provenance{display:grid;grid-template-columns:max-content 1fr;gap:.25rem 1rem;font-size:.82rem;margin:.8rem 0;max-width:78ch}.provenance dt{color:var(--muted);font-weight:650}.provenance dd{margin:0}
+.value-levels{background:#fff;border:1px solid var(--line);border-left:4px solid var(--teal);padding:1rem 1.2rem;margin:1rem 0;max-width:80ch}.value-levels h4{margin:0 0 .6rem;font-size:1rem}.value-levels ol{padding-left:1.2rem;margin:0}.value-levels li p{margin:.3rem 0 0}
 .contested{display:grid;gap:1rem;margin-top:1.2rem}.contested-topic{padding:1.4rem 1.6rem;scroll-margin-top:1rem}.contested-topic h3{font-size:1.15rem}.contested-issues{list-style:none;padding:0;margin:.8rem 0}.contested-issues li{border-top:1px solid var(--line);padding:.55rem 0;margin:0}.contested-issues .relationship{margin:.3rem 0 0}
 .next-areas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,30rem),1fr));gap:1rem;margin-top:1.2rem}.next-area{border-top:3px solid var(--teal);scroll-margin-top:1rem}.next-area h3{font-family:var(--serif);font-weight:400;font-size:1.35rem}.next-area h3 a{color:var(--ink);text-decoration:none}
-@media(max-width:640px){.insight{padding-left:2.4rem}.insight:before{font-size:1.6rem}.provenance{grid-template-columns:1fr}.provenance dd{margin-bottom:.4rem}.executive{padding:1.2rem}.executive-text{font-size:1.06rem}}
+.block{display:block;font-weight:400;margin-top:.3rem}
+@media(max-width:640px){.insight{padding-left:2.4rem}.insight:before{font-size:1.6rem}.provenance{grid-template-columns:1fr}.provenance dd{margin-bottom:.4rem}.executive{padding:1.2rem}.executive-text{font-size:1.04rem}}
 </style>

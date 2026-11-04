@@ -3,6 +3,8 @@ import Base from "../layouts/Base.astro";
 import PageIntro from "../components/PageIntro.astro";
 import { PROGRAM_URL, VERIFIED_ON, SITE_STANCE } from "../data/portal";
 import { INTERPRETATION_TYPES, REVIEW_STATUSES, PHASE8_EDITORIAL } from "../science/phase8/status.mjs";
+import { SOURCE_FIDELITY, INTERPRETATION_LEVELS, PUBLICATION_STATES, CHECK_METHOD, PHASE9_EDITORIAL } from "../science/phase9/status.mjs";
+import { SOURCE_QUALITY } from "../science/phase9/provenance.mjs";
 import { RELATIONSHIP_TYPES } from "../science/phase8/editorial-classification.mjs";
 ---
 <Base title="About & Methodology">
@@ -67,6 +69,16 @@ import { RELATIONSHIP_TYPES } from "../science/phase8/editorial-classification.m
     <h3>Review status</h3>
     <dl class="method-list">{Object.values(REVIEW_STATUSES).map((t) => <><dt>{t.label}</dt><dd>{t.description}</dd></>)}</dl>
     <p class="small">Current Phase 8 status: {PHASE8_EDITORIAL.status === "author_reviewed" ? "reviewed by the author" : "draft awaiting the author's review"}. Personal editorial approval for public presentation is not independent scientific verification.</p>
+    <h3 id="phase9-review">Three review dimensions (Phase 9)</h3>
+    <p>Since Phase 9 every statement shows three separate states. {CHECK_METHOD.description} Current Phase 9 status: {PHASE9_EDITORIAL.status === "author_reviewed" ? "reviewed by the author" : "awaiting the author's review"}.</p>
+    <h4>Source fidelity</h4>
+    <dl class="method-list">{Object.values(SOURCE_FIDELITY).map((t) => <><dt>{t.label}</dt><dd>{t.description}</dd></>)}</dl>
+    <h4>Interpretation</h4>
+    <dl class="method-list">{Object.values(INTERPRETATION_LEVELS).map((t) => <><dt>{t.label}</dt><dd>{t.description}</dd></>)}</dl>
+    <h4>Publication</h4>
+    <dl class="method-list">{Object.values(PUBLICATION_STATES).map((t) => <><dt>{t.label}</dt><dd>{t.description}</dd></>)}</dl>
+    <h4>Type of record behind a source</h4>
+    <dl class="method-list">{Object.values(SOURCE_QUALITY).map((t) => <><dt>{t.label}</dt><dd>{t.description}</dd></>)}</dl>
     <h3>How positions relate</h3>
     <dl class="method-list">{Object.values(RELATIONSHIP_TYPES).map((t) => <><dt>{t.code !== "–" && `${t.code} · `}{t.label}</dt><dd>{t.description}</dd></>)}</dl>
   </section>
