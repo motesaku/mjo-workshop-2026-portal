@@ -133,4 +133,4 @@ npm run build && npm run cf:dev   # built Worker on http://127.0.0.1:8787 (local
 
 ## Deployment (requires explicit owner authorization)
 
-Not performed. When authorized: complete item 1 above, run the full check list, `npm run build` (uses the gitignored `wrangler.site.jsonc`), then `npm run deploy` following `docs/PHASE7_DEPLOYMENT_GUIDE.md`. Keep `noindex, nofollow` unless indexing is separately decided. Pushing the commits to GitHub is also a separate authorization.
+Deployed on 2026-11-04 after the owner's explicit instruction, from commit `718f06c`: `npm run build` (from `wrangler.site.jsonc`), D1 Time Travel bookmark recorded offline, `npm run deploy -- --dry-run`, then `npm run deploy`. No D1 schema change or migration. Post-deploy read-only check of the live origin: 74 pages return 200 with `noindex, nofollow`, the new synthesis/roadmap/classification content is served, private paths return 403/404 and the admin route redirects to sign-in. Phase 8 wording is live with its "Phase 8 draft · awaiting author review" label; item 1 above is still open. Code rollback: `npx wrangler rollback`. Pushing the commits to GitHub remains a separate authorization.
