@@ -121,3 +121,41 @@ New text: a scientific objective and a testable hypothesis for each workflow, ea
 ### Prioritization
 
 Four qualitative criteria (scientific significance, feasibility, international collaboration potential, reusability). No scores were assigned and no ranking is shown, because no evidence-based scores or community priorities exist.
+
+## 8E — Workshop Synthesis page and site copy (2026-11-04)
+
+File: `src/science/phase8/editorial-synthesis.mjs`; page `/workshop-synthesis`.
+
+### Executive synthesis
+
+One paragraph framing the recurring gap between describing and explaining the MJO. Basis: q01-c01, q01-c07, e-hkim-43-48, q06-c03, q06-c07, q07-c07, q02-c08, q03-c08, q09-c08, q10-c08.
+
+### Section A — seven insights (all seven candidate themes were supported)
+
+| # | Insight | Type | Basis |
+| --- | --- | --- | --- |
+| 1 | Different theories may explain different aspects of the MJO | Workshop record | q01-c01, q01-c03, q01-c06 |
+| 2 | Reproducing MJO structure is not, by itself, evidence for a mechanism (stated as a disputed evaluation standard) | Editorial synthesis | q01-c02, q01-c05, q01-c07 |
+| 3 | Initiation, propagation and termination need distinct definitions and diagnostics | Editorial synthesis | q02-c01, q02-c02, q02-c08 |
+| 4 | The Maritime Continent remains a central process and prediction challenge (causes unranked) | Workshop record | q09-c01, q09-c02, q09-c03, q09-c08 |
+| 5 | Forecast skill and physical understanding call for different kinds of validation | Editorial synthesis | q07-c01, q07-c08, q08-c07 |
+| 6 | Indices and diagnostics describe complementary aspects of MJO behaviour | Editorial synthesis | q06-c03, q06-c01, q06-c02, q06-c07, q06-c08 |
+| 7 | Observational priorities should follow from specific scientific uncertainties | Workshop record | q10-c02, q10-c03, q10-c01, q10-c06 |
+
+Wording deliberately avoids "consensus" and states disputes where the records contain them (insight 2).
+
+### Section B — six contested topics
+
+Competing physical explanations (Q03, Q05, Q09) · What counts as evidence for a mechanism (Q01) · AI prediction and physical explanation (Q07, Q08) · Observation requirements (Q10) · Index and diagnostic limitations (Q06, Q02) · Prediction barriers, regional impacts and climate change (Q09, Q11, Q12). Each shows the per-question relationship label; bases in the module.
+
+### Section C
+
+Reuses the 8D priority areas (objective, gap, next investigation, deliverable) without new claims.
+
+### Site copy
+
+- Top bar: "Local build until public hosting is switched on" replaced by "Not an official ICTP or workshop record · About this report".
+- Footer: the long authorship paragraph replaced by a one-sentence statement; the full statement remains on About.
+- About: hosting described as Cloudflare Workers with `noindex, nofollow` retained; new "How to read the labels" section; method entries for video links, classification and the roadmap.
+- Repeated long notices on science pages replaced by a short contextual label linking to About.
+- `noindex, nofollow` is unchanged.

@@ -40,7 +40,7 @@ const actionLinks = [
 	...record.relatedActions.map((action) => ({ action, via: "proposal" as const })),
 	...record.actionsViaQuestions.map((action) => ({ action, via: "question" as const })),
 ];
-const refIds = record.evidenceIds;
+const refIds = [...new Set(record.statements.flatMap((row) => row.claim.evidence_ids ?? []))];
 ---
 <Base title={item.title} description={record.keyMessage?.text ?? `One-minute workshop highlight: ${item.title}.`}>
   <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/videos">Video Highlights</a><span>/</span><span>{item.title}</span></nav>

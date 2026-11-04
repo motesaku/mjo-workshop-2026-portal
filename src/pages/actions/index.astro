@@ -5,11 +5,14 @@ import ContextNote from "../../components/ContextNote.astro";
 import RelatedVideos from "../../components/RelatedVideos.astro";
 import ClaimEntry from "../../components/ClaimEntry.astro";
 import RelationshipBadge from "../../components/RelationshipBadge.astro";
+import ThemeReferences from "../../components/ThemeReferences.astro";
+import { loadThemeReview } from "../../science/theme-review";
 import {
 	priorityAreas, areaIssueIds, getIssue, actionForIssue, actionChain, videosForIssues, getClaim,
 	phase8Label, PRIORITIZATION_CRITERIA, PRIORITIZATION_NOTE, ROADMAP_STATUS, type Claim,
 } from "../../science/phase8";
 const areas = priorityAreas();
+const review = loadThemeReview();
 const draft = phase8Label();
 const unresolvedOf = (issueId: string) => {
 	const issue = getIssue(issueId);
@@ -107,5 +110,6 @@ const unresolvedOf = (issueId: string) => {
     <dl class="method-list">{PRIORITIZATION_CRITERIA.map((c) => <><dt>{c.label}</dt><dd>{c.question}</dd></>)}</dl>
     <p class="notice">{PRIORITIZATION_NOTE}</p>
   </section>
+  {review && <ThemeReferences review={review} ids={[...new Set(areas.flatMap((area) => areaIssueIds(area).flatMap((id) => unresolvedOf(id).flatMap((c) => c.evidence_ids ?? []))))]} />}
   <section><h2>Start with a question</h2><p>Each action retains the scientific question on which it depends. An AI-assisted sketch is distinguished from a workshop decision.</p><a href="/questions">Explore Scientific Questions →</a></section>
 </Base>

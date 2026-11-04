@@ -259,3 +259,29 @@ test("every workflow has an objective-to-evaluation chain grounded in its criter
 	assert.doesNotMatch(text, /[぀-ヿ㐀-鿿]/);
 	assert.match(roadmap.ROADMAP_STATUS, /not workshop-endorsed/);
 });
+
+// ---- 8E workshop synthesis ----
+const synth = await import("../src/science/phase8/editorial-synthesis.mjs");
+
+test("synthesis insights are justified by existing workshop records", () => {
+	assert.ok(synth.INSIGHTS.length >= 5 && synth.INSIGHTS.length <= 7);
+	for (const insight of synth.INSIGHTS) {
+		assert.ok(insight.basis.length >= 2, insight.id);
+		for (const b of insight.basis) assert.ok(index.claims.has(b), `${insight.id}: ${b}`);
+		assert.ok(insight.basis.some((b) => index.claims.get(b).field === "records"), `${insight.id}: needs at least one workshop-record claim`);
+		const basisIssues = new Set(insight.basis.map((b) => index.claims.get(b).issueId));
+		for (const q of insight.issues) assert.ok(basisIssues.has(q), `${insight.id}: ${q} not in basis`);
+		for (const q of basisIssues) assert.ok(insight.issues.includes(q), `${insight.id}: basis issue ${q} not linked`);
+		assert.ok(["workshop_record", "editorial_synthesis"].includes(insight.type));
+	}
+	for (const topic of synth.CONTESTED_TOPICS) {
+		for (const b of topic.basis) assert.ok(index.claims.has(b), `${topic.id}: ${b}`);
+		for (const q of topic.issues) assert.ok(pkg.issues.some((i) => i.id === q), `${topic.id}: ${q}`);
+	}
+	const covered = new Set(synth.CONTESTED_TOPICS.flatMap((t) => t.issues));
+	for (const q of ["q01", "q03", "q06", "q07", "q09", "q10", "q11", "q12"]) assert.ok(covered.has(q), `contested overview should reach ${q}`);
+	for (const b of synth.EXECUTIVE_SYNTHESIS.basis) assert.ok(known(b), b);
+	const text = readFileSync(new URL("../src/science/phase8/editorial-synthesis.mjs", import.meta.url), "utf8");
+	assert.doesNotMatch(text, /[぀-ヿ㐀-鿿]/);
+	assert.doesNotMatch(text, /\b(consensus was reached|the workshop agreed|workshop endorsed|official action plan)\b/i);
+});

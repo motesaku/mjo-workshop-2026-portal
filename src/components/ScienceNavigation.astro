@@ -1,4 +1,4 @@
 ---
 import { navigation } from "../data/portal";
 ---
-<nav class="subnav" aria-label="Scientific exploration">{navigation.slice(3, 10).map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a>)}</nav>
+<nav class="subnav" aria-label="Scientific exploration">{navigation.filter(item => item.science).map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a>)}</nav>

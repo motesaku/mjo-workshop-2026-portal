@@ -249,3 +249,26 @@ export function actionChain(actionId: string): ActionChain | undefined {
 		tools: typeof proposal.agent_role === "string" ? proposal.agent_role : "",
 	};
 }
+
+// ---- 8E: workshop synthesis -------------------------------------------------
+import { SYNTHESIS_INTRO, EXECUTIVE_SYNTHESIS, INSIGHTS, CONTESTED_TOPICS } from "./phase8/editorial-synthesis.mjs";
+import { INTERPRETATION_TYPES } from "./phase8/status.mjs";
+export { SYNTHESIS_INTRO, EXECUTIVE_SYNTHESIS, INTERPRETATION_TYPES };
+
+export interface Insight { id: string; title: string; text: string; type: keyof typeof INTERPRETATION_TYPES; basis: string[]; issues: string[] }
+export interface ContestedTopic { id: string; title: string; text: string; basis: string[]; issues: string[] }
+export const insights = () => INSIGHTS as Insight[];
+export const contestedTopics = () => CONTESTED_TOPICS as ContestedTopic[];
+
+/** Claims behind a list of basis IDs (evidence/reference IDs are skipped). */
+export const basisClaims = (ids: string[]) => ids.map((id) => getClaim(id)).filter((row): row is ClaimRow => !!row);
+/** Reader-facing names of the workshop records behind a list of basis IDs. */
+export function basisSourceLabels(ids: string[]): { id: string; label: string }[] {
+	const seen = new Set<string>();
+	for (const id of ids) {
+		const row = getClaim(id);
+		const sourceIds = row ? sourceIdsOfClaim(row.claim) : getEvidence(id) ? [getEvidence(id)!.source_id] : [];
+		for (const s of sourceIds) seen.add(s);
+	}
+	return [...seen].map((id) => ({ id, label: sourceLabel(id) }));
+}
