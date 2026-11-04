@@ -3,46 +3,152 @@ import Base from "../layouts/Base.astro";
 import PageIntro from "./PageIntro.astro";
 import Journey from "./Journey.astro";
 import YouTubePlayer from "./YouTubePlayer.astro";
-import { days } from "../data/program";
+import ClaimEntry from "./ClaimEntry.astro";
+import ThemeReferences from "./ThemeReferences.astro";
 import { PROGRAM_URL, VERIFIED_ON } from "../data/portal";
+import { formatDuration, PLAYLIST_URL, PLAYLIST_CHECKED, type Highlight } from "../data/highlights";
+import { loadThemeReview } from "../science/theme-review";
 import {
-	formatDuration,
-	PLAYLIST_URL,
-	PLAYLIST_CHECKED,
-	type Highlight,
-} from "../data/highlights";
+	videoRecord,
+	issueSignificance,
+	actionForIssue,
+	sourceLabel,
+	phase8Label,
+	SUMMARY_STATUS_LABELS,
+	FIELD_LABELS,
+} from "../science/phase8";
 
 interface Props { item: Highlight }
 const { item } = Astro.props;
-const session = item.sessionId
-	? days.flatMap((day) => day.sessions.map((session) => ({ day, session }))).find((row) => row.session.id === item.sessionId)
-	: undefined;
+const record = videoRecord(item);
+const review = loadThemeReview();
+const { session } = record;
 const duration = formatDuration(item.durationSeconds);
 const mappingLabel =
 	item.mapping === "mapped" ? "Session mapping verified"
 	: item.mapping === "provisional" ? "Provisional mapping"
 	: item.mapping === "alternate" ? "Alternate cut"
 	: "Session unconfirmed";
+const status = SUMMARY_STATUS_LABELS[record.summaryStatus];
+const draft = phase8Label();
+const firstIssue = record.relatedIssues[0]?.issue;
+const firstAction = firstIssue ? actionForIssue(firstIssue.id) : undefined;
+const statementsByIssue = record.relatedIssues
+	.map((link) => ({ issue: link.issue, rows: record.statements.filter((s) => s.issue.id === link.issue.id) }))
+	.filter((group) => group.rows.length > 0);
+const actionLinks = [
+	...record.relatedActions.map((action) => ({ action, via: "proposal" as const })),
+	...record.actionsViaQuestions.map((action) => ({ action, via: "question" as const })),
+];
+const refIds = record.evidenceIds;
 ---
-<Base title={item.title} description={`One-minute workshop highlight: ${item.title}.`}>
+<Base title={item.title} description={record.keyMessage?.text ?? `One-minute workshop highlight: ${item.title}.`}>
   <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/videos">Video Highlights</a><span>/</span><span>{item.title}</span></nav>
-  <PageIntro title={item.title} eyebrow={`Video highlight · ${item.kind}`} description={session ? `${session.day.label} 2026 · ${session.session.time}` : "Playlist highlight awaiting a confirmed timetable slot."}>
+  <PageIntro title={item.title} eyebrow={`Video highlight · ${item.kind}${item.talkSpeaker ? ` · ${item.talkSpeaker}` : ""}`} description={session ? `${session.day.label} 2026 · ${session.session.time} · ${session.session.title}` : "Playlist highlight awaiting a confirmed timetable slot."}>
     <span class="badge">{mappingLabel}</span>
-    <span class="badge draft">Scientific summary pending</span>
+    <span class="badge draft">{status.badge}</span>
   </PageIntro>
-  {item.slug === "breakout-themes-3-4" && <Journey current="video" />}
+  {firstIssue && (
+    <Journey
+      label="From the programme to possible research"
+      steps={[
+        { label: "Programme session", href: session ? `/program#${session.session.id}` : "/program" },
+        { label: "This highlight", current: true },
+        { label: `${firstIssue.id.toUpperCase()} · Scientific question`, href: `/questions/themes/${firstIssue.id}` },
+        { label: "Research action", href: firstAction ? `/actions/${firstAction.issue_id}` : undefined },
+      ]}
+    />
+  )}
   <div class="content-columns">
     <div class="reading">
       <YouTubePlayer id={item.youtubeId} title={item.youtubeTitle} />
-      <p class="small">{duration} · Highlight · Playlist-linked · English metadata</p>
-      <section>
-        <h2>Scientific summary</h2>
-        <div class="empty-state">
-          <span class="badge draft">Awaiting review</span>
-          <p style="margin-top:1rem">A scientific summary has not been approved. The clip is a one-minute orientation derivative, not a full recording or independent evidence.</p>
-        </div>
+      <p class="small">{duration} · One-minute derivative of the session, not a full recording · English metadata</p>
+
+      <section id="key-message">
+        <h2>Key message</h2>
+        {record.keyMessage ? (
+          <>
+            <p class="key-message">{record.keyMessage.text}</p>
+            <p class="small"><span class="tag">Editorial synthesis</span> {draft.short}: condensed from the workshop-record statements below, which paraphrase the minutes of this {item.talkSpeaker ? "talk" : "session"}. Not checked against the clip.</p>
+          </>
+        ) : (
+          <div class="empty-state compact">
+            <span class="badge draft">{status.badge}</span>
+            <p>{status.text}</p>
+          </div>
+        )}
       </section>
-      {item.mappingNote && <section><h2>Mapping note</h2><p>{item.mappingNote}</p></section>}
+
+      {statementsByIssue.length > 0 && (
+        <section id="minutes">
+          <h2>What the minutes record</h2>
+          <p class="small">Statements from the personal synthesis that cite the minutes of this {item.talkSpeaker ? "talk" : "session"}. Overlapping discussion records are retained; they are not independent replications.</p>
+          {statementsByIssue.map((group) => (
+            <div class="statement-group">
+              <h3><a href={`/questions/themes/${group.issue.id}`}>{group.issue.id.toUpperCase()} · {group.issue.title}</a></h3>
+              {group.rows.map((row) => <ClaimEntry claim={row.claim} context={FIELD_LABELS[row.field as keyof typeof FIELD_LABELS]} />)}
+            </div>
+          ))}
+        </section>
+      )}
+
+      {record.relatedIssues.length > 0 && (
+        <section id="why-it-matters">
+          <h2>Why it matters</h2>
+          {record.relatedIssues.slice(0, 3).map(({ issue }) => {
+            const why = issueSignificance(issue.id);
+            return why && <p><strong>{issue.title}</strong> {why.text}</p>;
+          })}
+          <p class="small"><span class="tag">Editorial synthesis</span> {draft.long}</p>
+        </section>
+      )}
+
+      <section id="related-questions">
+        <h2>Related scientific questions</h2>
+        {record.relatedIssues.length > 0 ? (
+          <div class="card-grid">
+            {record.relatedIssues.map((link) => (
+              <article class="card">
+                <p class="eyebrow">{link.issue.id.toUpperCase()} · {link.issue.classification}</p>
+                <h3><a href={`/questions/themes/${link.issue.id}`}>{link.issue.title}</a></h3>
+                <p class="small">The {link.issue.id.toUpperCase()} synthesis cites the minutes of {link.sourceIds.map(sourceLabel).join("; ")} in {link.claims.length} statement{link.claims.length === 1 ? "" : "s"} ({link.basis === "record" ? "including workshop records" : "editorial synthesis only"}).</p>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p>No scientific question is linked. Links are created only when a question cites the minutes of the same talk or session as this clip.</p>
+        )}
+        {record.withheld.length > 0 && (
+          <div class="notice">
+            <strong>Relationships withheld</strong>
+            {record.withheld.map((w) => <p>{w.reason}{w.issueIds && w.issueIds.length > 0 && <> Statements from that record appear in {w.issueIds.map((id, i) => <>{i > 0 && ", "}<a href={`/questions/themes/${id}`}>{id.toUpperCase()}</a></>)}.</>}</p>)}
+          </div>
+        )}
+      </section>
+
+      {actionLinks.length > 0 && (
+        <section id="research-actions">
+          <h2>Possible research actions</h2>
+          <p class="small">Illustrative workflows, not workshop commitments.</p>
+          <ul class="link-list">
+            {actionLinks.map(({ action, via }) => (
+              <li><a href={`/actions/${action.issue_id}`}>{action.title}</a> <span class="small">— {via === "proposal" ? `the proposal cites these minutes (${action.issue_id.toUpperCase()})` : `via ${action.issue_id.toUpperCase()}`}</span></li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <section id="source-status">
+        <h2>Source and review status</h2>
+        <dl class="status-list">
+          <dt>The clip</dt><dd>A one-minute derivative selected from the {item.kind === "talk" || item.kind === "keynote" ? "talk" : "session"} recording. It is not complete evidence of {item.talkSpeaker ? "the speaker's" : "any participant's"} scientific position.</dd>
+          <dt>Session mapping</dt><dd>{mappingLabel}{item.mappingNote && <> — {item.mappingNote}</>}</dd>
+          <dt>Summary basis</dt><dd>{status.text}</dd>
+          <dt>Scientific review</dt><dd>{record.statements.length > 0 ? "Workshop-record statements: personal synthesis, claim-level source check pending. Key message: " + draft.long : "No reviewed scientific statement is attached to this clip."}</dd>
+          <dt>Publication permission</dt><dd>Embedding approved by the playlist owner ({PLAYLIST_CHECKED}).{item.youtubeId === "RPXnSvabsGY" && " Representative version confirmed 2026-11-03."}</dd>
+        </dl>
+      </section>
+
       {session && (
         <section>
           <h2>Program context</h2>
@@ -50,21 +156,18 @@ const mappingLabel =
           <p class="small"><time datetime={session.day.date}>{session.day.label} 2026</time> · {session.session.time} · {session.day.theme}</p>
         </section>
       )}
-      {item.slug === "breakout-themes-3-4" && (
-        <>
-          <section><h2>Related scientific questions</h2><article class="card"><span class="badge draft">Personal synthesis</span><h3 style="margin-top:1rem"><a href="/questions/themes/q01">What would distinguish competing MJO mechanisms?</a></h3><p>A personal reading of theory and modelling minutes on evidential standards for mechanisms. Not workshop consensus.</p><a href="/questions/themes/q01">Read the issue →</a></article></section>
-          <section><h2>Relevant research actions</h2><p>An illustrative workflow sketch linked to that personal synthesis. It is not a workshop commitment.</p><a href="/actions/q01">Explore the illustrative research workflow →</a></section>
-        </>
-      )}
+      {review && refIds.length > 0 && <ThemeReferences review={review} ids={refIds} />}
     </div>
     <aside aria-label="Highlight information">
       <h2>Highlight information</h2>
       <dl class="metadata">
+        {item.talkSpeaker && <><dt>Speaker</dt><dd>{item.talkSpeaker}</dd></>}
         <dt>YouTube ID</dt><dd><code>{item.youtubeId}</code></dd>
         <dt>Duration</dt><dd>{duration} ({item.durationSeconds} seconds)</dd>
         <dt>Record coverage</dt><dd>Partial — one-minute derivative</dd>
         <dt>Website embed permission</dt><dd>Owner playlist approval {PLAYLIST_CHECKED}{item.youtubeId === "RPXnSvabsGY" ? " · Owner approved 2026-11-03" : ""}</dd>
         {item.youtubeId === "RPXnSvabsGY" && <><dt>Representative version</dt><dd>Owner confirmed 2026-11-03</dd></>}
+        {record.relatedIssues.length > 0 && <><dt>Related questions</dt><dd>{record.relatedIssues.map((l, i) => <>{i > 0 && " · "}<a href={`/questions/themes/${l.issue.id}`}>{l.issue.id.toUpperCase()}</a></>)}</dd></>}
         <dt>Playlist</dt><dd><a href={PLAYLIST_URL} target="_blank" rel="noopener noreferrer">MJO Workshop 2026 highlights ↗</a></dd>
         <dt>Metadata checked</dt><dd>{VERIFIED_ON} · playlist rechecked {PLAYLIST_CHECKED}</dd>
       </dl>

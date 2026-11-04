@@ -23,6 +23,7 @@
     "verify:local": "node scripts/verify-local.mjs",
     "test:science": "node --test tests/science.test.mjs",
     "test:security": "node --test tests/public-request-guard.test.mjs",
+    "test:phase8": "node --test tests/phase8-relations.test.mjs",
     "science:validate": "node scripts/science.mjs validate",
     "science:plan": "node scripts/science.mjs plan",
     "science:check": "node scripts/science.mjs check-generated",

@@ -1,0 +1,19 @@
+---
+// One synthesis statement: text first, then readable provenance; identifiers on demand.
+import { getEvidence, interpretationOf, sourceIdsOfClaim, sourceLabel, type Claim } from "../science/phase8";
+interface Props { claim: Claim; context?: string; showText?: boolean }
+const { claim, context, showText = true } = Astro.props;
+const type = interpretationOf(claim.origin);
+const sourceIds = sourceIdsOfClaim(claim);
+const ids = claim.evidence_ids ?? [];
+---
+<div class="claim">
+  {showText && <p class="claim-text">{claim.text}</p>}
+  <p class="claim-meta">
+    <span class="tag">{type.label}</span>
+    {context && context !== type.label && <span>{context}</span>}
+    {sourceIds.length > 0 && <span>From: {sourceIds.map((id, i) => <>{i > 0 && "; "}<a href={`#${id}`}>{sourceLabel(id)}</a></>)}</span>}
+    <span class="tag tag-muted">Source check pending</span>
+  </p>
+  <details class="claim-ids"><summary>Identifiers</summary><p class="small">Statement {claim.claim_id} · locators {ids.map((id) => { const e = getEvidence(id); return e ? `${id} (${e.locator.startsWith('Section near') ? e.locator : `${e.locator}, lines ${e.line_start}–${e.line_end}`})` : `${id} (not in public package)`; }).join(" · ")}</p></details>
+</div>

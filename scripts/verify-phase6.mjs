@@ -43,7 +43,9 @@ for (const path of ['/', ...themePaths]) {
     assert.doesNotMatch(html, /href="[^"<>]*\.(?:pdf|docx?|pptx?|mp4)(?:"|\?)/i);
     assert.match(html, /data-theme-review="personal-report"/);
     assert.match(html, /New research proposal|personal synthesis|Personal workshop report/);
-    assert.match(html, /href="\/videos\/breakout-themes-3-4"/);
+    // Phase 8: highlights are derived from cited minutes, not hard-coded.
+    assert.match(html, /href="\/videos\/[a-z0-9-]+"/);
+    if (path === '/ai-for-mjo-research') assert.match(html, /href="\/videos\/breakout-themes-3-4"/);
     const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]));
     for (const match of html.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.has(match[1]), `${path}: anchor ${match[1]}`);
   }

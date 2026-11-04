@@ -1,0 +1,7 @@
+---
+// Short contextual label replacing repeated long authorship notices.
+// The full explanation lives on /about#reading-labels.
+interface Props { label?: string }
+const { label = "Personal synthesis" } = Astro.props;
+---
+<p class="context-note" data-theme-review="personal-report"><span class="badge draft">{label}</span> <span><slot /></span> <a href="/about#reading-labels">How to read these labels</a></p>

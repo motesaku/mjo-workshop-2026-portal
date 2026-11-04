@@ -1,0 +1,27 @@
+---
+// Compact grid of related one-minute highlights with the reason for each link.
+import HighlightThumb from "./HighlightThumb.astro";
+import { formatDuration } from "../data/highlights";
+import { sessionOf, sourceLabel, type VideoLink } from "../science/phase8";
+interface Props { links: VideoLink[]; context?: string; limit?: number }
+const { links, context = "this question", limit } = Astro.props;
+const shown = limit ? links.slice(0, limit) : links;
+---
+{shown.length > 0 && (
+  <div class="video-mini-grid">
+    {shown.map((link) => {
+      const where = sessionOf(link.highlight.sessionId);
+      return (
+        <article class="video-mini">
+          <HighlightThumb highlight={link.highlight} compact />
+          <div>
+            <h3><a href={`/videos/${link.highlight.slug}`}>{link.highlight.title}</a></h3>
+            <p class="small">{link.highlight.talkSpeaker ?? "Discussion session"}{where && <> · {where.day.label.split(",")[0]} {where.session.time.split("–")[0]}</>} · {formatDuration(link.highlight.durationSeconds)}{link.highlight.mapping === "alternate" && " · alternate cut"}</p>
+            <p class="small link-basis">{link.basis === "record" ? "Workshop records" : "Editorial synthesis"} for {context} cite{link.claims.length === 1 ? "s" : ""} the minutes of {link.sourceIds.map(sourceLabel).join("; ")} ({link.claims.length} statement{link.claims.length === 1 ? "" : "s"}).</p>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+)}
+{limit && links.length > limit && <p class="small">{links.length - limit} more related highlight{links.length - limit === 1 ? "" : "s"} on the linked question pages.</p>}

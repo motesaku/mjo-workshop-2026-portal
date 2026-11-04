@@ -30,7 +30,7 @@ assert.match(video, /27 October 2026/);
 assert.match(video, /16:30–18:00/);
 assert.match(video, /61 seconds|60 seconds|1:01|1:00/);
 assert.match(video, /Owner approved 2026-11-03|Owner playlist approval/);
-assert.match(video, /Scientific summary pending|Scientific review pending|Awaiting review/);
+assert.match(video, /Scientific summary pending|Scientific review pending|Awaiting review|not checked against the clip/);
 assert.match(video, /Load YouTube player/);
 assert.ok(!video.includes("<iframe"), "No YouTube connection before user request");
 assert.match(video, /href="\/questions\/themes\/q01"/);
