@@ -1,12 +1,79 @@
 ---
 import Base from "../../layouts/Base.astro";
 import PageIntro from "../../components/PageIntro.astro";
-import HighlightCard from "../../components/HighlightCard.astro";
+import HighlightThumb from "../../components/HighlightThumb.astro";
+import { days } from "../../data/program";
+import {
+	catalogHighlights,
+	formatDuration,
+	PLAYLIST_URL,
+	PLAYLIST_CHECKED,
+	programHighlights,
+} from "../../data/highlights";
+
+const bySession = new Map<string, ReturnType<typeof programHighlights>>();
+for (const item of programHighlights()) {
+	if (!item.sessionId) continue;
+	const list = bySession.get(item.sessionId) ?? [];
+	list.push(item);
+	bySession.set(item.sessionId, list);
+}
+const extras = catalogHighlights().filter((item) => item.mapping === "alternate" || item.mapping === "unmapped");
+const total = catalogHighlights().length;
 ---
-<Base title="Video Highlights">
-  <PageIntro title="Video Highlights" eyebrow="Revisit a conversation" description="Short workshop highlights, placed in their session context and connected to future reviewed questions." />
-  <p class="small">1 supplied highlight · Session mapping and duration verified · More highlights await verification</p>
-  <HighlightCard />
-  <div class="notice">A one-minute highlight provides partial coverage. It is not a full recording, a reviewed scientific summary or a statement of workshop consensus. This local example is not cleared for public website publication.</div>
-  <a href="/program">Browse all sessions chronologically →</a>
+<Base title="Video Highlights" description="One-minute workshop highlights mapped to the official program.">
+  <PageIntro title="Video Highlights" eyebrow="Revisit the conversations" description="Short orientation clips from the workshop playlist, linked to the timetable where the title mapping is clear." />
+  <p class="small">{total} playlist highlights · Rechecked {PLAYLIST_CHECKED} · <a href={PLAYLIST_URL} target="_blank" rel="noopener noreferrer">Open the YouTube playlist ↗</a></p>
+  <div class="notice">Each clip is a one-minute derivative. It is not a full recording, a reviewed scientific summary, or workshop consensus. Scientific summaries remain pending. Thumbnails load from YouTube; the player connects only after you press Load.</div>
+
+  {days.map((day) => {
+    const dayItems = day.sessions.flatMap((session) => bySession.get(session.id) ?? []);
+    if (dayItems.length === 0) return null;
+    return (
+      <section aria-labelledby={`videos-${day.date}`}>
+        <div class="section-head">
+          <h2 id={`videos-${day.date}`}>{day.label}</h2>
+          <a href={`/program#${day.date}`}>Program day →</a>
+        </div>
+        <p class="small">{day.theme}</p>
+        <div class="highlight-grid">
+          {dayItems.map((item) => (
+            <article class="highlight-tile">
+              <HighlightThumb highlight={item} />
+              <p class="eyebrow">{item.kind} · {formatDuration(item.durationSeconds)}</p>
+              <h3><a href={`/videos/${item.slug}`}>{item.title}</a></h3>
+              {item.talkSpeaker && <p class="speaker">{item.talkSpeaker}</p>}
+              {item.mapping === "provisional" && <span class="badge draft">Provisional mapping</span>}
+              <a href={`/videos/${item.slug}`}>Open highlight →</a>
+            </article>
+          ))}
+        </div>
+      </section>
+    );
+  })}
+
+  {extras.length > 0 && (
+    <section aria-labelledby="videos-extra">
+      <div class="section-head"><h2 id="videos-extra">Alternate cuts and unconfirmed mappings</h2></div>
+      <div class="highlight-grid">
+        {extras.map((item) => (
+          <article class="highlight-tile">
+            <HighlightThumb highlight={item} />
+            <p class="eyebrow">{item.mapping} · {formatDuration(item.durationSeconds)}</p>
+            <h3><a href={`/videos/${item.slug}`}>{item.title}</a></h3>
+            {item.mappingNote && <p class="small">{item.mappingNote}</p>}
+            <a href={`/videos/${item.slug}`}>Open highlight →</a>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <p><a href="/program">Browse the full program with in-place thumbnails →</a></p>
 </Base>
+<style>
+  .highlight-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,14rem),1fr));gap:1.1rem;margin-top:1rem}
+  .highlight-tile{padding:1rem}
+  .highlight-tile h3{font-size:1rem;margin:.55rem 0 .35rem}
+  .highlight-tile .speaker{margin:0 0 .6rem;font-size:.78rem;color:var(--muted)}
+</style>

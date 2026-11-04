@@ -1,7 +1,20 @@
 ---
-import { highlight } from "../data/portal";
+import { featuredHighlight, formatDuration, youtubeThumb } from "../data/highlights";
+const item = featuredHighlight;
+const duration = formatDuration(item.durationSeconds);
+const thumb = youtubeThumb(item.youtubeId);
 ---
 <article class="highlight-card">
-  <a class="highlight-cover" href={`/videos/${highlight.slug}`} aria-label={`Watch ${highlight.title}`}><span class="play-symbol" aria-hidden="true">▶</span><small>Theory &amp; Modeling</small><span class="duration">{highlight.duration}</span></a>
-  <div class="highlight-body"><span class="badge">Session mapping verified</span><h2><a href={`/videos/${highlight.slug}`}>{highlight.title}</a></h2><p>{highlight.date} · {highlight.time} CET<br />One-minute highlight · YouTube unlisted</p><p>Revisit the discussion, then follow the path to scientific questions and possible research workflows.</p><span class="badge draft">Scientific summary awaiting review</span></div>
+  <a class="highlight-cover" href={`/videos/${item.slug}`} aria-label={`Watch ${item.title}`} style={`background-image:linear-gradient(#0e2825aa,#0e2825d0),url(${thumb});background-size:cover;background-position:center`}>
+    <span class="play-symbol" aria-hidden="true">▶</span>
+    <small>Theory &amp; Modeling</small>
+    <span class="duration">{duration}</span>
+  </a>
+  <div class="highlight-body">
+    <span class="badge">Session mapping verified</span>
+    <h2><a href={`/videos/${item.slug}`}>{item.title}</a></h2>
+    <p>27 October 2026 · 16:30–18:00 CET<br />One-minute highlight · Playlist-linked</p>
+    <p>One example from the full highlight playlist. Browse all sessions for in-place thumbnails.</p>
+    <span class="badge draft">Scientific summary awaiting review</span>
+  </div>
 </article>

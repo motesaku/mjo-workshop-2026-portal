@@ -29,14 +29,24 @@ Related risks: R3 (permissions / representative versions — **cleared for this 
 
 Site updates applied the same day: `src/data/portal.ts`, video detail / home / about copy, Phase 6 local package highlight flags. Package-level `scientific_review` / `publication_approval` remain `pending`.
 
-## C. Additional highlights (still open)
+## C. Playlist (authorized 2026-11-04)
 
-| Working title / session | Candidate YouTube ID | Mapping | Permission | Representative | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Themes 3+4 breakout (current) | `RPXnSvabsGY` | Yes | Owner approved | Owner approved | Contextual only |
-| Index / diagnostics highlight | — | No | — | — | Still needed for Indices page gap |
-| Prediction / predictability highlight | — | No | — | — | Optional for AI page |
-| Other | — | No | — | — | |
+Playlist: [`PLSLeDe1GyyvU`](https://www.youtube.com/playlist?list=PLSLeDe1GyyvU) — 38 one-minute highlights.
+
+| Decision | Status |
+| --- | --- |
+| Embed whole playlist on the public personal report | **Yes** (owner request 2026-11-04) |
+| Map clips to official program by YouTube title / speaker | **Yes** — see `src/data/highlights.ts` |
+| Scientific summaries for each clip | Still pending |
+| Hyemi Kim Prediction | Primary `aPRvkP0cfNc`; alternate `V5Yul2jwS9U` |
+| Unmapped / provisional | Isotope discussion unmapped; some closing / AI discussion clips provisional |
+
+## C2. Legacy “still open” rows (superseded by playlist)
+
+| Working title / session | Candidate YouTube ID | Mapping | Permission | Notes |
+| --- | --- | --- | --- | --- |
+| Themes 3+4 breakout | `RPXnSvabsGY` | Yes | Owner approved | Still featured on home |
+| Remaining talks/discussions | playlist IDs | Mostly yes | Playlist approval | Program thumbnails |
 
 ## D. Audience and access (recorded 2026-11-03)
 

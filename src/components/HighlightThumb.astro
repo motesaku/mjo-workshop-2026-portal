@@ -1,0 +1,20 @@
+---
+import type { Highlight } from "../data/highlights";
+import { formatDuration, youtubeThumb } from "../data/highlights";
+interface Props {
+	highlight: Highlight;
+	compact?: boolean;
+}
+const { highlight: item, compact = false } = Astro.props;
+const href = `/videos/${item.slug}`;
+const thumb = youtubeThumb(item.youtubeId);
+const duration = formatDuration(item.durationSeconds);
+---
+<a class:list={["highlight-thumb", { compact }]} href={href} aria-label={`Watch 1-minute highlight: ${item.title}`}>
+  <span class="highlight-thumb-frame">
+    <img src={thumb} alt="" width="480" height="360" loading="lazy" decoding="async" />
+    <span class="play-symbol" aria-hidden="true">▶</span>
+    <span class="duration">{duration}</span>
+  </span>
+  {!compact && <span class="highlight-thumb-label">{item.title}</span>}
+</a>

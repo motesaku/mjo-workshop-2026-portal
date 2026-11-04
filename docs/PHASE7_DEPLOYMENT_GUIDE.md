@@ -1,6 +1,6 @@
 # Phase 7 — Cloudflare deployment guide (prepared, not executed)
 
-Status on 3 November 2026: **no Cloudflare resource, Wrangler login, deployment, preview or tunnel exists.** The project remains a Node.js + SQLite local prototype. Everything below is a procedure to follow only after the owner explicitly authorizes public deployment. Templates live in `deploy/cloudflare/` with an `.example` suffix so nothing is active.
+Status on 4 November 2026: **public `workers.dev` deploy live with `noindex`**. URL: `https://<worker-name>.<account-subdomain>.workers.dev`. Active config: `astro.config.mjs` (Cloudflare), `wrangler.jsonc`, `src/worker.ts`. Node prototype retained as `astro.config.node.mjs`. Resources: D1 `mjo-workshop-2026-portal` (`<your-d1-uuid>`), R2 `mjo-workshop-2026-portal-media`, SESSION KV. Core migrations applied (fingerprint `<withheld-sha256>`). Scientific pages served from bundled personal synthesis. Production EmDash setup + owner passkey completed 2026-11-04 (1 admin user in D1). **Still open:** custom domain; indexing; Access; GitHub Actions.
 
 Official sources checked on 3 November 2026: [Deploy to Cloudflare](https://docs.emdashcms.com/deployment/cloudflare/), [Core database migrations](https://docs.emdashcms.com/deployment/core-migrations/), [Backups and recovery](https://docs.emdashcms.com/guides/backups/), [Secrets and key management](https://docs.emdashcms.com/deployment/secrets/), [Configuration](https://docs.emdashcms.com/reference/configuration/). Re-read them at execution time; API names and compatibility dates change.
 

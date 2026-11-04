@@ -27,28 +27,14 @@ export const navigation = [
   { href: "/mjo-indices-and-diagnostics", label: "MJO Indices and Diagnostics" },
   { href: "/about", label: "About & Methodology" },
 ];
-export const highlight = {
-  slug: "breakout-themes-3-4",
-  youtubeId: "RPXnSvabsGY",
-  title: "Breakout Discussion — Themes 3 + 4",
-  youtubeTitle: "MJO Workshop 2026: Discussion — Breakout Discussion — Themes 3 + 4",
-  duration: "1:00",
-  durationSeconds: 60,
-  sessionId: "tue-breakout-3-4",
+/** @deprecated Prefer `featuredHighlight` / `highlights` from `./highlights`. Kept for older imports. */
+export { featuredHighlight as highlight, PLAYLIST_ID, PLAYLIST_URL } from "./highlights";
+export const highlightLegacyMeta = {
   date: "27 October 2026",
   time: "16:30–18:00",
   topics: "Theory & Mechanisms · Modeling",
   mappingBasis: "The YouTube title and description identify Breakout Discussion — Themes 3 + 4. The official timetable lists this breakout on Tuesday 27 October at 16:30. This is distinct from the plenary reports on Wednesday 28 October.",
-  mappingVerified: true,
-  scientificReview: "pending",
-  // Owner decisions 2026-11-03: embed OK for participants and future public site;
-  // this ID is the representative 1-minute cut; keep Unlisted; JP channel name accepted.
-  // Scientific summary of the clip remains unapproved.
-  publicationPermission: "owner_approved",
   publicationPermissionDate: "2026-11-03",
-  representativeVersionApproved: true,
-  youtubeVisibility: "unlisted",
-  channelDisplayNamePolicy: "accept_as_shown_by_youtube",
 };
 export const editorialPages: Record<string, { title: string; eyebrow: string; description: string; emptyTitle: string; emptyText: string }> = {
   "diverging-perspectives": {

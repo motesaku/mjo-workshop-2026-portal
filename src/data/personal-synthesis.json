@@ -2899,7 +2899,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-chen",
@@ -2911,7 +2911,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-closing",
@@ -2923,7 +2923,7 @@
       "attribution_mode": "unattributed",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived translation/synthesis; exact session extent unresolved. Named discussion attribution is not reused. Administrative placeholder deadlines and inferred owners excluded. No formal adoption of full recommendation list recorded; no signed review located."
+      "limitations": "Translation/synthesis derived from automatic speech recognition; exact session extent unresolved. Named discussion attribution is not reused. Administrative placeholder deadlines and inferred owners excluded. No formal adoption of full recommendation list recorded; no signed review located."
     },
     {
       "source_id": "src-dkim",
@@ -2935,7 +2935,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-ekot",
@@ -2947,7 +2947,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-final",
@@ -2959,7 +2959,7 @@
       "attribution_mode": "unattributed",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived thematic record; exact mapping to 11:00 versus 14:00 session unresolved. Section 7 is analytical commentary, excluded from workshop evidence. Overlap with closing cannot be ruled out. No signed review located."
+      "limitations": "Thematic record derived from automatic speech recognition; exact mapping to 11:00 versus 14:00 session unresolved. Section 7 is analytical commentary, excluded from workshop evidence. Overlap with closing cannot be ruled out. No signed review located."
     },
     {
       "source_id": "src-g3",
@@ -2995,7 +2995,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-hkim",
@@ -3007,7 +3007,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-janiga",
@@ -3019,7 +3019,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-khouider",
@@ -3031,7 +3031,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-kumar",
@@ -3043,7 +3043,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-lin",
@@ -3055,7 +3055,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-liu",
@@ -3067,7 +3067,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-maraldi",
@@ -3079,7 +3079,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-moteki",
@@ -3115,7 +3115,7 @@
       "attribution_mode": "unattributed",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR excerpt 00:00:00–01:18:41 of a 01:49:13 recording; starts during a report and omits the final approximately 30 minutes. No signed review located."
+      "limitations": "Automatic speech recognition excerpt 00:00:00–01:18:41 of a 01:49:13 recording; starts during a report and omits the final approximately 30 minutes. No signed review located."
     },
     {
       "source_id": "src-p34",
@@ -3127,7 +3127,7 @@
       "attribution_mode": "unattributed",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR 00:00:03–01:35:46 of 01:35:54; speaker identity and some language uncertain. Overlaps GroupDiscussion v2; not an independent vote. No signed review located."
+      "limitations": "Automatic speech recognition transcript covering 00:00:03–01:35:46 of 01:35:54; speaker identity and some language uncertain. Overlaps GroupDiscussion v2; not an independent vote. No signed review located."
     },
     {
       "source_id": "src-peatman",
@@ -3139,7 +3139,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-robertson",
@@ -3151,7 +3151,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-rushley",
@@ -3163,7 +3163,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-sakaeda",
@@ -3175,7 +3175,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-scheibe",
@@ -3187,7 +3187,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-siena",
@@ -3199,7 +3199,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review. Source time 12:30 conflicts with the live official programme at 12:15; use programme time only after import review. Case is an Italian convective rainfall event, not direct MJO evidence."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review. Source time 12:30 conflicts with the live official programme at 12:15; use programme time only after import review. Case is an Italian convective rainfall event, not direct MJO evidence."
     },
     {
       "source_id": "src-silverio",
@@ -3211,7 +3211,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-takasuka",
@@ -3223,7 +3223,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-tsai",
@@ -3235,7 +3235,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-xu",
@@ -3247,7 +3247,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review. Official programme title concerns phase-dependent moisture–convection interactions, whereas these minutes describe short-record wave detection. Content-to-talk mapping is disputed; used only to flag a methodological question and withheld from named scientific attribution."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review. Official programme title concerns phase-dependent moisture–convection interactions, whereas these minutes describe short-record wave detection. Content-to-talk mapping is disputed; used only to flag a methodological question and withheld from named scientific attribution."
     },
     {
       "source_id": "src-yokoi",
@@ -3259,7 +3259,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     },
     {
       "source_id": "src-yoneyama",
@@ -3271,7 +3271,7 @@
       "attribution_mode": "named_talk",
       "source_review_status": "not_established",
       "coverage": "partial",
-      "limitations": "ASR-derived minutes; no explicit scientific sign-off located. Numerical and causal claims require review."
+      "limitations": "Minutes derived from automatic speech recognition; no explicit scientific sign-off located. Numerical and causal claims require review."
     }
   ],
   "evidence": [

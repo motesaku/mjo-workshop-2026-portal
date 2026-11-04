@@ -1,0 +1,7 @@
+---
+import VideoHighlightPage from "../../components/VideoHighlightPage.astro";
+import { getHighlight } from "../../data/highlights";
+const item = getHighlight(Astro.params.slug ?? "");
+if (!item) return Astro.rewrite("/404");
+---
+<VideoHighlightPage item={item} />

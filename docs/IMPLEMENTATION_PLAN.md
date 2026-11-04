@@ -67,4 +67,6 @@ No active Wrangler configuration/deploy script is included now. Local Node build
 - [x] Fill scientific theme/issue/action pages as personal synthesis from converted minutes (12 issues, 2 themes, 12 actions; uncertainty and non-consensus labels retained).
 - [x] Bundle personal synthesis for production as well as development (no runtime dependence on `exports/`).
 - [ ] Confirm any further YouTube highlight mappings.
-- [ ] Authorize Cloudflare provisioning/public hosting separately when ready (`noindex` until then).
+- [x] Authorize Cloudflare public hosting with **`noindex` retained** (2026-11-03/04). Live at `https://<worker-name>.<account-subdomain>.workers.dev`.
+- [x] Complete EmDash setup wizard + owner passkey on the production origin (2026-11-04; D1 has 1 admin user, role 50; admin routes to login).
+- [ ] Custom domain, Access, indexing (`noindex` removal), and GitHub Actions remain separate decisions.

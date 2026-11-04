@@ -1,30 +1,17 @@
-import node from "@astrojs/node";
+import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
+import { d1, r2 } from "@emdash-cms/cloudflare";
 import { defineConfig } from "astro/config";
-import emdash, { local } from "emdash/astro";
-import { sqlite } from "emdash/db";
+import emdash from "emdash/astro";
 import scientificPublicationPolicy from "./src/science/publication-policy.mjs";
+
+// Active Cloudflare Workers target (authorized 2026-11-03: public + noindex).
+// Local Node + SQLite prototype retained as ./astro.config.node.mjs.
 
 export default defineConfig({
 	output: "server",
-	server: { host: "127.0.0.1", port: 4321 },
-	vite: {
-		server: {
-			strictPort: true,
-			fs: {
-				// Preserve Vite's default secret exclusions and protect local CMS state.
-				deny: [
-					".env", ".env.*", "*.{crt,pem}", "**/.git/**",
-					"**/*.db", "**/*.db-*", "**/*.sqlite", "**/*.sqlite3",
-					"**/*.sqlite-*", "**/*.sqlite3-*", "**/*.key",
-					"**/.dev.vars*", "**/backups/**", "**/exports/**", "**/uploads/**",
-				],
-			},
-		},
-	},
-	adapter: node({
-		mode: "standalone",
-	}),
+	adapter: cloudflare(),
+	// Workers Cache intentionally off for the first public deploy.
 	image: {
 		layout: "constrained",
 		responsiveStyles: true,
@@ -34,10 +21,10 @@ export default defineConfig({
 		emdash({
 			admin: { locales: ["en"] },
 			plugins: [scientificPublicationPolicy],
-			database: sqlite({ url: "file:./data.db" }),
-			storage: local({
-				directory: "./uploads",
-				baseUrl: "/_emdash/api/media/file",
+			database: d1({ binding: "DB", session: "auto", coalesce: true }),
+			storage: r2({
+				binding: "MEDIA",
+				// No publicUrl: media stays behind EmDash routes; backups/ must stay private.
 			}),
 		}),
 	],

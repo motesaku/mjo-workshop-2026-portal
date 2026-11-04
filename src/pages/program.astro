@@ -1,13 +1,86 @@
 ---
 import Base from "../layouts/Base.astro";
 import PageIntro from "../components/PageIntro.astro";
+import HighlightThumb from "../components/HighlightThumb.astro";
 import { days, programSource } from "../data/program";
-import { highlight } from "../data/portal";
+import {
+	highlightsForSession,
+	primaryHighlightForTalk,
+	sessionLevelHighlights,
+	PLAYLIST_CHECKED,
+} from "../data/highlights";
 ---
 <Base title="Program & Sessions" description="Explore the official ICTP MJO workshop program in chronological order, 26–30 October 2026.">
-  <PageIntro title="Program & Sessions" eyebrow="Five days of scientific exchange" description="Follow the workshop chronologically, from observations and mechanisms to prediction, impacts and future research."><p class="small">All times: {programSource.timezone}. <a href={programSource.url} target="_blank" rel="noopener noreferrer">Official ICTP program ↗</a> · Verified 2 November 2026.</p></PageIntro>
+  <PageIntro title="Program & Sessions" eyebrow="Five days of scientific exchange" description="Follow the workshop chronologically, from observations and mechanisms to prediction, impacts and future research."><p class="small">All times: {programSource.timezone}. <a href={programSource.url} target="_blank" rel="noopener noreferrer">Official ICTP program ↗</a> · Verified 2 November 2026 · Highlight playlist linked {PLAYLIST_CHECKED}.</p></PageIntro>
   <nav class="day-nav" aria-label="Jump to workshop day">{days.map((day, i) => <a href={`#${day.date}`}>{["Mon 26", "Tue 27", "Wed 28", "Thu 29", "Fri 30"][i]} Oct</a>)}</nav>
-  <p class="small" style="margin-top:1rem">Academic sessions, scheduled talks, posters and social blocks are listed below. Breaks within session blocks are noted. Talk titles describe the program, not reviewed scientific findings.</p>
-  {days.map(day => <section class="day" id={day.date} aria-label={day.label}><div class="day-heading"><h2>{day.label}</h2><span class="small">{day.theme}</span></div><div class="schedule">{day.sessions.map(session => <article id={session.id} class:list={["session", { "has-highlight": session.id === highlight.sessionId }]}><div class="session-time">{session.time}</div><div><span class="badge">{session.kind}</span><h3>{session.title}</h3>{session.talks && <ul class="talks">{session.talks.map(talk => <li><time>{talk.time}</time><div>{talk.title}<span class="speaker">{talk.speaker}</span></div></li>)}</ul>}{session.note && <p class="muted">{session.note}</p>}{session.id === highlight.sessionId ? <><a class="button" href={`/videos/${highlight.slug}`}>Watch the 1:00 highlight <span aria-hidden="true">→</span></a><p class="small" style="margin-top:.7rem">Session mapping verified · Scientific summary awaiting review</p></> : !["Administrative", "Social", "Break"].includes(session.kind) && <p class="small">Highlight not yet available · Scientific summary not yet reviewed</p>}</div></article>)}</div></section>)}
-  <div class="notice">Coverage note: this is a program-based index, not a record of attendance or a complete scientific account. Discussion sessions are not attributed to individual people. No original slides, documents or photographs are hosted.</div>
+  <p class="small" style="margin-top:1rem">Academic sessions, scheduled talks, posters and social blocks are listed below. Where a one-minute highlight exists, a YouTube thumbnail opens the highlight page. Breaks within session blocks are noted. Talk titles describe the program, not reviewed scientific findings.</p>
+  {days.map(day => (
+    <section class="day" id={day.date} aria-label={day.label}>
+      <div class="day-heading"><h2>{day.label}</h2><span class="small">{day.theme}</span></div>
+      <div class="schedule">
+        {day.sessions.map(session => {
+          const talkThumbs = (session.talks ?? [])
+            .map((talk) => ({ talk, highlight: primaryHighlightForTalk(session.id, talk.speaker) }))
+            .filter((row) => row.highlight);
+          const sessionThumbs = sessionLevelHighlights(session.id);
+          const anyHighlight = talkThumbs.length > 0 || sessionThumbs.length > 0 || highlightsForSession(session.id).length > 0;
+          return (
+            <article id={session.id} class:list={["session", { "has-highlight": anyHighlight }]}>
+              <div class="session-time">{session.time}</div>
+              <div>
+                <span class="badge">{session.kind}</span>
+                <h3>{session.title}</h3>
+                {session.talks && (
+                  <ul class="talks">
+                    {session.talks.map((talk) => {
+                      const clip = primaryHighlightForTalk(session.id, talk.speaker);
+                      return (
+                        <li class:list={[{ "talk-with-video": !!clip }]}>
+                          <time>{talk.time}</time>
+                          <div>
+                            {talk.title}<span class="speaker">{talk.speaker}</span>
+                            {clip && (
+                              <div class="talk-video">
+                                <HighlightThumb highlight={clip} compact />
+                                <a href={`/videos/${clip.slug}`}>1:00 highlight →</a>
+                              </div>
+                            )}
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+                {sessionThumbs.length > 0 && (
+                  <div class="session-videos">
+                    {sessionThumbs.map((clip) => (
+                      <div class="session-video">
+                        <HighlightThumb highlight={clip} />
+                        <div>
+                          <a href={`/videos/${clip.slug}`}>{clip.title}</a>
+                          <p class="small">1-minute highlight · {clip.mapping === "provisional" ? "Provisional mapping" : "Mapped to this session"}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {session.note && <p class="muted">{session.note}</p>}
+                {!anyHighlight && !["Administrative", "Social", "Break"].includes(session.kind) && (
+                  <p class="small">No one-minute highlight mapped yet · Scientific summary not yet reviewed</p>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  ))}
+  <div class="notice">Coverage note: this is a program-based index, not a record of attendance or a complete scientific account. Discussion sessions are not attributed to individual people. No original slides, documents or photographs are hosted. Highlight thumbnails are served by YouTube.</div>
 </Base>
+<style>
+  .talk-with-video{align-items:start}
+  .talk-video{display:flex;align-items:center;gap:.75rem;margin-top:.55rem}
+  .session-videos{display:grid;gap:.85rem;margin:1rem 0}
+  .session-video{display:grid;grid-template-columns:9.5rem 1fr;gap:.9rem;align-items:center}
+  @media(max-width:640px){.session-video{grid-template-columns:1fr}}
+</style>

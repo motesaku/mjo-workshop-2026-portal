@@ -9,4 +9,4 @@ These files are templates only. They use the `.example` suffix so that Wrangler,
 | `worker.ts.example` | `./src/worker.ts` | Official EmDash Worker entry point with `scheduled` handler |
 | `dev.vars.example` | `./.dev.vars` | Local `wrangler dev` variables (gitignored) |
 
-Do not copy any of them into place, install `@astrojs/cloudflare`, `@emdash-cms/cloudflare` or `wrangler`, log in to Wrangler, or create cloud resources until public deployment has been explicitly authorized. The full procedure, checks and backup/restore plan are in `docs/PHASE7_DEPLOYMENT_GUIDE.md`.
+As of 4 November 2026 these templates have been activated at the project root (`wrangler.jsonc`, `src/worker.ts`, Cloudflare `astro.config.mjs`). The `*.example` copies remain reference snapshots. Live public URL (noindex): `https://<worker-name>.<account-subdomain>.workers.dev`. Procedure and backup notes: `docs/PHASE7_DEPLOYMENT_GUIDE.md`.

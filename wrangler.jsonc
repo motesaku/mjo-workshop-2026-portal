@@ -1,0 +1,38 @@
+// Active Cloudflare Workers config (authorized 2026-11-03: public + noindex).
+// Official EmDash guide: https://docs.emdashcms.com/deployment/cloudflare/
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "mjo-workshop-2026-portal",
+	"main": "./src/worker.ts",
+	// Keep at or after 2025-04-01 so Worker secrets reach process.env (EmDash requirement).
+	"compatibility_date": "2026-02-24",
+	"compatibility_flags": ["nodejs_compat"],
+	"workers_dev": true,
+	"preview_urls": false,
+
+	// Binding names MUST match astro.config.mjs: d1({ binding: "DB" }), r2({ binding: "MEDIA" }).
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "mjo-workshop-2026-portal",
+			"database_id": "<your-d1-uuid>"
+		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "MEDIA",
+			"bucket_name": "mjo-workshop-2026-portal-media"
+			// Approved site assets only. Never videos or original research documents.
+			// EmDash writes JSON backups under backups/: never expose a public bucket domain.
+		}
+	],
+
+	"triggers": { "crons": ["* * * * *"] },
+	"images": { "binding": "IMAGES" },
+
+	"vars": {
+		"EMDASH_SITE_URL": "https://<worker-name>.<account-subdomain>.workers.dev"
+	},
+
+	"observability": { "enabled": true }
+}

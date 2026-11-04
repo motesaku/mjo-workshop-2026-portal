@@ -1,0 +1,82 @@
+---
+import Base from "../layouts/Base.astro";
+import PageIntro from "./PageIntro.astro";
+import Journey from "./Journey.astro";
+import YouTubePlayer from "./YouTubePlayer.astro";
+import { days } from "../data/program";
+import { PROGRAM_URL, VERIFIED_ON } from "../data/portal";
+import {
+	formatDuration,
+	PLAYLIST_URL,
+	PLAYLIST_CHECKED,
+	type Highlight,
+} from "../data/highlights";
+
+interface Props { item: Highlight }
+const { item } = Astro.props;
+const session = item.sessionId
+	? days.flatMap((day) => day.sessions.map((session) => ({ day, session }))).find((row) => row.session.id === item.sessionId)
+	: undefined;
+const duration = formatDuration(item.durationSeconds);
+const mappingLabel =
+	item.mapping === "mapped" ? "Session mapping verified"
+	: item.mapping === "provisional" ? "Provisional mapping"
+	: item.mapping === "alternate" ? "Alternate cut"
+	: "Session unconfirmed";
+---
+<Base title={item.title} description={`One-minute workshop highlight: ${item.title}.`}>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/videos">Video Highlights</a><span>/</span><span>{item.title}</span></nav>
+  <PageIntro title={item.title} eyebrow={`Video highlight · ${item.kind}`} description={session ? `${session.day.label} 2026 · ${session.session.time}` : "Playlist highlight awaiting a confirmed timetable slot."}>
+    <span class="badge">{mappingLabel}</span>
+    <span class="badge draft">Scientific summary pending</span>
+  </PageIntro>
+  {item.slug === "breakout-themes-3-4" && <Journey current="video" />}
+  <div class="content-columns">
+    <div class="reading">
+      <YouTubePlayer id={item.youtubeId} title={item.youtubeTitle} />
+      <p class="small">{duration} · Highlight · Playlist-linked · English metadata</p>
+      <section>
+        <h2>Scientific summary</h2>
+        <div class="empty-state">
+          <span class="badge draft">Awaiting review</span>
+          <p style="margin-top:1rem">A scientific summary has not been approved. The clip is a one-minute orientation derivative, not a full recording or independent evidence.</p>
+        </div>
+      </section>
+      {item.mappingNote && <section><h2>Mapping note</h2><p>{item.mappingNote}</p></section>}
+      {session && (
+        <section>
+          <h2>Program context</h2>
+          <p><a href={`/program#${session.session.id}`}>{session.session.title}</a></p>
+          <p class="small"><time datetime={session.day.date}>{session.day.label} 2026</time> · {session.session.time} · {session.day.theme}</p>
+        </section>
+      )}
+      {item.slug === "breakout-themes-3-4" && (
+        <>
+          <section><h2>Related scientific questions</h2><article class="card"><span class="badge draft">Personal synthesis</span><h3 style="margin-top:1rem"><a href="/questions/themes/q01">What would distinguish competing MJO mechanisms?</a></h3><p>A personal reading of theory and modelling minutes on evidential standards for mechanisms. Not workshop consensus.</p><a href="/questions/themes/q01">Read the issue →</a></article></section>
+          <section><h2>Relevant research actions</h2><p>An illustrative workflow sketch linked to that personal synthesis. It is not a workshop commitment.</p><a href="/actions/q01">Explore the illustrative research workflow →</a></section>
+        </>
+      )}
+    </div>
+    <aside aria-label="Highlight information">
+      <h2>Highlight information</h2>
+      <dl class="metadata">
+        <dt>YouTube ID</dt><dd><code>{item.youtubeId}</code></dd>
+        <dt>Duration</dt><dd>{duration} ({item.durationSeconds} seconds)</dd>
+        <dt>Record coverage</dt><dd>Partial — one-minute derivative</dd>
+        <dt>Website embed permission</dt><dd>Owner playlist approval {PLAYLIST_CHECKED}{item.youtubeId === "RPXnSvabsGY" ? " · Owner approved 2026-11-03" : ""}</dd>
+        {item.youtubeId === "RPXnSvabsGY" && <><dt>Representative version</dt><dd>Owner confirmed 2026-11-03</dd></>}
+        <dt>Playlist</dt><dd><a href={PLAYLIST_URL} target="_blank" rel="noopener noreferrer">MJO Workshop 2026 highlights ↗</a></dd>
+        <dt>Metadata checked</dt><dd>{VERIFIED_ON} · playlist rechecked {PLAYLIST_CHECKED}</dd>
+      </dl>
+      <div class="buttons">
+        {session && <a class="button" href={`/program#${session.session.id}`}>View in the program →</a>}
+        <a class="button secondary" href="/videos">All highlights →</a>
+      </div>
+    </aside>
+  </div>
+  <section>
+    <h2>Source note</h2>
+    <p>Videos remain on YouTube. This page embeds only after you choose Load YouTube player. Discussion clips are not attributed to individual speakers.</p>
+    <p class="small"><a href={PROGRAM_URL} target="_blank" rel="noopener noreferrer">Official ICTP timetable ↗</a> · <a href={`https://www.youtube.com/watch?v=${item.youtubeId}`} target="_blank" rel="noopener noreferrer">Open on YouTube ↗</a></p>
+  </section>
+</Base>
