@@ -78,5 +78,59 @@ issue claim ── evidence_id ──► source_id ──► SOURCE_VIDEO_RULES 
 - [x] 8B relations and video pages
 - [x] 8C classification layer
 - [x] 8D four-area roadmap
-- [ ] 8E workshop synthesis page and homepage
-- [ ] 8F validation
+- [x] 8E workshop synthesis page and homepage
+- [x] 8F validation
+
+## 8F — Validation (2026-11-04)
+
+| Check | Result |
+| --- | --- |
+| `npm run typecheck` | 0 errors, 0 warnings, 0 hints (65 files) |
+| `npm run test:science` | 59 pass, 0 fail |
+| `npm run test:security` | 12 pass, 0 fail |
+| `npm run test:phase8` (new) | 15 pass, 0 fail — counts, supplement, source→clip rules vs programme, withheld sources, bidirectional links, key-message provenance, classification, roadmap, synthesis |
+| `npm run science:check` | Generated artifacts match the contract |
+| `npm run verify:local` (dev) | PASS |
+| `node scripts/verify-phase4-http.mjs` (dev) | PASS (breakout status regex updated for Phase 8 wording) |
+| `node scripts/verify-phase6.mjs dev` | PASS (hard-coded breakout link check replaced by an evidence-derived highlight check) |
+| `npm run verify:phase8` (dev, new) | PASS — 74 pages (38 highlights, 12 questions, 12 actions), all internal links and in-page anchors resolve, 47 bidirectional video↔question links, action asides match evidence-derived clips, private files 403/404 |
+| `npm run build` | Complete (pre-existing >500 kB chunk warning) |
+| Build output scan | 1,288 files, no private export names, path fields or fingerprints |
+| `npm run cf:dev` + `verify:phase8 http://127.0.0.1:8787` | PASS on the built Worker (local emulation only) |
+| Browser (Chrome) | Desktop and narrow layouts inspected; 14 key pages checked at 390 px / 16 px root font with no horizontal overflow; mobile menu works |
+
+Not run: any remote or production check. Nothing was deployed.
+
+## Files
+
+New: `src/science/phase8.ts`, `src/science/phase8/{relations,source-video-map,provenance-supplement,status,editorial-videos,editorial-classification,editorial-roadmap,editorial-synthesis}.mjs`, `src/components/{ContextNote,ClaimEntry,RelatedVideos,RelationshipBadge,DivergenceAnalysis,AlignmentAnalysis}.astro`, `src/pages/workshop-synthesis.astro`, `tests/phase8-relations.test.mjs`, `scripts/verify-phase8.mjs`, `docs/PHASE8_EDITORIAL_LOG.md`.
+
+Modified: `src/components/{VideoHighlightPage,Journey,ScientificTheme,ThemeReferences,EditorialPage,HighlightCard,ScienceNavigation}.astro`, `src/pages/{index,questions,about}.astro`, `src/pages/questions/themes/[issue].astro`, `src/pages/actions/{index,[issue]}.astro`, `src/pages/videos/index.astro`, `src/layouts/Base.astro`, `src/data/portal.ts`, `src/styles/portal.css`, `scripts/build-personal-synthesis.mjs`, `scripts/verify-phase4-http.mjs`, `scripts/verify-phase6.mjs`, `package.json`.
+
+Unchanged by design: `src/data/personal-synthesis.json`, `src/data/highlights.ts`, `src/data/program.ts`, the import contract and generated schema, `wrangler.jsonc`, `noindex, nofollow`.
+
+## Remaining scientific review items
+
+1. **Author review of all Phase 8 wording** (`docs/PHASE8_EDITORIAL_LOG.md`), then set `PHASE8_EDITORIAL.status` to `"author_reviewed"` in `src/science/phase8/status.mjs`. Until then every Phase 8 statement is labelled as a draft.
+2. Claim-level source checks remain pending for all 82 + 6 locators (unchanged from Phase 7).
+3. `src-xu`: confirm whether the minutes filed under the Chang Xu talk belong to that talk.
+4. `src-final` / `src-closing`: resolve the Friday 11:00 vs 14:00 boundary and the closing record's extent; this would allow links to the Themes 5+6 plenary, final plenary and closing clips.
+5. `src-obs` / `src-g34`: confirm dates and overlap with the 28 October plenaries.
+6. Q03 temperature-contribution percentages remain withheld (unresolved denominator).
+7. Key messages were condensed from minutes, not from the clips. A viewing check of each clip against its key message is still needed before describing any clip's content.
+8. Nine clips have no question link (welcome, Moncrieff keynote, Chang Xu talk, Themes 5+6 plenary, final plenary, closing, group reports, observations/AI discussion, isotope discussion). The Brennek talk is linked to Q11 only through an editorial comparison and has no key message.
+9. Future import contract: consider adding the relationship subcategory, source→session mapping and Phase 8 provenance fields to the reviewed-content schema (not changed here to keep `science:check` stable).
+10. `scripts/build-personal-synthesis.mjs` now collects evidence from every issue field, but a full rebuild would also revert later manual edits to 28 source descriptions; reconcile the exports before rebuilding.
+
+## Local preview
+
+```sh
+npm run dev            # http://127.0.0.1:4321/  (loopback only)
+npm run test:phase8
+npm run verify:phase8  # with the dev server running
+npm run build && npm run cf:dev   # built Worker on http://127.0.0.1:8787 (local emulation)
+```
+
+## Deployment (requires explicit owner authorization)
+
+Not performed. When authorized: complete item 1 above, run the full check list, `npm run build` (uses the gitignored `wrangler.site.jsonc`), then `npm run deploy` following `docs/PHASE7_DEPLOYMENT_GUIDE.md`. Keep `noindex, nofollow` unless indexing is separately decided. Pushing the commits to GitHub is also a separate authorization.

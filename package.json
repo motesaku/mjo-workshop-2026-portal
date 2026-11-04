@@ -29,7 +29,8 @@
     "science:check": "node scripts/science.mjs check-generated",
     "science:build-synthesis": "node scripts/build-personal-synthesis.mjs",
     "verify:phase4": "node scripts/verify-phase4-http.mjs",
-    "verify:phase6": "node scripts/verify-phase6.mjs"
+    "verify:phase6": "node scripts/verify-phase6.mjs",
+    "verify:phase8": "node scripts/verify-phase8.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.4.4",
