@@ -24,13 +24,17 @@
     "test:science": "node --test tests/science.test.mjs",
     "test:security": "node --test tests/public-request-guard.test.mjs",
     "test:phase8": "node --test tests/phase8-relations.test.mjs",
+    "test:phase9": "node --test tests/phase9.test.mjs",
     "science:validate": "node scripts/science.mjs validate",
     "science:plan": "node scripts/science.mjs plan",
     "science:check": "node scripts/science.mjs check-generated",
     "science:build-synthesis": "node scripts/build-personal-synthesis.mjs",
+    "science:export-phase9": "node scripts/export-phase9.mjs",
+    "science:check-phase9": "node scripts/export-phase9.mjs --check",
     "verify:phase4": "node scripts/verify-phase4-http.mjs",
     "verify:phase6": "node scripts/verify-phase6.mjs",
-    "verify:phase8": "node scripts/verify-phase8.mjs"
+    "verify:phase8": "node scripts/verify-phase8.mjs",
+    "verify:phase9": "node scripts/verify-phase9.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.4.4",

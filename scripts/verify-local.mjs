@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 
 // Regression check for the local dev server. Never target a remote origin.
-const origin = "http://127.0.0.1:4321";
+const origin = process.env.VERIFY_ORIGIN ?? "http://127.0.0.1:4321";
+if (!["127.0.0.1", "localhost", "[::1]"].includes(new URL(origin).hostname)) throw new Error("verification only targets a loopback server");
 for (const path of ["/", "/posts", "/_emdash/admin/"]) {
   const response = await fetch(new URL(path, origin));
   assert.equal(response.status, 200, `${path} must be accessible`);

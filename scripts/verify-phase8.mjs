@@ -4,15 +4,15 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { highlights } from "../src/data/highlights.ts";
 import { createRelationIndex } from "../src/science/phase8/relations.mjs";
-import { SOURCE_VIDEO_RULES, OVERLAP_GROUPS } from "../src/science/phase8/source-video-map.mjs";
-import { supplementalEvidence, supplementalSources } from "../src/science/phase8/provenance-supplement.mjs";
-import { ACTION_CROSS_LINKS } from "../src/science/phase8/editorial-videos.mjs";
+import { relationContext } from "../src/science/phase9/context.mjs";
+import { PILOTS } from "../src/science/phase9/roadmap.mjs";
 
 const origin = process.argv[2] ?? "http://127.0.0.1:4321";
 assert.ok(["127.0.0.1", "localhost", "[::1]"].includes(new URL(origin).hostname), "verify-phase8 only targets a loopback server");
 
 const pkg = JSON.parse(readFileSync(new URL("../src/data/personal-synthesis.json", import.meta.url), "utf8"));
-const index = createRelationIndex({ pkg, highlights, supplement: { evidence: supplementalEvidence, sources: supplementalSources }, sourceVideoRules: SOURCE_VIDEO_RULES, overlapGroups: OVERLAP_GROUPS, actionCrossLinks: ACTION_CROSS_LINKS });
+// Pages derive relations from the package plus the Phase 8 and Phase 9 supplements.
+const index = createRelationIndex(relationContext({ pkg, highlights }));
 
 const staticRoutes = ["/", "/workshop-synthesis", "/program", "/videos", "/questions", "/diverging-perspectives", "/emerging-alignment", "/open-challenges", "/actions", "/ai-for-mjo-research", "/mjo-indices-and-diagnostics", "/about"];
 const routes = [
@@ -20,6 +20,7 @@ const routes = [
 	...highlights.map((h) => `/videos/${h.slug}`),
 	...pkg.issues.map((i) => `/questions/themes/${i.id}`),
 	...pkg.actions.map((a) => `/actions/${a.issue_id}`),
+	...PILOTS.map((p) => `/actions/pilots/${p.slug}`),
 ];
 const pages = new Map();
 const failures = [];
@@ -116,4 +117,4 @@ if (failures.length) {
 	console.error(`FAIL ${failures.length} check(s):\n- ${failures.slice(0, 60).join("\n- ")}`);
 	process.exit(1);
 }
-console.log(`PASS ${routes.length} pages (${highlights.length} highlights, ${pkg.issues.length} questions, ${pkg.actions.length} actions), ${internal.size} internal links, ${pairs} bidirectional video↔question links`);
+console.log(`PASS ${routes.length} pages (${highlights.length} highlights, ${pkg.issues.length} questions, ${pkg.actions.length} actions, ${PILOTS.length} pilots), ${internal.size} internal links, ${pairs} bidirectional video↔question links`);
