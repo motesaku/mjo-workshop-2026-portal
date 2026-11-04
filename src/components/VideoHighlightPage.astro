@@ -16,7 +16,9 @@ import {
 	phase8Label,
 	SUMMARY_STATUS_LABELS,
 	FIELD_LABELS,
+	phase9Label,
 } from "../science/phase8";
+import { PROGRAMME_MAPPING, AUDIT_DIMENSIONS, MAPPING_REVIEW } from "../science/phase9/videos.mjs";
 
 interface Props { item: Highlight }
 const { item } = Astro.props;
@@ -30,7 +32,11 @@ const mappingLabel =
 	: item.mapping === "alternate" ? "Alternate cut"
 	: "Session unconfirmed";
 const status = SUMMARY_STATUS_LABELS[record.summaryStatus];
-const draft = phase8Label();
+const draft = record.keyMessagePhase === "phase9" ? phase9Label() : phase8Label();
+const audit = record.audit;
+const mappingReviews = MAPPING_REVIEW.filter((m) => audit.withheldSources.includes(m.sourceId));
+const MINUTES_LABELS = { linked: "Linked: questions cite the minutes of this talk or session", withheld: "Withheld: a candidate record exists, but its mapping to this clip is not established", none: "None: no cited minutes are tied to this clip" } as const;
+const SUMMARY_LABELS = { consistent: "Yes: consistent with the cited minutes (AI-assisted check, Phase 9)", revised: "Yes: revised in Phase 9 after the check against the cited minutes", no_summary: "No key message is given" } as const;
 const firstIssue = record.relatedIssues[0]?.issue;
 const firstAction = firstIssue ? actionForIssue(firstIssue.id) : undefined;
 const statementsByIssue = record.relatedIssues
@@ -65,11 +71,11 @@ const refIds = [...new Set(record.statements.flatMap((row) => row.claim.evidence
       <p class="small">{duration} · One-minute derivative of the session, not a full recording · English metadata</p>
 
       <section id="key-message">
-        <h2>Key message</h2>
+        <h2>Key Message from Session Minutes</h2>
         {record.keyMessage ? (
           <>
             <p class="key-message">{record.keyMessage.text}</p>
-            <p class="small"><span class="tag">Editorial synthesis</span> {draft.short}: condensed from the workshop-record statements below, which paraphrase the minutes of this {item.talkSpeaker ? "talk" : "session"}. Not checked against the clip.</p>
+            <p class="small"><span class="tag">Editorial synthesis</span> {draft.short}: condensed from the workshop-record statements below, which paraphrase the minutes of this {item.talkSpeaker ? "talk" : "session"}. Based on the minutes, not on the one-minute clip; the clip may show other parts of the {item.talkSpeaker ? "talk" : "session"}.</p>
           </>
         ) : (
           <div class="empty-state compact">
@@ -137,6 +143,22 @@ const refIds = [...new Set(record.statements.flatMap((row) => row.claim.evidence
           </ul>
         </section>
       )}
+
+      <section id="relationship-audit">
+        <h2>How this clip relates to the scientific content</h2>
+        <dl class="audit-list">
+          <dt>{AUDIT_DIMENSIONS.programme}</dt><dd>{PROGRAMME_MAPPING[audit.programme].label} — {PROGRAMME_MAPPING[audit.programme].description}</dd>
+          <dt>{AUDIT_DIMENSIONS.minutes}</dt><dd>{MINUTES_LABELS[audit.minutes]}</dd>
+          <dt>{AUDIT_DIMENSIONS.summaryVsMinutes}</dt><dd>{SUMMARY_LABELS[audit.summaryVsMinutes]}</dd>
+          <dt>{AUDIT_DIMENSIONS.summaryVsClip}</dt><dd>Not checked. A minutes-based relationship does not show that a particular statement appears in this one-minute clip.</dd>
+          {audit.withheldSources.length > 0 && <><dt>{AUDIT_DIMENSIONS.withheld}</dt><dd>{audit.withheldSources.map(sourceLabel).join("; ")}</dd></>}
+        </dl>
+        {mappingReviews.length > 0 && (
+          <details class="nested"><summary>Phase 9 re-examination of withheld mappings ({mappingReviews.length})</summary>
+            {mappingReviews.map((m) => <p class="small"><strong>{sourceLabel(m.sourceId)}.</strong> {m.finding} <em>Still open:</em> {m.remaining}</p>)}
+          </details>
+        )}
+      </section>
 
       <section id="source-status">
         <h2>Source and review status</h2>
