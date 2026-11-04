@@ -1,23 +1,111 @@
 ---
 import Base from "../../layouts/Base.astro";
 import PageIntro from "../../components/PageIntro.astro";
-import { loadThemeReview } from "../../science/theme-review";
-import { SITE_STANCE } from "../../data/portal";
-const actions = loadThemeReview()?.actions ?? [];
+import ContextNote from "../../components/ContextNote.astro";
+import RelatedVideos from "../../components/RelatedVideos.astro";
+import ClaimEntry from "../../components/ClaimEntry.astro";
+import RelationshipBadge from "../../components/RelationshipBadge.astro";
+import {
+	priorityAreas, areaIssueIds, getIssue, actionForIssue, actionChain, videosForIssues, getClaim,
+	phase8Label, PRIORITIZATION_CRITERIA, PRIORITIZATION_NOTE, ROADMAP_STATUS, type Claim,
+} from "../../science/phase8";
+const areas = priorityAreas();
+const draft = phase8Label();
+const unresolvedOf = (issueId: string) => {
+	const issue = getIssue(issueId);
+	const list = Array.isArray(issue?.unresolved_questions) ? issue.unresolved_questions : [];
+	return list.map((u) => getClaim((u as Claim).claim_id ?? "")?.claim).filter((c): c is Claim => !!c);
+};
 ---
-<Base title="Research Action Roadmap">
-  <PageIntro title="Research Action Roadmap" eyebrow="From questions to possible methods" description="Illustrative AI-agent workflows suggested by a personal reading of the workshop questions. They are sketches for future research design, not assignments." />
-  <div class="notice" data-theme-review="personal-report"><strong>{SITE_STANCE.shortLabel}.</strong> These pages illustrate possible workflows. They are not formal workshop commitments, owners, deadlines or evidence of completed research.</div>
-  <div class="card-grid">
-    {actions.map(action => (
-      <article class="card">
-        <p class="eyebrow">{action.issue_id} · Illustrative workflow</p>
-        <span class="badge draft">Not a commitment</span>
-        <h2 style="margin-top:1rem"><a href={`/actions/${action.issue_id}`}>{action.title}</a></h2>
-        <p>{action.rationale}</p>
-        <a href={`/actions/${action.issue_id}`}>Explore the workflow →</a>
-      </article>
-    ))}
-  </div>
+<Base title="Research Action Roadmap" description="Four strategic research areas built from the workshop's scientific questions, with twelve illustrative implementation workflows.">
+  <PageIntro title="Research Action Roadmap" eyebrow="From questions to possible research" description="Four strategic research areas defined by the scientific questions they address. The twelve detailed workflows remain available as possible implementation routes, in which AI agents are tools rather than objectives." />
+  <ContextNote label="Editorial proposal">{ROADMAP_STATUS} Not commitments, owners or deadlines.</ContextNote>
+  <nav class="area-toc" aria-label="Priority areas">{areas.map((area) => <a href={`#${area.id}`}><span>{area.numeral}</span>{area.title}</a>)}<a href="#workflows"><span>+</span>All 12 workflows</a><a href="#prioritization"><span>?</span>Prioritization criteria</a></nav>
+
+  <section class="chain-explainer" aria-label="How each investigation is structured">
+    <h2>How each investigation is structured</h2>
+    <ol class="chain"><li>Scientific objective</li><li>Testable hypothesis</li><li>Research method</li><li>Expected deliverable</li><li>Evaluation criteria</li></ol>
+    <p class="small">Objectives and hypotheses are Phase 8 editorial drafts derived from each workflow's own evaluation criterion. Methods, deliverables and criteria are the existing workflow text. AI agents appear only in the implementation note.</p>
+  </section>
+
+  {areas.map((area) => {
+    const issueIds = areaIssueIds(area);
+    const videos = videosForIssues(area.coreIssues);
+    return (
+      <section id={area.id} class="area">
+        <p class="eyebrow">Priority area {area.numeral}</p>
+        <h2>{area.title}</h2>
+        <p class="lead-sm"><strong>Main objective.</strong> {area.objective}</p>
+        <div class="area-grid">
+          <div>
+            <h3>Scientific questions</h3>
+            <ul class="question-list">
+              {area.coreIssues.map((id) => { const q = getIssue(id); return q && <li><a href={`/questions/themes/${id}`}>{id.toUpperCase()} · {q.title}</a><RelationshipBadge issueId={id} /></li>; })}
+            </ul>
+            {area.crossCuttingIssues.length > 0 && <><h4>Related cross-cutting questions</h4><ul class="question-list">{area.crossCuttingIssues.map((id) => { const q = getIssue(id); return q && <li><a href={`/questions/themes/${id}`}>{id.toUpperCase()} · {q.title}</a></li>; })}</ul></>}
+          </div>
+          <div>
+            <h3>Critical knowledge gap</h3>
+            <p>{area.gap.text}</p>
+            <p class="small"><span class="tag">Editorial synthesis</span> {draft.short}</p>
+          </div>
+        </div>
+        <details class="area-details">
+          <summary>Important unresolved uncertainties ({issueIds.length} questions)</summary>
+          {issueIds.flatMap((id) => unresolvedOf(id).map((c) => <ClaimEntry claim={c} context={id.toUpperCase()} />))}
+        </details>
+        <h3>Proposed investigations</h3>
+        <div class="investigations">
+          {issueIds.map((id) => {
+            const action = actionForIssue(id);
+            const chain = action ? actionChain(action.id) : undefined;
+            return action && chain && (
+              <article class="investigation">
+                <p class="eyebrow">{id.toUpperCase()}{area.crossCuttingIssues.includes(id) && " · cross-cutting"}</p>
+                <h4><a href={`/actions/${action.issue_id}`}>{action.title}</a></h4>
+                <dl class="chain-list">
+                  <dt>Objective</dt><dd>{chain.objective}</dd>
+                  <dt>Hypothesis</dt><dd>{chain.hypothesis}</dd>
+                  <dt>Deliverable</dt><dd>{chain.deliverable?.text}</dd>
+                </dl>
+                <a href={`/actions/${action.issue_id}`}>Full chain and workflow →</a>
+              </article>
+            );
+          })}
+        </div>
+        <h3>Necessary observations and model outputs</h3>
+        <ul>{area.observationsAndOutputs.map((o) => <li>{o.text}</li>)}</ul>
+        <h3>Expected research deliverables</h3>
+        <p>{area.deliverable.text}</p>
+        <p class="small"><span class="tag">Editorial synthesis</span> Summarized from the workflows' expected outputs. {draft.short}.</p>
+        {videos.length > 0 && <><h3>Relevant one-minute highlights</h3><RelatedVideos links={videos} context="this area's questions" limit={6} /></>}
+      </section>
+    );
+  })}
+
+  <section id="workflows">
+    <h2>Detailed implementation workflows</h2>
+    <p>The twelve original workflows, grouped by area. Each is an illustrative sketch of how researchers might implement an investigation with auditable AI-agent support.</p>
+    <div class="card-grid">
+      {areas.flatMap((area) => areaIssueIds(area).map((id) => {
+        const action = actionForIssue(id);
+        return action && (
+          <article class="card">
+            <p class="eyebrow">Area {area.numeral} · {id.toUpperCase()} · Illustrative workflow</p>
+            <h3><a href={`/actions/${action.issue_id}`}>{action.title}</a></h3>
+            <p>{action.rationale}</p>
+            <a href={`/actions/${action.issue_id}`}>Explore the workflow →</a>
+          </article>
+        );
+      }))}
+    </div>
+  </section>
+
+  <section id="prioritization">
+    <h2>A qualitative prioritization framework</h2>
+    <p>Readers planning their own work may weigh the investigations above against four criteria.</p>
+    <dl class="method-list">{PRIORITIZATION_CRITERIA.map((c) => <><dt>{c.label}</dt><dd>{c.question}</dd></>)}</dl>
+    <p class="notice">{PRIORITIZATION_NOTE}</p>
+  </section>
   <section><h2>Start with a question</h2><p>Each action retains the scientific question on which it depends. An AI-assisted sketch is distinguished from a workshop decision.</p><a href="/questions">Explore Scientific Questions →</a></section>
 </Base>

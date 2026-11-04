@@ -204,3 +204,48 @@ export const VERDICT_LABELS = {
 	complementary: "Complementary approaches, not disagreement",
 	undetermined: "Relationship not yet determinable",
 } as const;
+
+// ---- 8D: strategic roadmap ------------------------------------------------
+import { PRIORITY_AREAS, ACTION_CHAINS, PRIORITIZATION_CRITERIA, PRIORITIZATION_NOTE, ROADMAP_STATUS } from "./phase8/editorial-roadmap.mjs";
+export { PRIORITIZATION_CRITERIA, PRIORITIZATION_NOTE, ROADMAP_STATUS };
+
+export interface PriorityArea {
+	id: string; numeral: string; title: string; shortTitle: string; objective: string;
+	coreIssues: string[]; crossCuttingIssues: string[];
+	gap: Basis; observationsAndOutputs: Basis[]; nextInvestigation: Basis; deliverable: Basis;
+}
+export const priorityAreas = () => PRIORITY_AREAS as PriorityArea[];
+export const priorityAreaForIssue = (issueId: string) => priorityAreas().find((a) => a.coreIssues.includes(issueId) || a.crossCuttingIssues.includes(issueId));
+export const priorityAreaForAction = (actionId: string) => {
+	const action = getActionById(actionId);
+	return action ? priorityAreaForIssue(action.issue_id) : undefined;
+};
+export const areaIssueIds = (area: PriorityArea) => [...area.coreIssues, ...area.crossCuttingIssues];
+
+export interface ActionChain {
+	objective: string;
+	hypothesis: string;
+	basis: string[];
+	method: Claim[];
+	deliverable: Claim | null;
+	criteria: Claim | null;
+	limitations: Claim | null;
+	tools: string;
+}
+/** Scientific Objective → Testable Hypothesis → Method → Deliverable → Evaluation Criteria. */
+export function actionChain(actionId: string): ActionChain | undefined {
+	const action = getActionById(actionId);
+	const chain = (ACTION_CHAINS as Record<string, { objective: string; hypothesis: string; basis: string[] }>)[actionId];
+	const issue = action ? getIssue(action.issue_id) : undefined;
+	const proposal = issue?.proposed_research as Record<string, unknown> | undefined;
+	if (!action || !chain || !proposal) return undefined;
+	const one = (key: string) => (proposal[key] && typeof proposal[key] === "object" ? (proposal[key] as Claim) : null);
+	return {
+		...chain,
+		method: (Array.isArray(proposal.steps) ? proposal.steps : []) as Claim[],
+		deliverable: one("expected_outputs"),
+		criteria: one("discriminating_result"),
+		limitations: one("limitations"),
+		tools: typeof proposal.agent_role === "string" ? proposal.agent_role : "",
+	};
+}

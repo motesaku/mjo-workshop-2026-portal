@@ -6,7 +6,7 @@ import ContextNote from "../components/ContextNote.astro";
 import RelationshipBadge from "../components/RelationshipBadge.astro";
 import { CLASSIFICATIONS } from "../science/contract.mjs";
 import { loadThemeReview, CLASSIFICATION_ROUTES } from "../science/theme-review";
-import { RELATIONSHIP_TYPES, videosForIssue } from "../science/phase8";
+import { RELATIONSHIP_TYPES, videosForIssue, priorityAreaForIssue } from "../science/phase8";
 const review = loadThemeReview();
 const issues = review?.issues ?? [];
 ---
@@ -17,13 +17,14 @@ const issues = review?.issues ?? [];
   <div class="card-grid">
     {issues.map(issue => {
       const clips = videosForIssue(issue.id).length;
+      const area = priorityAreaForIssue(issue.id);
       return (
         <article class="card">
           <p class="eyebrow">{issue.id.toUpperCase()} · <a href={CLASSIFICATION_ROUTES[issue.classification] ?? '/questions'}>{issue.classification}</a></p>
           <h2 style="margin-top:.4rem"><a href={`/questions/themes/${issue.id}`}>{issue.title}</a></h2>
           <p>{issue.question}</p>
           <RelationshipBadge issueId={issue.id} />
-          <p class="small">{clips > 0 ? `${clips} related highlight${clips === 1 ? "" : "s"}` : "No highlight linked yet"}</p>
+          <p class="small">{clips > 0 ? `${clips} related highlight${clips === 1 ? "" : "s"}` : "No highlight linked yet"}{area && <> · <a href={`/actions#${area.id}`}>{area.shortTitle}</a></>}</p>
           <a href={`/questions/themes/${issue.id}`}>Open the question →</a>
         </article>
       );

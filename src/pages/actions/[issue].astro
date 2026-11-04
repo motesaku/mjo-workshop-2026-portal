@@ -5,7 +5,7 @@ import Journey from "../../components/Journey.astro";
 import ContextNote from "../../components/ContextNote.astro";
 import RelatedVideos from "../../components/RelatedVideos.astro";
 import { getAction, loadThemeReview } from "../../science/theme-review";
-import { issuesForAction, videosForAction } from "../../science/phase8";
+import { issuesForAction, videosForAction, actionChain, priorityAreaForAction, phase8Label } from "../../science/phase8";
 const review = loadThemeReview();
 const action = getAction(Astro.params.issue ?? "");
 const issue = review?.issues.find(i => i.id === Astro.params.issue);
@@ -13,6 +13,9 @@ if (!action || !issue) return Astro.rewrite("/404");
 const linkedIssues = issuesForAction(action.id);
 const crossLinks = linkedIssues.filter(l => l.relation === "cross-link");
 const videos = videosForAction(action.id);
+const chain = actionChain(action.id);
+const area = priorityAreaForAction(action.id);
+const draft = phase8Label();
 ---
 <Base title={action.title} description={action.rationale}>
   <PageIntro title={action.title} eyebrow={`Research action · ${action.issue_id.toUpperCase()}`} description="An illustrative workflow derived from a personal reading of workshop minutes. AI agents appear as possible implementation tools; the scientific question sets the objective." />
@@ -22,19 +25,28 @@ const videos = videosForAction(action.id);
       { label: `${issue.id.toUpperCase()} · Scientific question`, href: `/questions/themes/${issue.id}` },
       { label: "Video evidence", href: videos[0] ? `/videos/${videos[0].highlight.slug}` : undefined },
       { label: "This research action", current: true },
-      { label: "Research roadmap", href: "/actions" },
+      { label: area ? `Priority area ${area.numeral}` : "Research roadmap", href: area ? `/actions#${area.id}` : "/actions" },
     ]}
   />
   <ContextNote label="Illustrative workflow">Not a workshop commitment, assignment, deadline tracker or claim that the work has been done.</ContextNote>
   <div class="content-columns">
     <div class="reading">
       <section><h2>Starting point</h2><p><a href={`/questions/themes/${issue.id}`}>{issue.title}</a></p><p>{issue.question}</p><p>{action.rationale}</p></section>
-      <section><h2>Illustrative workflow</h2>
-        <ol class="workflow-list">
-          {action.steps.map((step, index) => <li><div><h3>Step {index + 1}</h3><p>{step}</p></div></li>)}
-        </ol>
-      </section>
-      {action.expected_outputs.length > 0 && <section><h2>Expected outputs</h2><ul>{action.expected_outputs.map(o => <li>{o}</li>)}</ul></section>}
+      {area && <p class="small">Part of <a href={`/actions#${area.id}`}>Priority area {area.numeral} — {area.title}</a> (editorial strategic proposal).</p>}
+      {chain ? (
+        <section id="chain"><h2>From objective to evaluation</h2>
+          <ol class="analysis-steps">
+            <li><h3>Scientific objective</h3><p>{chain.objective}</p><p class="small"><span class="tag">Editorial synthesis</span> {draft.short}</p></li>
+            <li><h3>Testable hypothesis</h3><p>{chain.hypothesis}</p><p class="small"><span class="tag">Editorial synthesis</span> {draft.short}; derived from the evaluation criterion below.</p></li>
+            <li><h3>Research method (illustrative workflow)</h3><ol class="workflow-list">{action.steps.map((step, index) => <li><div><h3>Step {index + 1}</h3><p>{step}</p></div></li>)}</ol></li>
+            <li><h3>Expected deliverable</h3>{action.expected_outputs.map(o => <p>{o}</p>)}</li>
+            <li><h3>Evaluation criteria</h3>{chain.criteria ? <p>{chain.criteria.text}</p> : <p>Not specified.</p>}<p class="small"><span class="tag">New research proposal</span> Existing workflow text; no experiment has been executed.</p></li>
+          </ol>
+        </section>
+      ) : (
+        <section><h2>Illustrative workflow</h2><ol class="workflow-list">{action.steps.map((step, index) => <li><div><h3>Step {index + 1}</h3><p>{step}</p></div></li>)}</ol></section>
+      )}
+      {chain?.tools && <section id="implementation"><h2>Implementation with AI agents</h2><p>{chain.tools}</p><p class="small">AI agents are a possible implementation tool for this investigation. The scientific objective and evaluation criteria do not depend on using them.</p></section>}
       {action.limitations.length > 0 && <section><h2>Limitations</h2><ul>{action.limitations.map(o => <li>{o}</li>)}</ul></section>}
       {crossLinks.length > 0 && <section><h2>Also informs</h2><ul class="link-list">{crossLinks.map(l => <li><a href={`/questions/themes/${l.issue.id}`}>{l.issue.id.toUpperCase()} · {l.issue.title}</a><span class="small"> — {l.rationale} (editorial cross-link)</span></li>)}</ul></section>}
       <section>
@@ -48,6 +60,7 @@ const videos = videosForAction(action.id);
       <dl class="metadata">
         <dt>Question</dt><dd><a href={`/questions/themes/${issue.id}`}>{issue.id.toUpperCase()} · {issue.title}</a></dd>
         <dt>Classification</dt><dd>{issue.classification}</dd>
+        {area && <><dt>Priority area</dt><dd><a href={`/actions#${area.id}`}>{area.numeral} · {area.title}</a></dd></>}
         {crossLinks.length > 0 && <><dt>Also informs</dt><dd>{crossLinks.map((l, i) => <>{i > 0 && " · "}<a href={`/questions/themes/${l.issue.id}`}>{l.issue.id.toUpperCase()}</a></>)}</dd></>}
         <dt>Related highlights</dt><dd>{videos.length > 0 ? videos.map((v, i) => <>{i > 0 && " · "}<a href={`/videos/${v.highlight.slug}`}>{v.highlight.talkSpeaker ?? v.highlight.title}</a></>) : "None linked"}</dd>
         <dt>Nature of this page</dt><dd>Illustrative personal synthesis</dd>

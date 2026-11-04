@@ -77,6 +77,6 @@ issue claim ── evidence_id ──► source_id ──► SOURCE_VIDEO_RULES 
 - [x] 8A audit and architecture (this file)
 - [x] 8B relations and video pages
 - [x] 8C classification layer
-- [ ] 8D four-area roadmap
+- [x] 8D four-area roadmap
 - [ ] 8E workshop synthesis page and homepage
 - [ ] 8F validation

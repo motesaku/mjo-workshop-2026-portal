@@ -223,3 +223,39 @@ test("divergence and alignment analyses cover the right questions and cite exist
 	assert.doesNotMatch(text, /[぀-ヿ㐀-鿿]/);
 	assert.doesNotMatch(text, /\b(consensus was reached|the workshop agreed|proves|settled)\b/i);
 });
+
+// ---- 8D strategic roadmap ----
+const roadmap = await import("../src/science/phase8/editorial-roadmap.mjs");
+
+test("four priority areas cover each question once and every action", () => {
+	const areas = roadmap.PRIORITY_AREAS;
+	assert.equal(areas.length, 4);
+	assert.deepEqual(areas.map((a) => a.coreIssues), [["q01", "q02", "q03", "q09"], ["q06", "q10"], ["q07", "q08"], ["q11", "q12"]]);
+	assert.deepEqual(areas[0].crossCuttingIssues, ["q04", "q05"]);
+	const all = areas.flatMap((a) => [...a.coreIssues, ...a.crossCuttingIssues]);
+	assert.deepEqual([...all].sort(), pkg.issues.map((i) => i.id).sort());
+	assert.equal(new Set(all).size, 12, "each question belongs to exactly one area");
+	for (const area of areas) {
+		for (const entry of [area.gap, area.nextInvestigation, area.deliverable, ...area.observationsAndOutputs]) {
+			assert.ok(entry.basis.length > 0, area.id);
+			for (const b of entry.basis) assert.ok(known(b), `${area.id}: ${b}`);
+			assert.ok(entry.basis.some((b) => [...area.coreIssues, ...area.crossCuttingIssues].some((q) => b.startsWith(q + "-"))), `${area.id}: basis outside the area`);
+		}
+		assert.doesNotMatch(area.objective, /\bAI agent/i, "objectives are scientific, not tool-defined");
+	}
+});
+
+test("every workflow has an objective-to-evaluation chain grounded in its criterion", () => {
+	assert.deepEqual(Object.keys(roadmap.ACTION_CHAINS).sort(), pkg.actions.map((a) => a.id).sort());
+	for (const [actionId, chain] of Object.entries(roadmap.ACTION_CHAINS)) {
+		const action = pkg.actions.find((a) => a.id === actionId);
+		for (const b of chain.basis) assert.equal(index.claims.get(b)?.issueId, action.issue_id, `${actionId}: ${b}`);
+		assert.ok(chain.basis.some((b) => index.claims.get(b).field === "proposal.discriminating_result"), `${actionId}: hypothesis must derive from the evaluation criterion`);
+		assert.doesNotMatch(chain.objective + chain.hypothesis, /\bAI agent|\bagent\b/i, `${actionId}: AI is a tool, not the objective`);
+	}
+	assert.match(roadmap.PRIORITIZATION_NOTE, /left unassigned/);
+	assert.equal(JSON.stringify(roadmap.PRIORITIZATION_CRITERIA).match(/\d+(\.\d+)?\s*\/\s*\d+|score:\s*\d/), null, "no fabricated scores");
+	const text = readFileSync(new URL("../src/science/phase8/editorial-roadmap.mjs", import.meta.url), "utf8");
+	assert.doesNotMatch(text, /[぀-ヿ㐀-鿿]/);
+	assert.match(roadmap.ROADMAP_STATUS, /not workshop-endorsed/);
+});

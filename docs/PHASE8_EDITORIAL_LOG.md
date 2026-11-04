@@ -100,3 +100,24 @@ A and B count as genuine scientific disagreement; C does not.
 ### Emerging alignment (Q06, Q08, Q11)
 
 Each page now shows the direction (existing alignment claim), supporting workshop records, contribution groups (overlapping breakout/plenary/extended minutes and final-day/closing records counted once), the existing limitation claim, and a new "what would strengthen confidence" statement (Q06: q06-c15, c09 · Q08: q08-c08, c15 · Q11: q11-c09, c15). No agreement score is computed.
+
+## 8D — Strategic roadmap (2026-11-04)
+
+File: `src/science/phase8/editorial-roadmap.mjs`. The four areas are an **editorial strategic proposal**, not workshop-endorsed priorities, and carry no ranking.
+
+| Area | Core questions | Cross-cutting | Gap basis | Next-investigation basis | Deliverable basis |
+| --- | --- | --- | --- | --- | --- |
+| I · MJO Lifecycle & Physical Mechanisms | Q01, Q02, Q03, Q09 | Q04, Q05 | q02-c08, q01-c07, q01-c09 | q01-c12, q03-c11, q03-c12 | q01-c14, q03-c13 |
+| II · Observations & Diagnostics | Q06, Q10 | — | q06-c09, q10-c02, q10-c09 | q06-c13, q10-c12 | q06-c14, q10-c14 |
+| III · Prediction & Physical Understanding | Q07, Q08 | — | q08-c08, q07-c08, q07-c09 | q08-c12, q07-c13 | q08-c14, q07-c14 |
+| IV · Regional Impacts & Climate Change | Q11, Q12 | — | q11-c09, q12-c09 | q11-c12, q12-c12 | q11-c14, q12-c14 |
+
+"Necessary observations and model outputs" restate the workflows' own steps (bases listed per bullet in the module).
+
+### Objective → hypothesis for the 12 workflows
+
+New text: a scientific objective and a testable hypothesis for each workflow, each derived from that workflow's existing evaluation criterion (`discriminating_result`, claims q01-c15 … q12-c15; Q01 also q01-c16). Method, deliverable and evaluation criteria are displayed unchanged from the package. AI agents appear only under "Implementation with AI agents", using the package's existing `agent_role` text.
+
+### Prioritization
+
+Four qualitative criteria (scientific significance, feasibility, international collaboration potential, reusability). No scores were assigned and no ranking is shown, because no evidence-based scores or community priorities exist.
