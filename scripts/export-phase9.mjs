@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Versioned JSON export of the Phase 9 editorial layer (public fields only).
-// Usage: node scripts/export-phase9.mjs          write docs/exports/phase9-editorial-layer.v1.json
+// Usage: node scripts/export-phase9.mjs          write docs/versions/phase9-editorial-layer.v1.json
 //        node scripts/export-phase9.mjs --check  fail if the committed export is out of date
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { highlights } from "../src/data/highlights.ts";
@@ -42,13 +42,13 @@ const out = {
 };
 const text = JSON.stringify(out, null, "\t") + "\n";
 if (/sha256:|\/Users\/|researcher_os|[぀-ヿ㐀-鿿]/.test(text)) throw new Error("export contains private paths, fingerprints or non-English text");
-const target = new URL("../docs/exports/phase9-editorial-layer.v1.json", import.meta.url);
+const target = new URL("../docs/versions/phase9-editorial-layer.v1.json", import.meta.url);
 if (process.argv.includes("--check")) {
 	const current = existsSync(target) ? readFileSync(target, "utf8") : "";
-	if (current !== text) { console.error("docs/exports/phase9-editorial-layer.v1.json is out of date; run npm run science:export-phase9"); process.exit(1); }
+	if (current !== text) { console.error("docs/versions/phase9-editorial-layer.v1.json is out of date; run npm run science:export-phase9"); process.exit(1); }
 	console.log("Phase 9 export is up to date.");
 } else {
-	mkdirSync(new URL("../docs/exports/", import.meta.url), { recursive: true });
+	mkdirSync(new URL("../docs/versions/", import.meta.url), { recursive: true });
 	writeFileSync(target, text);
-	console.log(`Wrote docs/exports/phase9-editorial-layer.v1.json (${reviewMatrix.length} reviewed statements, ${PHASE9_CLAIMS.length} Phase 9 records)`);
+	console.log(`Wrote docs/versions/phase9-editorial-layer.v1.json (${reviewMatrix.length} reviewed statements, ${PHASE9_CLAIMS.length} Phase 9 records)`);
 }
