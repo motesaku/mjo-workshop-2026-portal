@@ -35,6 +35,9 @@ exports/
 *.pem
 *.key
 
+# Owner-local Japanese review copies of public English docs (not published in Git).
+docs/*.ja.md
+
 # Private source documents and locally hosted videos are forbidden here.
 *.pdf
 *.doc

@@ -110,18 +110,18 @@ attribution { mode, talk_id }, verification, uncertainty
 
 氏名は `talks.speaker_names` のみ。個別講演の公式プログラム箇所を要求する。主張の帰属は該当講演IDで参照し、議論セッションへの氏名帰属は拒否する。`contribution_id` は匿名の寄与を区別する識別子であり、氏名や個人を推測するものではない。
 
-## 6. researcher_os からの版管理付きJSON
+## 6. 版管理付きレビュー済JSON（インポート契約）
 
 機械可読定義: [scientific-import-v1.schema.json](../schemas/scientific-import-v1.schema.json)。定義の正本は [contract.mjs](../src/science/contract.mjs)。JSON Schema 2020-12形式で出力する。
 
-トップレベルは `format`, `schema_version`, `purpose`, `producer`, `export_id`, `exported_at`, `language`, `records`。形式名は `mjo-workshop-reviewed-content`、producerは `researcher_os`、言語は `en` に固定する。
+トップレベルは `format`, `schema_version`, `purpose`, `producer`, `export_id`, `exported_at`, `language`, `records`。形式名は `mjo-workshop-reviewed-content`、`producer` は `editorial_export`、言語は `en` に固定する。`producer` はスキーマ上の固定トークン（レビュー済エクスポートの出所ラベル）であり、他リポジトリへの依存やリンクを意味しない。
 
 - 現版は厳密に `1.0.0` のみを受理し、未知の版・未知フィールドを黙って無視しない。
 - `records` は8コレクションの配列を必ず含む。空配列は許す。
 - 参照対象をすべて同じJSONに含める、参照が閉じたエクスポートとする。未知の既存CMSデータで不足を自動補完しない。
-- importerは研究リポジトリを読み取らない。元リポジトリ側でレビューした公開用派生物だけを、利用者が明示したJSONとして渡す。依存・submodule・symlink・ビルド時入力を追加していない。
+- importerは本リポジトリ外の編集作業ツリーを読み取らない。オフラインでレビューした公開用派生物だけを、利用者が明示したJSONとして渡す。依存・submodule・symlink・ビルド時入力を追加していない。
 - 原本・原写真・録画・URL・ローカルパス・HTMLは契約に含めない。この版では公開論文URLも持たず、文書識別子による来歴を優先する。
-- YouTubeは11文字のIDのみ。`video_kind=highlight`、対応の出典・代表版・目視・権利・対応確認が揃うことを要求する。文字数の検査だけではYouTube上の実在や内容一致を証明できないため、元環境での人による確認が必要。
+- YouTubeは11文字のIDのみ。`video_kind=highlight`、対応の出典・代表版・目視・権利・対応確認が揃うことを要求する。文字数の検査だけではYouTube上の実在や内容一致を証明できないため、オフラインでの人による確認が必要。
 
 各レコードには科学レビュー・公開承認・英語レビューの3記録を要求する。それぞれ承認状態、レビュアー識別子、承認日時、対象レコードのSHA-256を持つ。`recordDigest()` はこの3つの承認記録を除いた全フィールドをキー順に正規化してハッシュ化する。本文・版・参照・収録範囲の変更後に古い承認を流用すると検証に失敗する。
 

@@ -3,7 +3,7 @@
 These requirements override generic template suggestions below.
 
 - The website is English-only, including navigation, scientific summaries and video metadata.
-- The existing `researcher_os` repository must remain independent and private. Do not add it as a dependency, submodule, symlink or build-time input, and do not copy its credentials or working tree here.
+- Do not add any external private research or editorial workspace as a dependency, submodule, symlink, or build-time input. Do not copy credentials or working trees from outside this repository into the portal.
 - Original PDF, Word and presentation files must not be published or linked for download. Do not copy raw transcripts, rapporteur notes or original photographs into site assets.
 - Scientific content must be based on reviewed meeting minutes and explicitly approved publication derivatives. Preserve source identifiers, versions, review status, record coverage and uncertainty in the future import contract.
 - Videos are embedded from YouTube, never hosted locally by this website or in its R2 bucket. Verify each approved highlight video ID; do not confuse highlights with full recordings.

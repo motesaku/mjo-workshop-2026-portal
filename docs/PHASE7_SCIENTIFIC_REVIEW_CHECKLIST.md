@@ -10,9 +10,9 @@ The mechanical scan ran over `themes.en.json` (2 themes, 10 sections, 36 items, 
 | --- | --- | --- |
 | Every item carries at least one reference | Mechanical ✔ | Enforced by `verify-phase6.mjs` |
 | Every evidence ID resolves to a source with matching SHA-256 | Mechanical ✔ | 49/49; sources are unchanged private minutes |
-| No filesystem paths, `researcher_os` or `"path"` keys in the web derivative | Mechanical ✔ | Private paths live only in `provenance.private.json` |
+| No filesystem paths or `"path"` keys in the web derivative | Mechanical ✔ | Private paths live only in `provenance.private.json` |
 | Source versions, coverage and review status are displayed | Mechanical ✔ | All 22 sources: coverage `partial`, review status `not_established` |
-| Hashes re-verified against originals in the research environment | Human/Open | Last done by the Phase 6 author on 3 Nov; the final hash check was interrupted (usage limit). Repeat in the private environment before any import |
+| Hashes re-verified against offline originals | Human/Open | Last done by the Phase 6 author on 3 Nov; the final hash check was interrupted (usage limit). Repeat offline before any import |
 
 ## 2. Session attribution
 
@@ -74,7 +74,7 @@ The mechanical scan ran over `themes.en.json` (2 themes, 10 sections, 36 items, 
 
 - `scientific_review`, `publication_approval`, `language_review` are all `pending` in the package; `loadThemeReview()` refuses any package where review is not `pending`-labelled (fail-closed for drafts) and normal builds never load it.
 - The CMS publish/schedule blocker (`mjo-scientific-publication-policy`) remains active for all scientific collections.
-- Sign-off should be recorded in the private research environment and exported as a reviewed v1.0.0 package, not by editing `themes.en.json` flags.
+- Sign-off should be recorded in offline editorial storage and exported as a reviewed v1.0.0 package, not by editing `themes.en.json` flags.
 
 ## Reproduce the mechanical scan
 

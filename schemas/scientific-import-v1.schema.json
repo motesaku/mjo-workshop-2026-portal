@@ -19,7 +19,7 @@
       ]
     },
     "producer": {
-      "const": "researcher_os"
+      "const": "editorial_export"
     },
     "export_id": {
       "type": "string",

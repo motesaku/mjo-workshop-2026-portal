@@ -2,6 +2,8 @@
 
 This repository is intended as a **starting point** for workshop participants who want their own personal report site. Forking the GitHub repository does **not** copy anyone else’s Cloudflare database, encryption key, admin passkey, or media bucket.
 
+For the full creation story (recordings → ASR → minutes → highlights → EmDash on Cloudflare), read [`SITE_CREATION_WORKFLOW.md`](./SITE_CREATION_WORKFLOW.md) first.
+
 ## What you get
 
 | Included in the fork | Not included (create your own) |

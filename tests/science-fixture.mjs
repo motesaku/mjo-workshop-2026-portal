@@ -41,5 +41,5 @@ export function fixtureBundle() {
   q.action_ids.push("test-action"); q.finding_ids.push("test-finding");
   records.scientific_findings.push({ ...common("test-finding"), question_ids: [q.external_id], session_ids: [session], statement: claim("test-finding-claim", [eid], [session], "observation") });
   records.research_actions.push({ ...common("test-action"), question_ids: [q.external_id], session_ids: [session], action_kind: "illustrative_ai_workflow", rationale: claim("test-rationale", [eid], [session], "proposal"), steps: [claim("test-step", [eid], [session], "proposal")], expected_outputs: [], limitations: "TEST ONLY: no execution or outcome is asserted.", commitment: "not_a_commitment" });
-  return { format: "mjo-workshop-reviewed-content", schema_version: VERSION, purpose: "test_fixture", producer: "researcher_os", export_id: "test-export", exported_at: "2000-01-03T00:00:00Z", language: "en", records };
+  return { format: "mjo-workshop-reviewed-content", schema_version: VERSION, purpose: "test_fixture", producer: "editorial_export", export_id: "test-export", exported_at: "2000-01-03T00:00:00Z", language: "en", records };
 }

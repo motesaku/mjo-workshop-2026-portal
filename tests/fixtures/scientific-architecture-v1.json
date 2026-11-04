@@ -2,7 +2,7 @@
   "format": "mjo-workshop-reviewed-content",
   "schema_version": "1.0.0",
   "purpose": "test_fixture",
-  "producer": "researcher_os",
+  "producer": "editorial_export",
   "export_id": "test-export",
   "exported_at": "2000-01-03T00:00:00Z",
   "language": "en",

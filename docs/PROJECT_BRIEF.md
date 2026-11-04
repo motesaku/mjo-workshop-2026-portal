@@ -10,12 +10,12 @@ An English-only Knowledge & Action Portal about MJO Workshop 2026 (ICTP, Trieste
 
 | System | Responsibility |
 | --- | --- |
-| Private `researcher_os` | Original minutes, transcripts, source documents, scientific validation, corrections, provenance, video production and approved derivative generation |
-| Independent portal repository | Astro/TypeScript application, EmDash CMS, reviewed publication derivatives, presentation and import validation |
+| Offline / private editorial work (outside this Git repo) | Original minutes, transcripts, source documents, scientific validation, corrections, provenance, video production and approved derivative generation |
+| This portal repository | Astro/TypeScript application, EmDash CMS, reviewed publication derivatives, presentation and import validation |
 | YouTube | Approved highlight video hosting; verified IDs used for embeds |
-| Cloudflare (future, not provisioned) | Workers execution, D1 CMS data, R2 approved site assets and protected backups |
+| Cloudflare | Workers execution, D1 CMS data, R2 approved site assets and protected backups |
 
-The portal has no filesystem, Python/package, build or Git dependency on the research repository. No raw scientific source files are copied. Future imports must be explicit allowlisted exports of reviewed derivatives, not a folder sync or automatic publication pipeline.
+The portal has no filesystem, package, build, or Git dependency on those offline sources. No raw scientific source files are copied here. Future imports must be explicit allowlisted exports of reviewed derivatives, not a folder sync or automatic publication pipeline.
 
 ## Editorial rules inherited from Phase 1
 

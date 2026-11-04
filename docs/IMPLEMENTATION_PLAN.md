@@ -1,11 +1,11 @@
 # Implementation Plan
 
-Updated 2026-11-03. Phase 1 decisions were read from the preceding audit/planning chat; its source materials remain in the private research repository. Phases 2–6 below record local foundation, import contract, portal presentation and editorial theme work. Scientific CMS publication and public deployment remain unauthorized.
+Updated 2026-11-03. Phase 1 decisions were read from the preceding audit/planning chat; source materials for that phase remain in offline editorial storage outside this repository. Phases 2–6 below record local foundation, import contract, portal presentation and editorial theme work. Scientific CMS publication gates and further hosting decisions remain owner-controlled.
 
 ## Phase 2: local foundation
 
 - [x] Generate using the official `create-emdash` Node.js Starter workflow.
-- [x] Keep a separate directory and local Git root outside `researcher_os`.
+- [x] Keep this portal as its own directory and local Git root (no coupling to offline editorial workspaces).
 - [x] Configure Astro server rendering, React administration, SQLite and local media storage.
 - [x] Provide an English placeholder homepage without scientific claims.
 - [x] Retain official Starter Posts/Pages routes and live loader; remove sample seed entries.
@@ -41,7 +41,7 @@ Updated 2026-11-03. Phase 1 decisions were read from the preceding audit/plannin
 ## GitHub gate
 
 Remote configured: `motesaku/mjo-workshop-2026-portal` (private), tracking `origin/main`.
-Do not use `researcher_os` as a submodule, workspace package or CI checkout. No automatic deployment integration is installed. Additional pushes, visibility changes and CI deploy hooks still require explicit authorization. A private repository is not website access control.
+Do not attach offline editorial workspaces as a submodule, workspace package, or CI checkout. No automatic deployment integration is installed. Additional pushes, visibility changes and CI deploy hooks still require explicit authorization. A private GitHub repository is not website access control.
 
 ## Cloudflare migration — plan only
 

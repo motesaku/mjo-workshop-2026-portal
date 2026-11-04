@@ -46,7 +46,7 @@ Checked on 3 November 2026 (Asia/Tokyo), local machine only, project-local Node 
 
 - `npx emdash export-seed` (schema) and `--with-content=all` produce valid JSON; the content export is 24 kB and contains only the empty Posts/Pages collections. Written to `/tmp` only.
 - `npm run science:validate` / `science:plan` on the bundled fixture: rejected with "test fixtures cannot enter the import path" (expected; purpose gate works). `npm run test:science`: 59/59.
-- The Phase 5/6 editorial packages in `exports/` are deliberately not importable through the v1.0.0 contract; a reviewed export from the research environment is still required.
+- The Phase 5/6 editorial packages in `exports/` are deliberately not importable through the v1.0.0 contract; a separately reviewed export from offline editorial work is still required.
 
 ### Migration readiness
 

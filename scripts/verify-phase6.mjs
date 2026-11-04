@@ -68,7 +68,7 @@ if (mode === 'production') {
   for (const file of await walk('dist')) {
     if (!/\.(m?js|json|html|map)$/.test(file)) continue;
     const text = await readFile(file, 'utf8');
-    // Astro embeds absolute component source paths; the import contract may name researcher_os as producer.
+    // Astro embeds absolute component source paths in some builds.
     // Fail only on private export material or absolute filesystem path fields.
     assert.doesNotMatch(text, /provenance\.private|exports\/phase[56]|editorial-drafts\.en\.json|themes\.jp\.json/, `private export excluded: ${file}`);
     assert.doesNotMatch(text, /"path"\s*:\s*"(?:\/Users\/|file:\/\/)/, `filesystem path field excluded: ${file}`);

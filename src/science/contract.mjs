@@ -74,7 +74,7 @@ export const IMPORT_SCHEMA = {
   $id: "urn:mjo-workshop:scientific-import:1.0.0",
   title: "MJO Workshop reviewed scientific content export v1.0.0",
   ...object({ format: { const: "mjo-workshop-reviewed-content" }, schema_version: { const: VERSION },
-    purpose: enumeration("reviewed_import", "test_fixture"), producer: { const: "researcher_os" },
+    purpose: enumeration("reviewed_import", "test_fixture"), producer: { const: "editorial_export" },
     export_id: id, exported_at: timestamp, language: { const: "en" },
     records: object(Object.fromEntries(Object.entries(RECORD_SCHEMAS).map(([name, schema]) => [name, list(schema)]))) }),
 };

@@ -1,9 +1,13 @@
 # MJO Workshop 2026 Knowledge & Action Portal
 
 English-only EmDash + Astro site for a **personal workshop participation report**.  
-This repository is independent of the private `researcher_os` research environment.
+Raw workshop recordings, transcripts, and private editorial files are kept **outside** this repository; only English site derivatives and YouTube embeds live here.
 
-Live owner hosting (separate from GitHub visibility) may already be on Cloudflare Workers with **`noindex, nofollow`**. Changing the GitHub repository from private to public so others can fork is a **separate owner decision**—prepare with `docs/FORKING.md` first.
+**Start here if you are new to the repository:**  
+[**How this site was created (workflow, diagrams, reuse)**](docs/SITE_CREATION_WORKFLOW.md) — workshop recordings → ASR → minutes → YouTube highlights → site structure with AI agents → Cloudflare EmDash (no PHP).  
+Then see [`docs/FORKING.md`](docs/FORKING.md) to run your own copy.
+
+Live owner hosting (separate from GitHub visibility) may already be on Cloudflare Workers with **`noindex, nofollow`**. Changing the GitHub repository from private to public so others can fork is a **separate owner decision**.
 
 ## Local development
 
@@ -65,6 +69,7 @@ npm run deploy        # Cloudflare Worker; needs your bindings overlay
 | `wrangler.site.jsonc` | Local production bindings (gitignored) |
 | `src/data/personal-synthesis.json` | Bundled personal synthesis (no source file hashes) |
 | `examples/` | Empty starter + reference synthesis package |
+| `docs/SITE_CREATION_WORKFLOW.md` | End-to-end creation workflow with flowcharts |
 | `docs/FORKING.md` | Fork / redeploy checklist |
 | `docs/PHASE7_DEPLOYMENT_GUIDE.md` | Cloudflare procedure |
 | `LICENSE` | MIT + content notice |
