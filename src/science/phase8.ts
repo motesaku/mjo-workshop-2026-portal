@@ -5,10 +5,10 @@ import { highlights, type Highlight } from "../data/highlights";
 import { days, type Day, type Session } from "../data/program";
 import type { ReviewAction, ReviewIssue } from "./theme-review";
 import { createRelationIndex, FIELD_LABELS, RECORD_FIELDS } from "./phase8/relations.mjs";
-import { SOURCE_VIDEO_RULES, OVERLAP_GROUPS } from "./phase8/source-video-map.mjs";
-import { supplementalEvidence, supplementalSources } from "./phase8/provenance-supplement.mjs";
-import { VIDEO_KEY_MESSAGES, ISSUE_SIGNIFICANCE, ACTION_CROSS_LINKS } from "./phase8/editorial-videos.mjs";
+import { VIDEO_KEY_MESSAGES, ISSUE_SIGNIFICANCE } from "./phase8/editorial-videos.mjs";
 import { phase8Label, interpretationOf } from "./phase8/status.mjs";
+import { relationContext, SOURCE_RULES as SOURCE_VIDEO_RULES } from "./phase9/context.mjs";
+import { PHASE9_KEY_MESSAGES } from "./phase9/videos.mjs";
 
 export { FIELD_LABELS, phase8Label, interpretationOf };
 
@@ -24,14 +24,9 @@ export interface IssueActionLink { issue: ReviewIssue; relation: "primary" | "cr
 export interface ContributionGroup { key: string; label: string; overlapReason: string | null; sourceIds: string[] }
 export interface Basis { text: string; basis: string[] }
 
-export const relations = createRelationIndex({
-	pkg: synthesis,
-	highlights,
-	supplement: { evidence: supplementalEvidence, sources: supplementalSources },
-	sourceVideoRules: SOURCE_VIDEO_RULES,
-	overlapGroups: OVERLAP_GROUPS,
-	actionCrossLinks: ACTION_CROSS_LINKS,
-});
+export const relations = createRelationIndex(relationContext({ pkg: synthesis, highlights }));
+/** Phase 9 workshop-record statements attached to one question. */
+export const supplementalClaimsFor = (issueId: string) => relations.supplementalRows(issueId) as ClaimRow[];
 
 const issueList = synthesis.issues as unknown as ReviewIssue[];
 const actionList = (synthesis.actions ?? []) as ReviewAction[];
@@ -110,6 +105,18 @@ export interface VideoRecord {
 	evidenceIds: string[];
 	summaryStatus: SummaryStatus;
 	publicationPermission: Highlight["publicationPermission"];
+	/** Which editorial layer wrote the key message (Phase 9 revisions take precedence). */
+	keyMessagePhase: "phase8" | "phase9" | null;
+	audit: VideoAudit;
+}
+
+/** Phase 9E: the five relationship dimensions of one clip. */
+export interface VideoAudit {
+	programme: Highlight["mapping"];
+	minutes: "linked" | "withheld" | "none";
+	summaryVsMinutes: "consistent" | "revised" | "no_summary";
+	summaryVsClip: "not_checked";
+	withheldSources: string[];
 }
 
 /** Complete Phase 8 record for one highlight (media metadata + derived science links). */
@@ -123,9 +130,19 @@ export function videoRecord(highlight: Highlight): VideoRecord {
 	const withheld = withheldForVideo(highlight.slug);
 	const sourceIds = [...new Set(relatedIssues.flatMap((r) => r.sourceIds))];
 	const evidenceIds = [...new Set(relatedIssues.flatMap((r) => r.claims.flatMap((c) => c.claim.evidence_ids ?? [])))].filter((id) => sourceIds.includes(getEvidence(id)?.source_id ?? ""));
-	const keyMessage = (VIDEO_KEY_MESSAGES as Record<string, Basis>)[highlight.slug] ?? null;
+	const p9 = (PHASE9_KEY_MESSAGES as Record<string, Basis>)[highlight.slug];
+	const p8 = (VIDEO_KEY_MESSAGES as Record<string, Basis>)[highlight.slug];
+	const keyMessage = p9 ?? p8 ?? null;
+	const keyMessagePhase = p9 ? "phase9" : p8 ? "phase8" : null;
 	const disputed = withheld.some((w) => w.sourceId === "src-xu");
 	const summaryStatus: SummaryStatus = keyMessage ? "minutes_based_draft" : disputed ? "mapping_disputed" : relatedIssues.length ? "related_only" : "pending";
+	const audit: VideoAudit = {
+		programme: highlight.mapping,
+		minutes: relatedIssues.length ? "linked" : withheld.length ? "withheld" : "none",
+		summaryVsMinutes: !keyMessage ? "no_summary" : p9 ? "revised" : "consistent",
+		summaryVsClip: "not_checked",
+		withheldSources: withheld.map((w) => w.sourceId),
+	};
 	return {
 		highlight,
 		session: sessionOf(highlight.sessionId),
@@ -140,6 +157,8 @@ export function videoRecord(highlight: Highlight): VideoRecord {
 		evidenceIds,
 		summaryStatus,
 		publicationPermission: highlight.publicationPermission,
+		keyMessagePhase,
+		audit,
 	};
 }
 
@@ -150,7 +169,7 @@ export const SUMMARY_STATUS_LABELS: Record<SummaryStatus, { badge: string; text:
 	},
 	related_only: {
 		badge: "No summary · related through cited minutes",
-		text: "The personal synthesis cites minutes of this talk only in editorial comparisons, so no clip-level summary is given. The related questions below show how those minutes are used.",
+		text: "No clip-level summary is given. The related questions below show how the synthesis uses the minutes of this talk or session.",
 	},
 	mapping_disputed: {
 		badge: "Source mapping disputed",
@@ -166,6 +185,7 @@ export const isRecordField = (field: string) => RECORD_FIELDS.has(field);
 
 // ---- 8C: classification layer -------------------------------------------
 import { RELATIONSHIP_TYPES, ISSUE_RELATIONSHIPS, DIVERGENCE_ANALYSES, ALIGNMENT_ANALYSES, INDEPENDENCE_NOTE } from "./phase8/editorial-classification.mjs";
+import { RELATIONSHIP_REVISIONS } from "./phase9/classification.mjs";
 export { RELATIONSHIP_TYPES, INDEPENDENCE_NOTE };
 
 export type RelationshipKey = keyof typeof RELATIONSHIP_TYPES;
@@ -184,7 +204,10 @@ export interface DivergenceAnalysis {
 export interface AlignmentAnalysis { direction: string; support: string[]; limitations: string; strongerConfidence: Basis }
 
 export const relationshipType = (key: RelationshipKey) => RELATIONSHIP_TYPES[key] as RelationshipType;
-export const issueRelationship = (issueId: string) => (ISSUE_RELATIONSHIPS as Record<string, IssueRelationship>)[issueId];
+/** Phase 9 relationship revisions (classification.mjs) take precedence over Phase 8. */
+export const issueRelationship = (issueId: string) => ((RELATIONSHIP_REVISIONS as Record<string, IssueRelationship>)[issueId] ?? (ISSUE_RELATIONSHIPS as Record<string, IssueRelationship>)[issueId]);
+/** The Phase 8 relationship, kept for side-by-side review. */
+export const phase8Relationship = (issueId: string) => (ISSUE_RELATIONSHIPS as Record<string, IssueRelationship>)[issueId];
 export const divergenceAnalysis = (issueId: string) => (DIVERGENCE_ANALYSES as Record<string, DivergenceAnalysis>)[issueId];
 export const alignmentAnalysis = (issueId: string) => (ALIGNMENT_ANALYSES as Record<string, AlignmentAnalysis>)[issueId];
 
@@ -253,12 +276,20 @@ export function actionChain(actionId: string): ActionChain | undefined {
 // ---- 8E: workshop synthesis -------------------------------------------------
 import { SYNTHESIS_INTRO, EXECUTIVE_SYNTHESIS, INSIGHTS, CONTESTED_TOPICS } from "./phase8/editorial-synthesis.mjs";
 import { INTERPRETATION_TYPES } from "./phase8/status.mjs";
-export { SYNTHESIS_INTRO, EXECUTIVE_SYNTHESIS, INTERPRETATION_TYPES };
+import { OVERARCHING_QUESTION, EXECUTIVE_SYNTHESIS_V2, INSIGHTS_V2, EVIDENCE_STRENGTH, REGIONAL_VALUE_LEVELS, INSIGHT_ASSESSMENTS, CONTESTED_REVISIONS } from "./phase9/synthesis.mjs";
+export { SYNTHESIS_INTRO, EXECUTIVE_SYNTHESIS, INTERPRETATION_TYPES, OVERARCHING_QUESTION, EXECUTIVE_SYNTHESIS_V2, EVIDENCE_STRENGTH, REGIONAL_VALUE_LEVELS, INSIGHT_ASSESSMENTS };
 
 export interface Insight { id: string; title: string; text: string; type: keyof typeof INTERPRETATION_TYPES; basis: string[]; issues: string[] }
-export interface ContestedTopic { id: string; title: string; text: string; basis: string[]; issues: string[] }
-export const insights = () => INSIGHTS as Insight[];
-export const contestedTopics = () => CONTESTED_TOPICS as ContestedTopic[];
+export interface ContestedTopic { id: string; title: string; text: string; basis: string[]; issues: string[]; revisedInPhase9?: boolean; previousText?: string }
+/** Phase 8 insights, kept for side-by-side review. */
+export const phase8Insights = () => INSIGHTS as Insight[];
+/** Insights shown on the site: the Phase 9 revision (draft awaiting author review). */
+export const insights = () => INSIGHTS_V2 as InsightV2[];
+export const contestedTopics = () => (CONTESTED_TOPICS as ContestedTopic[]).map((t) => {
+	const revision = (CONTESTED_REVISIONS as Record<string, { text: string; basis: string[] }>)[t.id];
+	return revision ? { ...t, text: revision.text, basis: revision.basis, revisedInPhase9: true, previousText: t.text } : t;
+});
+export interface InsightV2 extends Insight { aliases: string[]; themes: number[]; previous: string[]; change: "merged" | "revised" | "new" | "retained"; reason: string; strength: keyof typeof EVIDENCE_STRENGTH }
 
 /** Claims behind a list of basis IDs (evidence/reference IDs are skipped). */
 export const basisClaims = (ids: string[]) => ids.map((id) => getClaim(id)).filter((row): row is ClaimRow => !!row);
@@ -272,3 +303,27 @@ export function basisSourceLabels(ids: string[]): { id: string; label: string }[
 	}
 	return [...seen].map((id) => ({ id, label: sourceLabel(id) }));
 }
+
+// ---- Phase 9: review states, provenance quality --------------------------
+import { reviewOf, REVIEW_OVERRIDES, PUBLICATION_RISKS } from "./phase9/claim-review.mjs";
+import { SOURCE_FIDELITY, INTERPRETATION_LEVELS, PUBLICATION_STATES, REVIEW_CATEGORIES, CHECK_METHOD, phase9Label } from "./phase9/status.mjs";
+import { SOURCE_QUALITY, sourceQualityOf } from "./phase9/provenance.mjs";
+export { SOURCE_FIDELITY, INTERPRETATION_LEVELS, PUBLICATION_STATES, REVIEW_CATEGORIES, CHECK_METHOD, SOURCE_QUALITY, PUBLICATION_RISKS, REVIEW_OVERRIDES, phase9Label, sourceQualityOf };
+
+export interface ClaimReview {
+	id: string;
+	fidelity: keyof typeof SOURCE_FIDELITY;
+	interpretation: keyof typeof INTERPRETATION_LEVELS;
+	category: keyof typeof REVIEW_CATEGORIES;
+	publication: keyof typeof PUBLICATION_STATES;
+	note: string | null;
+	proposed: string | null;
+	phase: "package" | "phase8" | "phase9";
+}
+/** Phase 9 review state of a package or Phase 9 statement. */
+export function claimReview(claimId: string): ClaimReview {
+	const row = getClaim(claimId);
+	return reviewOf(claimId, { field: row?.field, sourceIds: row ? sourceIdsOfClaim(row.claim) : [] }) as ClaimReview;
+}
+/** Phase 9 review state of a Phase 8 editorial statement (e.g. "insight-1", "km:<slug>"). */
+export const statementReview = (phase8Id: string) => reviewOf(`p8:${phase8Id}`, {}) as ClaimReview;

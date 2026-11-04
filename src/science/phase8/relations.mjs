@@ -51,9 +51,11 @@ export function proposalClaims(issue) {
 }
 
 /**
- * @param {{ pkg: any, highlights: any[], supplement?: { evidence?: any[], sources?: any[] }, sourceVideoRules: Record<string, any>, overlapGroups?: Record<string, any>, actionCrossLinks?: any[] }} context
+ * @param {{ pkg: any, highlights: any[], supplement?: { evidence?: any[], sources?: any[] }, sourceVideoRules: Record<string, any>, overlapGroups?: Record<string, any>, actionCrossLinks?: any[], supplementalClaims?: { issueId: string, field: string, claim: any }[] }} context
+ * `supplementalClaims` (Phase 9) are later workshop-record statements attached
+ * to an issue; they take part in every evidence-derived relation.
  */
-export function createRelationIndex({ pkg, highlights, supplement, sourceVideoRules, overlapGroups, actionCrossLinks = [] }) {
+export function createRelationIndex({ pkg, highlights, supplement, sourceVideoRules, overlapGroups, actionCrossLinks = [], supplementalClaims = [] }) {
 	const sources = new Map();
 	for (const s of supplement?.sources ?? []) sources.set(s.source_id, { ...s, supplemental: true });
 	for (const s of pkg.sources) sources.set(s.source_id, s);
@@ -69,6 +71,12 @@ export function createRelationIndex({ pkg, highlights, supplement, sourceVideoRu
 	const claims = new Map();
 	for (const issue of pkg.issues) {
 		for (const row of [...issueClaims(issue), ...proposalClaims(issue)]) claims.set(row.claim.claim_id, row);
+	}
+	const extraRows = new Map();
+	for (const row of supplementalClaims) {
+		if (!issues.has(row.issueId) || claims.has(row.claim.claim_id)) continue;
+		claims.set(row.claim.claim_id, row);
+		extraRows.set(row.issueId, [...(extraRows.get(row.issueId) ?? []), row]);
 	}
 
 	const sourceIdsOfClaim = (claim) => {
@@ -127,7 +135,7 @@ export function createRelationIndex({ pkg, highlights, supplement, sourceVideoRu
 
 	const issueRows = (issueId) => {
 		const issue = issues.get(issueId);
-		return issue ? issueClaims(issue) : [];
+		return issue ? [...issueClaims(issue), ...(extraRows.get(issueId) ?? [])] : [];
 	};
 	const proposalRows = (issueId) => {
 		const issue = issues.get(issueId);
@@ -156,7 +164,7 @@ export function createRelationIndex({ pkg, highlights, supplement, sourceVideoRu
 		const out = [];
 		for (const [sourceId, rule] of Object.entries(sourceVideoRules)) {
 			if (rule.kind !== "withheld" || !(rule.candidateSlugs ?? []).includes(slug)) continue;
-			const issueIds = pkg.issues.filter((issue) => issueClaims(issue).some((row) => sourceIdsOfClaim(row.claim).includes(sourceId))).map((i) => i.id);
+			const issueIds = pkg.issues.filter((issue) => issueRows(issue.id).some((row) => sourceIdsOfClaim(row.claim).includes(sourceId))).map((i) => i.id);
 			out.push({ sourceId, source: sources.get(sourceId), reason: rule.reason, issueIds });
 		}
 		return out;
@@ -240,6 +248,7 @@ export function createRelationIndex({ pkg, highlights, supplement, sourceVideoRu
 		actions,
 		highlightBySlug,
 		claim: (id) => claims.get(id),
+		supplementalRows: (issueId) => extraRows.get(issueId) ?? [],
 		source: (id) => sources.get(id),
 		sourceIdsOfClaim,
 		unresolvedEvidence,
