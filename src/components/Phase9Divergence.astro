@@ -1,0 +1,60 @@
+---
+// Phase 9C structured analyses for Q03 and Q07 (draft awaiting author review).
+import RelationshipBadge from "./RelationshipBadge.astro";
+import { basisSourceLabels, disagreementVerdict, VERDICT_LABELS, phase9Label, phase8Relationship, relationshipType } from "../science/phase8";
+import { Q07_LAYERS, Q03_ANALYSIS, RELATIONSHIP_REVISIONS } from "../science/phase9/classification.mjs";
+interface Props { issueId: "q03" | "q07" }
+const { issueId } = Astro.props;
+const draft = phase9Label();
+const from = (ids: string[]) => basisSourceLabels(ids).map((s) => s.label).join("; ");
+const revision = (RELATIONSHIP_REVISIONS as Record<string, { previous: string }>)[issueId];
+const before = phase8Relationship(issueId);
+---
+<section id="analysis" class="analysis">
+  <h2>Structure of the difference</h2>
+  <div class="analysis-head">
+    <p class="eyebrow">{VERDICT_LABELS[disagreementVerdict(issueId)]}</p>
+    <RelationshipBadge issueId={issueId} />
+    <p class="small"><span class="tag">Editorial synthesis</span> {(issueId === "q07" ? Q07_LAYERS : Q03_ANALYSIS).reassessment.text} {draft.short}.</p>
+    {revision && before && <p class="small">Changed from Phase 8: primary relationship was {relationshipType(before.primary).code} · {relationshipType(before.primary).label}.</p>}
+  </div>
+
+  {issueId === "q07" && (
+    <>
+      {Q07_LAYERS.layers.map((layer) => (
+        <div class:list={["layer", `layer-${layer.id}`]} id={`layer-${layer.id}`}>
+          <h3>{layer.title}</h3>
+          <p class="eyebrow">{layer.verdict}</p>
+          <p>{layer.summary}</p>
+          <dl>{layer.items.map((item) => <><dt>{item.label}</dt><dd>{item.text}<span class="small block">From: {from(item.basis)}</span></dd></>)}</dl>
+        </div>
+      ))}
+      <h3>Evidence that the disagreement was recorded</h3>
+      <p>{Q07_LAYERS.evidenceOfDisagreement.text}</p>
+      <p class="small">From: {from(Q07_LAYERS.evidenceOfDisagreement.basis)}</p>
+      <h3>What would narrow the disagreement?</h3>
+      <p>{Q07_LAYERS.distinguishing.text}</p>
+      <p class="small"><span class="tag">New research proposal</span> Builds on the Q07 workflow's evaluation criteria.</p>
+    </>
+  )}
+
+  {issueId === "q03" && (
+    <>
+      <h3>Five process families</h3>
+      <div class="process-grid">{Q03_ANALYSIS.processes.map((p) => <article id={`process-${p.id}`}><h4>{p.title}</h4><p class="small">{p.text}</p><p class="small">From: {from(p.basis)}</p></article>)}</div>
+      <p class="small"><span class="tag">Editorial framing</span> {Q03_ANALYSIS.interactions}</p>
+      <h3>Competing hypotheses</h3>
+      <p class="small">Stated as claims about relative roles, temporal ordering and necessity under specified conditions. They are not mutually exclusive.</p>
+      <dl class="method-list">{Q03_ANALYSIS.hypotheses.map((h) => <><dt id={`hypothesis-${h.id.toLowerCase()}`}>{h.id} · {h.title}</dt><dd>{h.text}<span class="small block">From: {from(h.basis)}</span></dd></>)}</dl>
+      <p>{Q03_ANALYSIS.conditions.text}</p>
+      <h3>What would distinguish the interpretations?</h3>
+      <ol>{Q03_ANALYSIS.tests.map((t) => <li><strong>{t.title}.</strong> {t.text}</li>)}</ol>
+      <p class="small"><span class="tag">New research proposal</span> Builds on the Q03 workflow (transition-phase budgets).</p>
+      <h3>Uncertainty in the numbers</h3>
+      <p>{Q03_ANALYSIS.numericalUncertainty.text}</p>
+      <h3>Current state of evidence</h3>
+      <p>{Q03_ANALYSIS.evidenceState.text}</p>
+      <p class="small">From: {from(Q03_ANALYSIS.evidenceState.basis)}</p>
+    </>
+  )}
+</section>

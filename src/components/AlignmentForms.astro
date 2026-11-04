@@ -1,0 +1,26 @@
+---
+// Phase 9C: four forms of agreement, kept separate for one emerging-alignment question.
+import { basisSourceLabels, phase9Label } from "../science/phase8";
+import { ALIGNMENT_FORMS, AGREEMENT_FORMS, FORM_STATES } from "../science/phase9/classification.mjs";
+interface Props { issueId: string }
+const forms = (ALIGNMENT_FORMS as Record<string, Record<string, { state?: string; text: string; basis: string[] }>>)[Astro.props.issueId];
+const draft = phase9Label();
+const keys = Object.keys(AGREEMENT_FORMS) as (keyof typeof AGREEMENT_FORMS)[];
+---
+{forms && (
+  <section id="agreement-forms">
+    <h2>What kind of agreement is this?</h2>
+    <p class="small">Shared recognition of a problem, agreement on a method, agreement on a physical explanation and formal endorsement are different things. No agreement score is computed.</p>
+    <div class="form-list">
+      {keys.map((key) => (
+        <div class="form-row">
+          <strong title={AGREEMENT_FORMS[key].description}>{AGREEMENT_FORMS[key].label}</strong>
+          <span class:list={["state", `state-${forms[key].state}`]}>{FORM_STATES[forms[key].state as keyof typeof FORM_STATES]}</span>
+          <span>{forms[key].text}{forms[key].basis.length > 0 && <span class="small block">From: {basisSourceLabels(forms[key].basis).map((s) => s.label).join("; ")}</span>}</span>
+        </div>
+      ))}
+    </div>
+    <p><strong>Remaining disagreements or qualifications.</strong> {forms.remaining.text}</p>
+    <p class="small"><span class="tag">Editorial synthesis</span> {draft.short}.</p>
+  </section>
+)}

@@ -4,6 +4,7 @@ import PageIntro from "../components/PageIntro.astro";
 import ScienceNavigation from "../components/ScienceNavigation.astro";
 import ContextNote from "../components/ContextNote.astro";
 import RelationshipBadge from "../components/RelationshipBadge.astro";
+import DisagreementMatrix from "../components/DisagreementMatrix.astro";
 import { CLASSIFICATIONS } from "../science/contract.mjs";
 import { loadThemeReview, CLASSIFICATION_ROUTES } from "../science/theme-review";
 import { RELATIONSHIP_TYPES, videosForIssue, priorityAreaForIssue } from "../science/phase8";
@@ -30,12 +31,13 @@ const issues = review?.issues ?? [];
       );
     })}
   </div>
+  <DisagreementMatrix />
   <section id="classification">
     <h2>How these questions are classified</h2>
     <p>Two layers of editorial labels are used in this personal report. Neither is a workshop decision.</p>
     <h3>Primary class</h3>
     <dl class="method-list">{Object.values(CLASSIFICATIONS).map(({label, description}) => <><dt>{label}</dt><dd>{description}{label === "Documented Agreements" && " No question currently meets this standard."}</dd></>)}</dl>
-    <h3>How the positions relate (added in Phase 8)</h3>
+    <h3>How the positions relate (added in Phase 8, revised for Q07 in Phase 9)</h3>
     <p class="small">Distinguishes genuine scientific disagreement from approaches that serve different purposes. A question can carry a primary and a secondary relationship.</p>
     <dl class="method-list">{Object.values(RELATIONSHIP_TYPES).map(({label, code, description, genuineDisagreement}) => <><dt>{code !== "–" && `${code} · `}{label}</dt><dd>{description} {genuineDisagreement === true ? "Counted as genuine disagreement." : genuineDisagreement === false ? "Not counted as disagreement." : ""}</dd></>)}</dl>
   </section>

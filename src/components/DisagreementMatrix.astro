@@ -1,0 +1,26 @@
+---
+// Phase 9C step C4: scientific disagreement matrix and complementary perspectives.
+import { getIssue, phase9Label } from "../science/phase8";
+import { DISAGREEMENT_MATRIX, COMPLEMENTARY_PERSPECTIVES } from "../science/phase9/classification.mjs";
+const draft = phase9Label();
+---
+<section id="disagreement-matrix">
+  <h2>Scientific disagreement matrix</h2>
+  <p class="small">Major debated issues, with positions stated without attribution to discussion participants. Complementary perspectives are listed separately below and are not counted as disagreement.</p>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th scope="col">Question</th><th scope="col">Position A</th><th scope="col">Position B</th><th scope="col">Compatible?</th><th scope="col">What would distinguish them</th><th scope="col">Main uncertainty</th><th scope="col">State of evidence</th></tr></thead>
+      <tbody>
+        {DISAGREEMENT_MATRIX.map((row) => (
+          <tr id={`matrix-${row.issue}`}>
+            <th scope="row"><a href={`/questions/themes/${row.issue}`}>{row.issue.toUpperCase()}</a> · {row.question}<span class="small block">{getIssue(row.issue)?.title}</span></th>
+            <td>{row.a.text}</td><td>{row.b.text}</td><td>{row.compatible}</td><td>{row.distinguish.text}</td><td>{row.uncertainty.text}</td><td>{row.evidence}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <h3 id="complementary">Complementary perspectives (not disagreements)</h3>
+  <ul>{COMPLEMENTARY_PERSPECTIVES.map((c) => <li><a href={`/questions/themes/${c.issue}`}>{c.issue.toUpperCase()}</a> · <strong>{c.title}.</strong> {c.text}</li>)}</ul>
+  <p class="small"><span class="tag">Editorial synthesis</span> {draft.short}. Q04 and Q12 are not listed: their contributions measure different quantities, so whether they compete is not yet determinable.</p>
+</section>

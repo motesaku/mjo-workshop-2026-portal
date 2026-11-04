@@ -4,16 +4,16 @@ import ClaimEntry from "./ClaimEntry.astro";
 import RelationshipBadge from "./RelationshipBadge.astro";
 import { divergenceAnalysis, getClaim, phase8Label, disagreementVerdict, VERDICT_LABELS, type Claim } from "../science/phase8";
 import type { ReviewIssue } from "../science/theme-review";
-interface Props { issue: ReviewIssue }
-const { issue } = Astro.props;
+interface Props { issue: ReviewIssue; sectionId?: string; heading?: string }
+const { issue, sectionId = "analysis", heading = "Structure of the difference" } = Astro.props;
 const a = divergenceAnalysis(issue.id);
 const claim = (id: string) => getClaim(id)?.claim as Claim | undefined;
 const draft = phase8Label();
 const verdict = VERDICT_LABELS[disagreementVerdict(issue.id)];
 ---
 {a && (
-  <section id="analysis" class="analysis">
-    <h2>Structure of the difference</h2>
+  <section id={sectionId} class="analysis">
+    <h2>{heading}</h2>
     <div class="analysis-head">
       <p class="eyebrow">{verdict}</p>
       <RelationshipBadge issueId={issue.id} />
