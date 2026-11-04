@@ -54,6 +54,7 @@ Committed `wrangler.jsonc` is a **template without production resource IDs**.
 ```sh
 npm run typecheck
 npm run test:science
+npm run test:security # public API request-body guard (src/security/public-request-guard.mjs)
 npm run science:check
 npm run verify:local  # Requires the local dev server
 node scripts/verify-phase4-http.mjs
