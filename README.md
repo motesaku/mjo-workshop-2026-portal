@@ -1,12 +1,13 @@
 # MJO Workshop 2026 Knowledge & Action Portal
 
-Private, local development prototype for workshop participants. English-only.
+English-only EmDash + Astro site for a **personal workshop participation report**.  
 This repository is independent of the private `researcher_os` research environment.
-Scientific CMS import and public website deployment remain unauthorized. Local Phase 3–6 work adds review gates, portal pages and editorial theme drafts that stay unpublished until scientific sign-off.
+
+Live owner hosting (separate from GitHub visibility) may already be on Cloudflare Workers with **`noindex, nofollow`**. Changing the GitHub repository from private to public so others can fork is a **separate owner decision**—prepare with `docs/FORKING.md` first.
 
 ## Local development
 
-Use Node.js 24.15+ in the 24.x line (see `.nvmrc`). A project-local Node 24 runtime is also installed as a dev dependency, so npm scripts use that runtime without changing the machine-wide installation.
+Use Node.js 24.15+ in the 24.x line (see `.nvmrc`).
 
 ```sh
 npm ci
@@ -15,30 +16,35 @@ npm run dev
 
 - Homepage: http://localhost:4321/
 - EmDash administration: http://localhost:4321/_emdash/admin/
-- Fresh database: the administration route opens the initial setup wizard.
-- The development server binds to loopback only. Do not add `--host 0.0.0.0`, a tunnel, or a public preview without authorization.
-- This Astro version runs the development server in the background. Use `npm exec astro dev status` to check it and `npm exec astro dev stop` to stop it.
+- Fresh database: the administration route opens the initial setup wizard (**Empty site**).
+- The development server binds to loopback only.
 
-The official scaffolder generated `.env` with a private `EMDASH_ENCRYPTION_KEY`. Preserve it; do not commit or share it. For a fresh clone with no `.env`, use the following command once to create one with a cryptographically random key (it refuses to overwrite an existing file):
+Create a private `.env` with a **new** `EMDASH_ENCRYPTION_KEY` (never commit it):
 
 ```sh
 node --input-type=module -e 'import { randomBytes } from "node:crypto"; import { writeFileSync } from "node:fs"; writeFileSync(".env", `EMDASH_ENCRYPTION_KEY=${randomBytes(32).toString("hex")}
 `, { flag: "wx", mode: 0o600 });'
 ```
 
-`.env.example` documents the required variable without a real key. Never use a `PUBLIC_` variable for secrets. Back up the key securely and separately from database backups.
+## Forks and rearrangements
+
+Participants may fork this project and rearrange pages, styling, and personal synthesis content under the MIT `LICENSE` (see also the content notice in that file).
+
+1. Read **`docs/FORKING.md`**.
+2. Replace authorship in `src/data/portal.ts`.
+3. Start blank with `examples/personal-synthesis.empty.json`, or adapt `examples/personal-synthesis.qoosaku-moteki.json`.
+4. Create **your own** Cloudflare D1/R2 and `wrangler.site.jsonc` (gitignored). Never reuse another person’s database UUID or encryption key.
+
+Committed `wrangler.jsonc` is a **template without production resource IDs**.
 
 ## Manual administrator setup
 
-1. Open the admin URL in your own browser on this Mac. Use `localhost` consistently for setup and later sign-in.
-2. Use site title **MJO Workshop 2026** and tagline **Knowledge & Action Portal**. Select **Empty site**; the seed deliberately contains no posts or pages.
-3. Enter your administrator email and name.
-4. Register a passkey using the browser/OS prompt, then open the dashboard.
-5. Keep scientific content unpublished until its reviewed source and publication approval have been recorded.
+1. Open the admin URL in your browser. Use a consistent origin for passkeys.
+2. Site title **MJO Workshop 2026**, tagline **Knowledge & Action Portal**, **Empty site**.
+3. Enter **your** administrator email and name; register a passkey.
+4. Keep unverified scientific claims unpublished; this site’s scientific pages are a personal synthesis unless you change that policy.
 
-No administrator identity or passkey was created by the implementation agent. A verified setup screen is not a verified authenticated editor session. Email delivery is not configured.
-
-## Commands and structure
+## Commands
 
 ```sh
 npm run typecheck
@@ -47,44 +53,28 @@ npm run science:check
 npm run verify:local  # Requires the local dev server
 node scripts/verify-phase4-http.mjs
 node scripts/verify-phase6.mjs dev
-npm run build
-npm run preview
+npm run build         # prefers wrangler.site.jsonc when present
+npm run deploy        # Cloudflare Worker; needs your bindings overlay
 ```
 
 | Path | Purpose |
 | --- | --- |
-| `astro.config.mjs` | Official Node adapter, English React admin, EmDash SQLite/local storage integration and private-file HTTP exclusions |
-| `src/live.config.ts` | Official EmDash live content loader |
-| `src/pages/` | Server-rendered homepage, portal routes and Starter post/page/taxonomy routes |
-| `src/layouts/Base.astro` | Shared English layout with official EmDash page contributions |
-| `src/styles/portal.css` | Small responsive local prototype stylesheet |
-| `seed/seed.json` | Starter Posts/Pages schema; no sample or scientific content |
-| `data.db`, `uploads/` | Local runtime data; ignored by Git |
-| `exports/` | Local editorial review packages only; ignored by Git and denied over HTTP |
-| `docs/PROJECT_BRIEF.md` | Audience, boundaries, editorial rules and future scope |
-| `docs/IMPLEMENTATION_PLAN.md` | Phase checklist, acceptance criteria and deployment gates |
-| `docs/PHASE6_IMPLEMENTATION.md` | Dedicated scientific theme delivery and verification notes |
-| `docs/VERIFICATION.md` | Phase 2 implementation checks, limitations and dependency findings |
+| `astro.config.mjs` | Cloudflare adapter + EmDash D1/R2 |
+| `astro.config.node.mjs` | Local Node + SQLite prototype |
+| `wrangler.jsonc` | Committed Cloudflare **template** |
+| `wrangler.site.jsonc` | Local production bindings (gitignored) |
+| `src/data/personal-synthesis.json` | Bundled personal synthesis (no source file hashes) |
+| `examples/` | Empty starter + reference synthesis package |
+| `docs/FORKING.md` | Fork / redeploy checklist |
+| `docs/PHASE7_DEPLOYMENT_GUIDE.md` | Cloudflare procedure |
+| `LICENSE` | MIT + content notice |
 
 ## GitHub status
 
-Private remote: **`motesaku/mjo-workshop-2026-portal`** (`origin`, branch `main`).
-A private GitHub repository does not make a deployed website private. Do not change visibility, add CI deploy hooks, or push secrets, SQLite data, `exports/`, `backups/` or `.env`. Further pushes still require explicit authorization when they are not part of an already approved handoff.
+Remote: **`motesaku/mjo-workshop-2026-portal`**. Treat visibility changes, CI deploy hooks, and secret scanning enablement as owner-authorized steps. Do not push secrets, SQLite data, `exports/`, `backups/`, `.env`, or `wrangler.site.jsonc`.
 
-## Later Cloudflare deployment
+After the repository is made **public**, enable GitHub secret scanning and push protection (often unavailable on free private personal repositories).
 
-Plan only: Cloudflare Workers + D1 (`DB`) + R2 (`MEDIA`). See the implementation plan before changing the adapter. No Wrangler deployment configuration, cloud resources, GitHub Actions, deployment button, or deploy script is enabled. Videos will remain YouTube embeds; R2 is only for approved site assets and carefully protected backups.
+## Official scaffold provenance
 
-## Official sources and scaffold provenance
-
-Generated on 2026-11-01 using `create-emdash@1.4.0`:
-
-```sh
-npm create emdash@latest mjo-workshop-2026-portal -- --template starter --platform node --pm npm --install --yes
-```
-
-- [EmDash Getting Started](https://docs.emdashcms.com/getting-started/)
-- [EmDash Node.js guide](https://docs.emdashcms.com/deployment/nodejs/)
-- [EmDash Cloudflare guide](https://docs.emdashcms.com/deployment/cloudflare/)
-
-The npm lockfile records installed versions. The scaffold's transitive dependencies currently have an audit finding; see `docs/VERIFICATION.md`. Do not apply `npm audit fix --force`: the suggested EmDash downgrade is incompatible with this scaffold.
+Generated on 2026-11-01 using `create-emdash@1.4.0` (Starter), then customized for the workshop portal and Cloudflare deployment.

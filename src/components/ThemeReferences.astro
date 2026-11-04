@@ -11,14 +11,14 @@ const references = review.references.filter(r => ids.includes(r.id));
   <p class="small">Personal synthesis v{review.version} · {review.created_on}. Scientific framing: {review.scientific_review.replaceAll('_', ' ')}. Publication framing: {review.publication_approval.replaceAll('_', ' ')}. Language: {review.language_review.replaceAll('_', ' ')}. Source coverage: partial. No formal consensus is established.</p>
   {references.map(ref => <article id={ref.id}><h3><a href={ref.url}>{ref.title}</a></h3><p>{ref.scope}</p><p class="small">Definition/source checked: {ref.verified_on}. This does not constitute scientific approval of the synthesis.</p></article>)}
   <details><summary>Workshop source records ({sources.length})</summary>
-    <p class="small">Discussion participants remain anonymous. Repeated breakout/plenary and final-day records may overlap; they are not independent votes. Only edited paraphrases are shown; original documents are not served.</p>
-    {sources.map(source => <article id={source.source_id}><h3>{source.title}</h3><p class="small">{source.source_id} · Coverage: {source.coverage} · Source review: {source.source_review_status.replaceAll('_', ' ')}</p><p>{source.limitations}</p><p class="hash">Version: {source.source_version}</p></article>)}
+    <p class="small">Discussion participants remain anonymous. Repeated breakout/plenary and final-day records may overlap; they are not independent votes. Only edited paraphrases are shown; original documents are not served. Public packages omit source file fingerprints.</p>
+    {sources.map(source => <article id={source.source_id}><h3>{source.title}</h3><p class="small">{source.source_id} · Coverage: {source.coverage} · Source review: {source.source_review_status.replaceAll('_', ' ')}</p><p>{source.limitations}</p><p class="small">Record label: {source.source_version}</p></article>)}
   </details>
   <details open><summary>Claim-level source locators ({evidence.length})</summary>
-    <p class="small">Each identifier below resolves a cited passage in the private source record. Hashes preserve the version; they do not establish correctness.</p>
-    <dl>{evidence.map(e => <div id={e.evidence_id}><dt>{e.evidence_id}</dt><dd>{review.sources.find(s => s.source_id === e.source_id)?.title} · {e.locator} · lines {e.line_start}–{e.line_end}<br/><span class="small">Personal synthesis locator · {e.source_id}</span><details><summary>Version fingerprints</summary><p class="hash">Source SHA-256: {e.source_sha256}<br/>Passage SHA-256: {e.excerpt_sha256}</p></details></dd></div>)}</dl>
+    <p class="small">Each identifier below names a cited passage in a private source record kept offline. Locators support editorial traceability; they are not a correctness proof and do not expose file hashes.</p>
+    <dl>{evidence.map(e => <div id={e.evidence_id}><dt>{e.evidence_id}</dt><dd>{review.sources.find(s => s.source_id === e.source_id)?.title} · {e.locator} · lines {e.line_start}–{e.line_end}<br/><span class="small">Personal synthesis locator · {e.source_id}</span></dd></div>)}</dl>
   </details>
 </section>
 <style>
-.theme-references article{margin:1rem 0}.theme-references details{margin:1rem 0}.theme-references summary{font-weight:600;padding:.5rem 0}.theme-references dl>div{border-top:1px solid var(--line);padding:1rem 0;scroll-margin-top:1rem}.theme-references dt{font-weight:650;font-size:.85rem}.theme-references dd{margin:.35rem 0;font-size:.85rem}.hash{overflow-wrap:anywhere;font-size:.75rem;color:var(--muted)}
+.theme-references article{margin:1rem 0}.theme-references details{margin:1rem 0}.theme-references summary{font-weight:600;padding:.5rem 0}.theme-references dl>div{border-top:1px solid var(--line);padding:1rem 0;scroll-margin-top:1rem}.theme-references dt{font-weight:650;font-size:.85rem}.theme-references dd{margin:.35rem 0;font-size:.85rem}
 </style>

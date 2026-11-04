@@ -19,8 +19,8 @@ export interface ReviewIssue {
 	unresolved_questions?: { text?: string } | string | Array<{ text?: string }> | null;
 	limitations?: { text?: string } | string | null;
 }
-export interface ReviewSource { source_id: string; title: string; source_version: string; coverage: string; limitations: string; source_review_status: string; contribution_family: string; sha256?: string }
-export interface ReviewEvidence { evidence_id: string; source_id: string; source_sha256: string; line_start: number; line_end: number; locator: string; excerpt_sha256: string; verification: string }
+export interface ReviewSource { source_id: string; title: string; source_version: string; coverage: string; limitations: string; source_review_status: string; contribution_family: string }
+export interface ReviewEvidence { evidence_id: string; source_id: string; line_start: number; line_end: number; locator: string; verification: string }
 export interface ReviewAction {
 	id: string;
 	issue_id: string;

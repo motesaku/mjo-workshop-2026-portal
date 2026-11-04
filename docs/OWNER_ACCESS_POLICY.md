@@ -13,18 +13,19 @@ Decided **2026-11-03** by Qoosaku Moteki. Recorded on the public-facing site (ho
 | Accounts | No participant account management; single editor (site owner) |
 | Scientific pages | Fill from converted minutes where usable, label uncertainty, complete a readable report |
 | Other participants | Not invited as co-editors on this site |
-| Hosting | **Public** Cloudflare host authorized 2026-11-03; live at `https://<worker-name>.<account-subdomain>.workers.dev`; search engines remain **`noindex, nofollow`** until a separate indexing decision |
+| Hosting | **Public** Cloudflare host authorized 2026-11-03 (owner `workers.dev` origin); search engines remain **`noindex, nofollow`** until a separate indexing decision |
 | Cloudflare Access | Not used for the first public deploy (site is openly reachable by URL) |
-| Production admin | EmDash setup + owner passkey completed on the workers.dev origin (2026-11-04); localhost passkeys remain separate |
+| Production admin | EmDash setup + owner passkey completed on the production origin (2026-11-04); localhost passkeys remain separate |
+| GitHub | Remains **private** until a separate visibility decision; fork/template hygiene prepared (`docs/FORKING.md`, placeholder `wrangler.jsonc`, MIT `LICENSE`) |
 
 ## Implications for the prototype
 
 1. Visible English disclosure on every page (prototype bar + footer) and a full statement on `/about`.
 2. YouTube embed permission already allows participant and future public use for `RPXnSvabsGY`.
 3. Theme/issue copy may move from “awaiting formal workshop sign-off” framing to “personal synthesis from minutes,” while keeping origin labels and avoiding false consensus.
-4. Scientific theme/issue/action bodies are served from committed `src/data/personal-synthesis.json` in both development and production. Raw minutes, Japanese drafts and private provenance under `exports/` remain gitignored and are not a runtime input.
-5. First public host: Cloudflare Workers (`workers.dev` unless a custom domain is later approved). Keep `noindex, nofollow` on every page until the owner explicitly allows indexing.
-6. Custom domain, Access, GitHub Actions auto-deploy, and `noindex` removal each need a separate authorization.
+4. Scientific theme/issue/action bodies are served from committed `src/data/personal-synthesis.json` in both development and production. Raw minutes, Japanese drafts and private provenance under `exports/` remain gitignored and are not a runtime input. Public packages omit source SHA-256 fingerprints; reference copies live under `examples/`.
+5. First public host: Cloudflare Workers (`workers.dev` unless a custom domain is later approved). Keep `noindex, nofollow` on every page until the owner explicitly allows indexing. Production resource IDs stay in gitignored `wrangler.site.jsonc` only.
+6. Custom domain, Access, GitHub Actions auto-deploy, `noindex` removal, and **GitHub public visibility** each need a separate authorization.
 
 ## Related files
 

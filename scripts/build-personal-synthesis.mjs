@@ -20,12 +20,18 @@ const CLASS_MAP = {
 	"open questions": "open questions",
 };
 
+function publicSourceVersion(s) {
+	const v = s.source_version;
+	if (typeof v === "string" && v.length && !v.startsWith("sha256:")) return v;
+	return "version withheld from public package";
+}
+
 function publicSource(s) {
+	// Omit sha256: public packages must not fingerprint private minute files.
 	return {
 		source_id: s.source_id,
 		title: s.title,
-		source_version: s.source_version ?? (s.sha256 ? `sha256:${s.sha256}` : "unknown"),
-		sha256: s.sha256,
+		source_version: publicSourceVersion(s),
 		snapshot_date: s.snapshot_date ?? null,
 		session_date: s.session_date ?? null,
 		contribution_family: s.contribution_family,
@@ -58,14 +64,13 @@ function englishLocator(locator, lineStart, lineEnd) {
 }
 
 function publicEvidence(e) {
+	// Omit source_sha256 / excerpt_sha256 from the committed public package.
 	return {
 		evidence_id: e.evidence_id,
 		source_id: e.source_id,
-		source_sha256: e.source_sha256,
 		line_start: e.line_start,
 		line_end: e.line_end,
 		locator: englishLocator(e.locator, e.line_start, e.line_end),
-		excerpt_sha256: e.excerpt_sha256,
 		verification: e.verification ?? "pending_human_review",
 		coverage: e.coverage ?? "partial",
 	};

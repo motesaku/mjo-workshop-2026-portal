@@ -9,7 +9,14 @@ const pkg = JSON.parse(await readFile('src/data/personal-synthesis.json', 'utf8'
 const evidence = new Map(pkg.evidence.map(e => [e.evidence_id, e]));
 const sources = new Map(pkg.sources.map(s => [s.source_id, s]));
 const referenceIds = new Set(pkg.references.map(r => r.id));
-for (const e of pkg.evidence) assert.equal(e.source_sha256, sources.get(e.source_id)?.sha256, e.evidence_id);
+const pkgText = JSON.stringify(pkg);
+assert.doesNotMatch(pkgText, /"source_sha256"|"excerpt_sha256"|"sha256"\s*:/);
+assert.doesNotMatch(pkgText, /"sha256:[a-f0-9]{64}"/);
+for (const e of pkg.evidence) {
+  assert.ok(sources.has(e.source_id), e.evidence_id);
+  assert.equal(e.source_sha256, undefined, e.evidence_id);
+  assert.equal(e.excerpt_sha256, undefined, e.evidence_id);
+}
 for (const t of pkg.themes) for (const s of t.sections) for (const c of s.items) {
   assert.ok(c.refs.length, c.title);
   for (const id of c.refs) assert.ok(evidence.has(id) || referenceIds.has(id), id);

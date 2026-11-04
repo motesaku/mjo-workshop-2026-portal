@@ -1,6 +1,6 @@
 # Phase 7 — Cloudflare deployment guide (prepared, not executed)
 
-Status on 4 November 2026: **public `workers.dev` deploy live with `noindex`**. URL: `https://<worker-name>.<account-subdomain>.workers.dev`. Active config: `astro.config.mjs` (Cloudflare), `wrangler.jsonc`, `src/worker.ts`. Node prototype retained as `astro.config.node.mjs`. Resources: D1 `mjo-workshop-2026-portal` (`<your-d1-uuid>`), R2 `mjo-workshop-2026-portal-media`, SESSION KV. Core migrations applied (fingerprint `<withheld-sha256>`). Scientific pages served from bundled personal synthesis. Production EmDash setup + owner passkey completed 2026-11-04 (1 admin user in D1). **Still open:** custom domain; indexing; Access; GitHub Actions.
+Status on 4 November 2026: **owner production Worker is live with `noindex`**. Active config: Cloudflare `astro.config.mjs`, committed template `wrangler.jsonc` (no production UUIDs), local overlay `wrangler.site.jsonc` (gitignored), `src/worker.ts`. Node prototype retained as `astro.config.node.mjs`. Each deployer creates their own D1 / R2 / SESSION KV and records IDs only in the local overlay or offline notes—never in Git. Scientific pages are served from bundled personal synthesis (source file fingerprints omitted). Owner EmDash setup on the production origin completed 2026-11-04. **Still open:** custom domain; indexing; Access; GitHub Actions; explicit GitHub visibility change for community forks (see `docs/FORKING.md`).
 
 Official sources checked on 3 November 2026: [Deploy to Cloudflare](https://docs.emdashcms.com/deployment/cloudflare/), [Core database migrations](https://docs.emdashcms.com/deployment/core-migrations/), [Backups and recovery](https://docs.emdashcms.com/guides/backups/), [Secrets and key management](https://docs.emdashcms.com/deployment/secrets/), [Configuration](https://docs.emdashcms.com/reference/configuration/). Re-read them at execution time; API names and compatibility dates change.
 
@@ -33,11 +33,12 @@ Do this on a branch; keep `main` runnable with the Node adapter until the Worker
 
 ```sh
 npx wrangler login
-npx wrangler d1 create mjo-workshop-2026-portal      # record the UUID → wrangler.jsonc database_id
+npx wrangler d1 create mjo-workshop-2026-portal      # record the UUID offline → wrangler.site.jsonc only
 npx wrangler r2 bucket create mjo-workshop-2026-portal-media
+cp wrangler.jsonc wrangler.site.jsonc   # gitignored; put YOUR database_id and EMDASH_SITE_URL here
 ```
 
-Do not create a public R2 custom domain. EmDash writes JSON backups under `backups/` in the same bucket; a public bucket origin would expose them.
+Do not create a public R2 custom domain. EmDash writes JSON backups under `backups/` in the same bucket; a public bucket origin would expose them. Do not commit `wrangler.site.jsonc` or paste another person’s D1 UUID into your overlay.
 
 ## 3. Secrets (never in files)
 
@@ -55,16 +56,16 @@ npx wrangler secret put EMDASH_ENCRYPTION_KEY            # paste the generated v
 Follow the official "build, migrate, deploy, check" order.
 
 ```sh
-npm run build
-export CLOUDFLARE_ACCOUNT_ID=…   # from the dashboard
+npm run build    # uses wrangler.site.jsonc when present
+export CLOUDFLARE_ACCOUNT_ID=…   # from the dashboard; shell only
 export CLOUDFLARE_API_TOKEN=…    # scoped token with D1 Edit; shell only, never committed
-npx emdash migrate --status --wrangler-config wrangler.jsonc    # confirm account + UUID + fingerprint
-npx emdash migrate --wrangler-config wrangler.jsonc             # interactive; confirm target
-npx wrangler deploy
-npx emdash migrate --check --wrangler-config wrangler.jsonc
+npx emdash migrate --status --wrangler-config wrangler.site.jsonc
+npx emdash migrate --wrangler-config wrangler.site.jsonc
+npm run deploy
+npx emdash migrate --check --wrangler-config wrangler.site.jsonc
 ```
 
-- Record the printed target fingerprint with the deployment notes.
+- Record the printed target fingerprint in **offline** deployment notes (not in the public Git tree).
 - Until setup completes, the first request applies the seed's schema (10 collections, no sample content). Verify that the template shown by the wizard is "MJO Workshop 2026 Portal".
 - Keep `workers_dev` enabled only while testing; set `workers_dev: false` and add the approved `routes` once the domain is validated (authorization d).
 

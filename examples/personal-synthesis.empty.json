@@ -1,0 +1,53 @@
+{
+  "format": "personal-workshop-synthesis",
+  "version": "0.0.0",
+  "created_on": "2026-11-04",
+  "language": "en",
+  "authorship": {
+    "author": "Your Name",
+    "role": "individual workshop participant",
+    "stance": "personal_learning_and_present_understanding",
+    "access_model": "public_personal_report",
+    "not_claimed": [
+      "official ICTP publication",
+      "workshop multi-author consensus",
+      "shared participant CMS"
+    ]
+  },
+  "scientific_review": "personal_synthesis_from_minutes",
+  "publication_approval": "owner_personal_report",
+  "language_review": "author_english",
+  "formal_consensus": "not_established",
+  "coverage": "none",
+  "themes": [
+    {
+      "id": "ai",
+      "title": "AI for MJO Research",
+      "description": "Replace this starter theme with your own personal synthesis.",
+      "sections": [],
+      "issues": [],
+      "video_context": "No highlight mapped yet.",
+      "video_gap": "Add an approved YouTube highlight only after permission checks."
+    },
+    {
+      "id": "indices",
+      "title": "MJO Indices and Diagnostics",
+      "description": "Replace this starter theme with your own personal synthesis.",
+      "sections": [],
+      "issues": [],
+      "video_context": "No highlight mapped yet.",
+      "video_gap": "Add an approved YouTube highlight only after permission checks."
+    }
+  ],
+  "issues": [],
+  "actions": [],
+  "sources": [],
+  "evidence": [],
+  "references": [],
+  "highlight": {
+    "youtube_id": "",
+    "verification_date": "",
+    "publication_permission": "not_set",
+    "scientific_review": "pending_as_independent_evidence"
+  }
+}

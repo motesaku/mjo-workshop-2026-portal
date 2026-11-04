@@ -1,5 +1,10 @@
-// Active Cloudflare Workers config (authorized 2026-11-03: public + noindex).
-// Official EmDash guide: https://docs.emdashcms.com/deployment/cloudflare/
+// Committed TEMPLATE for forks and fresh clones.
+// Do NOT put production D1 UUIDs, account IDs, or live site URLs here.
+//
+// Owner / existing deployers: copy this file to `wrangler.site.jsonc` (gitignored),
+// fill in your own Cloudflare resource IDs and EMDASH_SITE_URL, then use
+// `npm run build` / `npm run deploy` (they prefer wrangler.site.jsonc when present).
+// See docs/FORKING.md and docs/PHASE7_DEPLOYMENT_GUIDE.md.
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "mjo-workshop-2026-portal",
@@ -14,8 +19,9 @@
 	"d1_databases": [
 		{
 			"binding": "DB",
-			"database_name": "mjo-workshop-2026-portal",
-			"database_id": "<your-d1-uuid>"
+			"database_name": "mjo-workshop-2026-portal"
+			// After `npx wrangler d1 create mjo-workshop-2026-portal`, set:
+			// "database_id": "<your-d1-uuid>"
 		}
 	],
 	"r2_buckets": [
@@ -31,7 +37,8 @@
 	"images": { "binding": "IMAGES" },
 
 	"vars": {
-		"EMDASH_SITE_URL": "https://<worker-name>.<account-subdomain>.workers.dev"
+		// Set to YOUR Worker origin BEFORE the EmDash setup wizard (passkeys bind to it).
+		// "EMDASH_SITE_URL": "https://YOUR-SUBDOMAIN.workers.dev"
 	},
 
 	"observability": { "enabled": true }

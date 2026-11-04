@@ -9,11 +9,13 @@ These requirements override generic template suggestions below.
 - Videos are embedded from YouTube, never hosted locally by this website or in its R2 bucket. Verify each approved highlight video ID; do not confuse highlights with full recordings.
 - Unverified scientific claims must remain unpublished. Distinguish observations, interpretations, proposals and formal consensus. The CMS draft/publish controls alone do not enforce scientific review.
 - The website must not be publicly deployed without explicit authorization. Do not deploy previews, open tunnels, configure automatic deployment, or expose the dev server beyond loopback.
-- The intended GitHub repository is `motesaku/mjo-workshop-2026-portal`, PRIVATE. Do not create it, push to it or change its visibility without explicit authorization. Do not commit unless explicitly asked.
+- The intended GitHub repository is `motesaku/mjo-workshop-2026-portal`. Keep it private until the owner explicitly authorizes a visibility change. Do not create it, push to it, or change visibility without that authorization. Do not commit unless explicitly asked.
+- Committed `wrangler.jsonc` is a template only. Never commit production D1 UUIDs, encryption keys, or live site overlays (`wrangler.site.jsonc` is gitignored). Fork guidance: `docs/FORKING.md`.
+- Public synthesis packages must not include source or excerpt SHA-256 fingerprints of private minute files.
 
 ## Phase 1 editorial decisions
 
-- Audience: final workshop participants; start with a private repository and a local prototype.
+- Audience: workshop participants who may later fork a public template; until visibility is changed, treat the remote as private and the live site as a personal public report with `noindex`.
 - Rework reviewed material into English site summaries; never directly link source files. State missing or partial coverage rather than reconstructing it.
 - Attribute named speakers only for individual talks listed in the official programme. Do not attach individual names to discussion sessions.
 - Action pages illustrate possible AI agent workflows derived from workshop context. They are not responsibility/owner/deadline/status trackers, formal commitments, or evidence of completed work.
