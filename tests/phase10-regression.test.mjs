@@ -152,7 +152,7 @@ test("npm scripts keep every test, verification and gated deployment entry point
 	assert.match(s.build, /with-site-wrangler\.mjs build /);
 	assert.match(s.deploy, /with-site-wrangler\.mjs deploy /);
 	assert.match(s["cf:dev"], /with-site-wrangler\.mjs local /);
-	for (const file of ["science", "public-request-guard", "phase8-relations", "phase9", "phase10-regression"]) {
+	for (const file of ["science", "public-request-guard", "phase8-relations", "phase9", "phase10-regression", "phase10-science"]) {
 		assert.match(s.test, new RegExp(`tests/${file}\\.test\\.mjs`), `npm test runs ${file}`);
 	}
 });

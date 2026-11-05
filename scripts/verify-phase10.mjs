@@ -20,6 +20,7 @@ import { RELATIONSHIP_REVISIONS } from "../src/science/phase9/classification.mjs
 import { PHASE9_EDITORIAL } from "../src/science/phase9/status.mjs";
 import { PRIORITY_AREAS } from "../src/science/phase8/editorial-roadmap.mjs";
 import { ISSUE_RELATIONSHIPS, RELATIONSHIP_TYPES } from "../src/science/phase8/editorial-classification.mjs";
+import { PROPOSALS } from "../src/science/phase10/proposals.mjs";
 
 const origin = process.argv[2] ?? "http://127.0.0.1:4321";
 assert.ok(["127.0.0.1", "localhost", "[::1]"].includes(new URL(origin).hostname), "verify-phase10 only targets a loopback server");
@@ -78,6 +79,12 @@ for (const insight of INSIGHTS_V2) {
 	check(/<dl class="provenance"/.test(item) && /Evidence basis/.test(text(item)), `synthesis: ${insight.id} provenance`);
 }
 if (PHASE9_EDITORIAL.status !== "author_reviewed") check(!/Author-reviewed \(Phase 9\)/.test(text(synthesis)), "synthesis must not claim author review");
+// Phase 10 proposals awaiting the author's decision must not be served.
+for (const p of PROPOSALS.filter((x) => x.decision === null && x.proposed?.text)) {
+	const current = p.target.kind === "insight" ? INSIGHTS_V2.find((i) => i.id === p.target.id)?.text ?? "" : "";
+	const sentence = p.proposed.text.split(/(?<=\.)\s+/).find((s) => s.length > 60 && !current.includes(s));
+	if (sentence) check(!text(synthesis).includes(sentence) && !text(homeMain).includes(sentence), `pending proposal ${p.id} must not be served`);
+}
 
 // 4. Roadmap: four areas with their questions, pilots, and a graph with one arrow per relation.
 const roadmap = main(await page("/actions"));
