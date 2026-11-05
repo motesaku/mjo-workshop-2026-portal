@@ -22,7 +22,6 @@ data.db-*
 wrangler.site.jsonc
 .emdash/
 .claude/state/
-.claude/sessions/
 .verification/
 coverage/
 backups/

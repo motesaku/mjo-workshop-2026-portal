@@ -2,10 +2,6 @@
 import Base from "../layouts/Base.astro";
 import PageIntro from "../components/PageIntro.astro";
 import { PROGRAM_URL, VERIFIED_ON, SITE_STANCE } from "../data/portal";
-import { INTERPRETATION_TYPES, REVIEW_STATUSES, PHASE8_EDITORIAL } from "../science/phase8/status.mjs";
-import { SOURCE_FIDELITY, INTERPRETATION_LEVELS, PUBLICATION_STATES, CHECK_METHOD, PHASE9_EDITORIAL } from "../science/phase9/status.mjs";
-import { SOURCE_QUALITY } from "../science/phase9/provenance.mjs";
-import { RELATIONSHIP_TYPES } from "../science/phase8/editorial-classification.mjs";
 ---
 <Base title="About & Methodology">
   <PageIntro title="About & Methodology" eyebrow="Authorship, access and method" description="Who maintains this site, who it is for, and how workshop records are used without claiming official consensus." />
@@ -28,11 +24,11 @@ import { RELATIONSHIP_TYPES } from "../science/phase8/editorial-classification.m
       <dt>Program metadata</dt>
       <dd>The five-day schedule is based on the <a href={PROGRAM_URL} target="_blank" rel="noopener noreferrer">official ICTP timetable</a>, checked {VERIFIED_ON}. The timetable's overlapping session blocks are preserved and explained. Within academic blocks, individual talk start times are shown; breaks are noted.</dd>
       <dt>Video highlights</dt>
-      <dd>The YouTube playlist <a href="https://www.youtube.com/playlist?list=PLSLeDe1GyyvU" target="_blank" rel="noopener noreferrer">PLSLeDe1GyyvU</a> (38 one-minute clips) is mapped into the program where titles and speakers allow. Owner playlist embed approval: 4 November 2026. A clip is linked to a scientific question only when that question cites the minutes of the same programme talk or session; nothing is inferred from video titles. Key messages condense those minutes-based statements and were not checked against the clips, which remain one-minute derivatives rather than independent evidence. Where the source of the minutes is ambiguous or disputed, the link is withheld and the reason is shown.</dd>
+      <dd>The YouTube playlist <a href="https://www.youtube.com/playlist?list=PLSLeDe1GyyvU" target="_blank" rel="noopener noreferrer">PLSLeDe1GyyvU</a> (38 one-minute clips) is mapped into the program where titles and speakers allow (<code>src/data/highlights.ts</code>). Owner playlist embed approval: 4 November 2026. The earlier sample <a href="https://www.youtube.com/watch?v=RPXnSvabsGY" target="_blank" rel="noopener noreferrer">RPXnSvabsGY</a> remains the Themes 3 + 4 breakout example (owner decisions 3 November 2026). Scientific summaries of the clips are still not approved as independent evidence.</dd>
       <dt>Scientific coverage</dt>
       <dd>English theme pages and issue drafts are being filled from converted meeting minutes as a personal synthesis, with origin labels where available. They remain the author's working understanding, not a workshop-endorsed record. Gaps and uncertainty stay visible.</dd>
       <dt>Website publication</dt>
-      <dd>The site is publicly reachable as a personal report hosted on Cloudflare Workers. Pages carry <code>noindex, nofollow</code>, so search engines are asked not to index them. A custom domain and any change to indexing remain separate decisions by the author.</dd>
+      <dd>Editorial stance and YouTube playlist embed permission are recorded. The site is live on Cloudflare Workers with <code>noindex</code>. Custom domain and search indexing remain separate decisions.</dd>
     </dl>
   </section>
 
@@ -48,9 +44,7 @@ import { RELATIONSHIP_TYPES } from "../science/phase8/editorial-classification.m
       <dt>Provenance</dt>
       <dd>Where source identifiers, versions, coverage and review status are displayed, they describe the editorial package behind the page. Original PDFs, Word files, slides, raw transcripts, rapporteur notes and photographs are not hosted or offered for download.</dd>
       <dt>Research actions</dt>
-      <dd>The roadmap groups twelve illustrative workflows into four strategic research areas defined by scientific questions. The areas are an editorial proposal, not workshop-endorsed priorities, and no ranking is assigned. Each workflow runs from a scientific objective and testable hypothesis to method, deliverable and evaluation criteria; AI agents appear only as possible implementation tools. None of this is an assignment, deadline, commitment or claim that work has been completed.</dd>
-      <dt>Classification</dt>
-      <dd>Each scientific question has a provisional primary class (diverging perspectives, emerging alignment, open question) and, since Phase 8, a label describing how the recorded positions relate. Emerging alignment is never treated as formal consensus, and breakout, plenary and closing reports of the same discussion are counted once.</dd>
+      <dd>Action pages illustrate possible AI agent workflows derived from this personal reading. They are not assignments, deadlines, commitments or claims that work has been completed by others.</dd>
     </dl>
   </section>
 
@@ -58,28 +52,6 @@ import { RELATIONSHIP_TYPES } from "../science/phase8/editorial-classification.m
     <h2>Media &amp; technical notes</h2>
     <p>Videos remain on YouTube and load only when requested by the viewer. No video files or original research documents are stored in the site assets.</p>
     <p>The interface uses English throughout, visible keyboard focus, a skip link and responsive layouts. Captions depend on the available YouTube track.</p>
-    <p>The public site runs on Cloudflare Workers; local development binds to loopback only. Removing <code>noindex</code> or inviting search engines would be a separate decision from this authorship statement.</p>
-  </section>
-
-  <section id="reading-labels">
-    <h2>How to read the labels</h2>
-    <p>Scientific statements on this site carry two kinds of label. Detailed identifiers (statement IDs, source locators and line ranges) are available in expandable sections; private file paths, raw transcripts and source fingerprints are never shown.</p>
-    <h3>Interpretation type</h3>
-    <dl class="method-list">{Object.values(INTERPRETATION_TYPES).map((t) => <><dt>{t.label}</dt><dd>{t.description}</dd></>)}</dl>
-    <h3>Review status</h3>
-    <dl class="method-list">{Object.values(REVIEW_STATUSES).map((t) => <><dt>{t.label}</dt><dd>{t.description}</dd></>)}</dl>
-    <p class="small">Current Phase 8 status: {PHASE8_EDITORIAL.status === "author_reviewed" ? "reviewed by the author" : "draft awaiting the author's review"}. Personal editorial approval for public presentation is not independent scientific verification.</p>
-    <h3 id="phase9-review">Three review dimensions (Phase 9)</h3>
-    <p>Since Phase 9 every statement shows three separate states. {CHECK_METHOD.description} Current Phase 9 status: {PHASE9_EDITORIAL.status === "author_reviewed" ? "reviewed by the author" : "awaiting the author's review"}.</p>
-    <h4>Source fidelity</h4>
-    <dl class="method-list">{Object.values(SOURCE_FIDELITY).map((t) => <><dt>{t.label}</dt><dd>{t.description}</dd></>)}</dl>
-    <h4>Interpretation</h4>
-    <dl class="method-list">{Object.values(INTERPRETATION_LEVELS).map((t) => <><dt>{t.label}</dt><dd>{t.description}</dd></>)}</dl>
-    <h4>Publication</h4>
-    <dl class="method-list">{Object.values(PUBLICATION_STATES).map((t) => <><dt>{t.label}</dt><dd>{t.description}</dd></>)}</dl>
-    <h4>Type of record behind a source</h4>
-    <dl class="method-list">{Object.values(SOURCE_QUALITY).map((t) => <><dt>{t.label}</dt><dd>{t.description}</dd></>)}</dl>
-    <h3>How positions relate</h3>
-    <dl class="method-list">{Object.values(RELATIONSHIP_TYPES).map((t) => <><dt>{t.code !== "–" && `${t.code} · `}{t.label}</dt><dd>{t.description}</dd></>)}</dl>
+    <p>Local development still binds to loopback. Turning on a public host, removing <code>noindex</code>, and inviting general web search engines are deployment decisions separate from this authorship statement.</p>
   </section>
 </Base>

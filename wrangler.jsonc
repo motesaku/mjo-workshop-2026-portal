@@ -3,8 +3,7 @@
 //
 // Owner / existing deployers: copy this file to `wrangler.site.jsonc` (gitignored),
 // fill in your own Cloudflare resource IDs and EMDASH_SITE_URL, then use
-// `npm run build` / `npm run deploy`. The build reads wrangler.site.jsonc in place
-// (this template is never overwritten); deploy refuses to run without it.
+// `npm run build` / `npm run deploy` (they prefer wrangler.site.jsonc when present).
 // See docs/FORKING.md and docs/PHASE7_DEPLOYMENT_GUIDE.md.
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
@@ -13,10 +12,7 @@
 	// Keep at or after 2025-04-01 so Worker secrets reach process.env (EmDash requirement).
 	"compatibility_date": "2026-02-24",
 	"compatibility_flags": ["nodejs_compat"],
-	// New deployments start WITHOUT a public hostname: on an empty database the first
-	// visitor to finish the setup wizard becomes admin. Enable workers_dev only after
-	// Cloudflare Access protects the Worker (docs/PHASE7_DEPLOYMENT_GUIDE.md §4a).
-	"workers_dev": false,
+	"workers_dev": true,
 	"preview_urls": false,
 
 	// Binding names MUST match astro.config.mjs: d1({ binding: "DB" }), r2({ binding: "MEDIA" }).

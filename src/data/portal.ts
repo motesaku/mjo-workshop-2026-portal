@@ -11,25 +11,20 @@ export const SITE_STANCE = {
 	authorRole: "individual workshop participant",
 	accessModel: "public_personal_report",
 	shortLabel: "Personal workshop report by Qoosaku Moteki",
-	/** One-line site-level statement used in the header bar and footer. */
-	concise: "A personal report by Qoosaku Moteki, one workshop participant. Not an official ICTP or workshop record, and not a multi-author consensus.",
 	summary:
 		"This site is a personal public report by Qoosaku Moteki, written as one workshop participant. It records his own learning and present understanding from the meeting. It is not an official ICTP or workshop product, not a multi-author consensus, and not a participant account portal. Only he updates the site.",
 };
-export interface NavItem { href: string; label: string; short?: string; primary?: boolean; science?: boolean }
-/** Site navigation. `primary` items appear directly in the header; the rest sit under "More". */
-export const navigation: NavItem[] = [
+export const navigation = [
   { href: "/", label: "Home" },
-  { href: "/workshop-synthesis", label: "Workshop Synthesis", primary: true, science: true },
-  { href: "/program", label: "Program & Sessions", primary: true },
-  { href: "/videos", label: "Video Highlights", primary: true },
-  { href: "/questions", label: "Scientific Questions", primary: true, science: true },
-  { href: "/diverging-perspectives", label: "Diverging Perspectives", science: true },
-  { href: "/emerging-alignment", label: "Emerging Alignment", science: true },
-  { href: "/open-challenges", label: "Open Challenges", science: true },
-  { href: "/actions", label: "Research Action Roadmap", short: "Research Roadmap", primary: true, science: true },
-  { href: "/ai-for-mjo-research", label: "AI for MJO Research", primary: true, science: true },
-  { href: "/mjo-indices-and-diagnostics", label: "MJO Indices and Diagnostics", short: "MJO Indices", primary: true, science: true },
+  { href: "/program", label: "Program & Sessions" },
+  { href: "/videos", label: "Video Highlights" },
+  { href: "/questions", label: "Scientific Questions" },
+  { href: "/diverging-perspectives", label: "Diverging Perspectives" },
+  { href: "/emerging-alignment", label: "Emerging Alignment" },
+  { href: "/open-challenges", label: "Open Challenges" },
+  { href: "/actions", label: "Research Action Roadmap" },
+  { href: "/ai-for-mjo-research", label: "AI for MJO Research" },
+  { href: "/mjo-indices-and-diagnostics", label: "MJO Indices and Diagnostics" },
   { href: "/about", label: "About & Methodology" },
 ];
 /** @deprecated Prefer `featuredHighlight` / `highlights` from `./highlights`. Kept for older imports. */

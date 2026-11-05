@@ -1,82 +1,44 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import PageIntro from '../../../components/PageIntro.astro';
-import ContextNote from '../../../components/ContextNote.astro';
-import ClaimEntry from '../../../components/ClaimEntry.astro';
-import RelatedVideos from '../../../components/RelatedVideos.astro';
 import ThemeReferences from '../../../components/ThemeReferences.astro';
-import RelationshipBadge from '../../../components/RelationshipBadge.astro';
-import DivergenceAnalysis from '../../../components/DivergenceAnalysis.astro';
-import AlignmentAnalysis from '../../../components/AlignmentAnalysis.astro';
-import AlignmentForms from '../../../components/AlignmentForms.astro';
-import Phase9Divergence from '../../../components/Phase9Divergence.astro';
-import { loadThemeReview, themeRoutes, CLASSIFICATION_ROUTES } from '../../../science/theme-review';
-import { actionsForIssue, issueSignificance, phase8Label, supplementalClaimsFor, phase9Label, videosForIssue, withheldForIssue, sourceLabel, divergenceAnalysis, alignmentAnalysis, disagreementVerdict, VERDICT_LABELS, type Claim } from '../../../science/phase8';
-import { issueClaims, proposalClaims } from '../../../science/phase8/relations.mjs';
+import { loadThemeReview, themeRoutes, textField, getAction, CLASSIFICATION_ROUTES } from '../../../science/theme-review';
+import { SITE_STANCE } from '../../../data/portal';
 const review = loadThemeReview();
 const issue = review?.issues.find(q => q.id === Astro.params.issue);
 if (!review || !issue) return Astro.rewrite('/404');
 Astro.response.headers.set('Cache-Control', 'no-store');
-const asClaim = (value: unknown) => (value && typeof value === 'object' && 'claim_id' in value ? value as Claim : null);
-const comparison = asClaim(issue.comparison);
-const alignment = asClaim(issue.emerging_alignment);
-const limitations = asClaim(issue.limitations);
-const unresolved = (Array.isArray(issue.unresolved_questions) ? issue.unresolved_questions : [issue.unresolved_questions]).map(asClaim).filter((c): c is Claim => !!c);
-const extraRecords = supplementalClaimsFor(issue.id);
-const phase9Analysis = issue.id === 'q03' || issue.id === 'q07';
-const refs = [...new Set(([...issueClaims(issue), ...proposalClaims(issue), ...extraRecords] as { claim: Claim }[]).flatMap(row => row.claim.evidence_ids ?? []))];
-const actions = actionsForIssue(issue.id);
-const videos = videosForIssue(issue.id);
-const withheld = withheldForIssue(issue.id);
-const why = issueSignificance(issue.id);
-const draft = phase8Label();
+const refs = [...new Set([
+  ...issue.records.flatMap(c => c.evidence_ids),
+  ...(issue.positions ?? []).flatMap(c => c.evidence_ids ?? []),
+])];
+const action = getAction(issue.id);
 const classHref = CLASSIFICATION_ROUTES[issue.classification] ?? '/questions';
-const primaryAction = actions.find(a => a.relation === 'primary')?.action;
-const divergence = divergenceAnalysis(issue.id);
-const alignmentView = alignmentAnalysis(issue.id);
+const comparison = textField(issue.comparison);
+const alignment = textField(issue.emerging_alignment);
+const unresolvedItems = Array.isArray(issue.unresolved_questions)
+  ? issue.unresolved_questions.map((item) => item.text ?? "").filter(Boolean)
+  : textField(issue.unresolved_questions) ? [textField(issue.unresolved_questions)] : [];
+const limitations = textField(issue.limitations);
 ---
 <Base title={issue.title} description={issue.question}>
-  <PageIntro title={issue.title} eyebrow={`${issue.id.toUpperCase()} · Cross-session scientific question`} description={issue.question} />
-  <ContextNote><a href={classHref}>{issue.classification}</a> (provisional editorial class) · Coverage: {issue.coverage}. Paraphrased from converted minutes; not a workshop consensus.</ContextNote>
-  <nav class="subnav" aria-label="On this page"><a href="#why">Why it matters</a>{divergence ? <a href="#analysis">Structure of the difference</a> : <a href="#record">Workshop record</a>}{alignmentView && <a href="#alignment">Emerging alignment</a>}{alignmentView && <a href="#agreement-forms">Forms of agreement</a>}{extraRecords.length > 0 && <a href="#phase9-records">Added records</a>}<a href="#videos">Related video highlights</a><a href="#actions">Research actions</a><a href="#references">Sources</a></nav>
+  <PageIntro title={issue.title} eyebrow={`${issue.id} / Cross-session scientific issue`} description={issue.question} />
+  <div class="notice" data-theme-review="personal-report"><strong>{SITE_STANCE.shortLabel}.</strong><p>{issue.status}. Provisional classification: {issue.classification}. Coverage: {issue.coverage}. Formal consensus is not established.</p></div>
+  <p class="small"><a href={classHref}>← {issue.classification}</a> · <a href="/questions">All scientific questions</a>{action && <> · <a href={`/actions/${issue.id}`}>Illustrative research action</a></>}</p>
 
-  {why && <section id="why"><h2>Why it matters</h2><p class="lead-sm">{why.text}</p><p class="small"><span class="tag">Editorial synthesis</span> {draft.long}</p></section>}
+  <section><h2>Workshop record</h2><p>Edited paraphrases from converted minutes, selected for this personal report. Overlapping records are retained; they are not independent replications.</p>{issue.records.map(c => <article><p>{c.text}</p><p class="small">{c.claim_id} · {c.origin} · personal synthesis</p><nav class="subnav" aria-label={`Sources for ${c.claim_id}`}>{c.evidence_ids.map(id => <a href={`#${id}`}>{id}</a>)}</nav></article>)}</section>
 
-  {!divergence && <section id="relationship"><h2>How the positions relate</h2><p class="eyebrow">{VERDICT_LABELS[disagreementVerdict(issue.id)]}</p><RelationshipBadge issueId={issue.id} withNote /><p class="small"><span class="tag">Editorial synthesis</span> {draft.short}. Subcategories are defined on the <a href="/questions#classification">Scientific Questions</a> page.</p></section>}
+  {issue.positions && issue.positions.length > 0 && <section><h2>Positions in dialogue</h2>{issue.positions.map(c => <article><p>{c.text}</p><p class="small">{c.claim_id} · {c.origin}</p></article>)}</section>}
+  {comparison && <section><h2>Editorial comparison</h2><p>{comparison}</p></section>}
+  {alignment && <section><h2>Emerging alignment (provisional)</h2><p>{alignment}</p></section>}
+  {unresolvedItems.length > 0 && <section><h2>Unresolved questions</h2><ul>{unresolvedItems.map((text) => <li>{text}</li>)}</ul></section>}
+  {limitations && <section><h2>Limitations</h2><p>{limitations}</p></section>}
 
-  {phase9Analysis && <Phase9Divergence issueId={issue.id as 'q03' | 'q07'} />}
-  {phase9Analysis && divergence && <details class="nested phase8-analysis"><summary>Phase 8 analysis (previous structure, retained for comparison)</summary><DivergenceAnalysis issue={issue} sectionId="analysis-phase8" heading="Phase 8 structure of the difference" /></details>}
-  {divergence && !phase9Analysis ? <DivergenceAnalysis issue={issue} /> : divergence ? null : <>
-  <section id="record"><h2>Workshop record</h2><p class="small">Edited paraphrases from converted minutes, selected for this personal report. Overlapping records are retained; they are not independent replications.</p>{issue.records.map(c => <ClaimEntry claim={c as Claim} />)}</section>
+  {action && <section><h2>Illustrative research action</h2><p class="small">Not a commitment, assignment or claim of completed work.</p><article class="card"><h3><a href={`/actions/${issue.id}`}>{action.title}</a></h3><p>{action.rationale}</p><a href={`/actions/${issue.id}`}>Open the workflow sketch →</a></article></section>}
 
-  {issue.positions && issue.positions.length > 0 && <section id="positions"><h2>Positions in dialogue</h2><p class="small">Positions are described without attribution to individual discussion participants.</p>{issue.positions.map(c => <ClaimEntry claim={c as Claim} />)}</section>}
-  {comparison && <section id="comparison"><h2>Editorial comparison</h2><ClaimEntry claim={comparison} /></section>}
-  {alignmentView ? <AlignmentAnalysis issue={issue} /> : alignment && <section id="alignment"><h2>Emerging alignment (provisional)</h2><ClaimEntry claim={alignment} /></section>}
-  {unresolved.length > 0 && <section id="unresolved"><h2>Unresolved questions</h2>{unresolved.map(c => <ClaimEntry claim={c} />)}</section>}
-  {limitations && !alignmentView && <section id="limitations"><h2>Limitations</h2><ClaimEntry claim={limitations} /></section>}
-  </>}
-  {divergence && alignment && <section id="alignment"><h2>Emerging alignment (provisional)</h2><ClaimEntry claim={alignment} /></section>}
-  {alignmentView && <AlignmentForms issueId={issue.id} />}
-  {extraRecords.length > 0 && <section id="phase9-records"><h2>Additional workshop records (Phase 9)</h2><p class="small">Paraphrases of sections of the minutes first used in Phase 9, mainly to improve representativeness. {phase9Label().long}</p>{extraRecords.map(row => <ClaimEntry claim={row.claim as Claim} />)}</section>}
-
-  <section id="videos">
-    <h2>Related video highlights</h2>
-    <p class="small">A clip is listed when this question cites the minutes of the same talk or session. The one-minute clip itself was not checked against these statements.</p>
-    {videos.length > 0 ? <RelatedVideos links={videos} context={issue.id.toUpperCase()} /> : <p>No clip is linked: the minutes cited here cannot yet be tied to a specific highlight.</p>}
-    {withheld.length > 0 && <details class="withheld"><summary>Records cited here but not linked to a clip ({withheld.length})</summary><ul>{withheld.map(w => <li><strong>{sourceLabel(w.sourceId)}.</strong> {w.reason}</li>)}</ul></details>}
-  </section>
-
-  <section id="actions">
-    <h2>Research actions</h2>
-    <p class="small">Illustrative workflows suggested by this report. Not commitments, assignments or completed work.</p>
-    <div class="card-grid">
-      {actions.map(link => <article class="card"><p class="eyebrow">{link.relation === 'primary' ? 'Primary workflow' : `Also informs ${issue.id.toUpperCase()} · editorial cross-link`}</p><h3><a href={`/actions/${link.action.issue_id}`}>{link.action.title}</a></h3><p>{link.relation === 'primary' ? link.action.rationale : link.rationale}</p><a href={`/actions/${link.action.issue_id}`}>Open the workflow →</a></article>)}
-    </div>
-  </section>
-
-  <section id="themes"><h2>Connected scientific themes</h2><div class="card-grid">{review.themes.filter(t => t.issues.includes(issue.id)).map(t => <article><h3><a href={themeRoutes[t.id]}>{t.title}</a></h3><p>{t.description}</p><a href={`${themeRoutes[t.id]}#testable-actions`}>See related theme material →</a></article>)}</div>
-  {review.themes.every(t => !t.issues.includes(issue.id)) && <p class="small">This question is not yet attached to a dedicated theme page. {primaryAction && <a href="/actions">See where it sits in the research roadmap →</a>}</p>}
+  <section><h2>Explore the connected scientific themes</h2><div class="card-grid">{review.themes.filter(t => t.issues.includes(issue.id)).map(t => <article><h3><a href={themeRoutes[t.id]}>{t.title}</a></h3><p>{t.description}</p><a href={`${themeRoutes[t.id]}#testable-actions`}>See related theme material →</a></article>)}</div>
+  {review.themes.every(t => !t.issues.includes(issue.id)) && <p class="small">This issue is part of the personal synthesis catalogue; it is not yet attached to a dedicated theme page.</p>}
   </section>
   <ThemeReferences review={review} ids={refs} />
 </Base>
-<style>section>.claim{margin-top:1rem}</style>
+<style>section>article{margin-top:1rem}</style>

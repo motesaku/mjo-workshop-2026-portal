@@ -62,21 +62,20 @@ const pageCtx = createPublicPageContext({
 		<EmDashBodyStart page={pageCtx} />
 
 		<a class="skip-link" href="#main">Skip to content</a>
-		<div class="prototype-bar">{SITE_STANCE.shortLabel} <span>•</span> Not an official ICTP or workshop record <span>•</span> <a href="/about">About this report</a></div>
+		<div class="prototype-bar">{SITE_STANCE.shortLabel} <span>•</span> Not an official workshop record <span>•</span> Local build until public hosting is switched on</div>
 		<header class="site-header">
 			<div class="header-inner">
 				<a class="brand" href="/" aria-label={siteTitle}><span class="brand-mark" aria-hidden="true">MJO<span>26</span></span><span>MJO Workshop 2026<small>Knowledge &amp; Action Portal</small></span></a>
 				<nav class="primary-nav" aria-label="Primary navigation">
-					{navigation.filter(item => item.primary).map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.short ?? item.label}</a>)}
-					<details class="explore-menu"><summary>More</summary><div>{navigation.filter(item => !item.primary && item.href !== "/").map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a>)}</div></details>
+					{navigation.filter((item, index) => index < 4 || ["/ai-for-mjo-research", "/mjo-indices-and-diagnostics"].includes(item.href)).map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a>)}
+					<details class="explore-menu"><summary>Explore topics</summary><div>{navigation.filter((item, index) => index >= 4 && !["/ai-for-mjo-research", "/mjo-indices-and-diagnostics"].includes(item.href)).map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a>)}</div></details>
 				</nav>
-				<details class="mobile-menu"><summary>Menu</summary><nav aria-label="Site menu">{navigation.map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a>)}</nav></details>
 			</div>
 		</header>
 		<main id="main" tabindex="-1">
 			<slot />
 		</main>
-		<footer class="site-footer"><div class="footer-inner"><div><p class="eyebrow">ICTP · Trieste · 26–30 October 2026</p><p class="footer-title">{siteTitle}</p><p>{SUBTITLE}</p><p class="small">{SITE_STANCE.concise}</p><p class="small"><a href="/about">Authorship, method and review status →</a></p></div><nav aria-label="All portal pages">{navigation.map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a>)}</nav><p class="small footer-bottom"><a href="/about">About &amp; methodology</a><a href="/_emdash/admin/">Editor sign-in</a></p></div></footer>
+		<footer class="site-footer"><div class="footer-inner"><div><p class="eyebrow">ICTP · Trieste · 26–30 October 2026</p><p class="footer-title">{siteTitle}</p><p>{SUBTITLE}</p><p class="small">{SITE_STANCE.summary}</p><p class="small"><a href="/about">Read the full authorship and access statement →</a></p></div><nav aria-label="All portal pages">{navigation.map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a>)}</nav><p class="small footer-bottom"><a href="/about">About &amp; methodology</a><a href="/_emdash/admin/">Editor sign-in</a></p></div></footer>
 		<EmDashBodyEnd page={pageCtx} />
 	</body>
 </html>

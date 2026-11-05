@@ -10,8 +10,6 @@ import {
 	PLAYLIST_CHECKED,
 	programHighlights,
 } from "../../data/highlights";
-import { issuesForVideo } from "../../science/phase8";
-const questionChips = (slug: string) => issuesForVideo(slug).map((l) => l.issue.id);
 
 const bySession = new Map<string, ReturnType<typeof programHighlights>>();
 for (const item of programHighlights()) {
@@ -26,7 +24,7 @@ const total = catalogHighlights().length;
 <Base title="Video Highlights" description="One-minute workshop highlights mapped to the official program.">
   <PageIntro title="Video Highlights" eyebrow="Revisit the conversations" description="Short orientation clips from the workshop playlist, linked to the timetable where the title mapping is clear." />
   <p class="small">{total} playlist highlights · Rechecked {PLAYLIST_CHECKED} · <a href={PLAYLIST_URL} target="_blank" rel="noopener noreferrer">Open the YouTube playlist ↗</a></p>
-  <div class="notice">Each clip is a one-minute derivative, not a full recording or workshop consensus. Question tags (Q01–Q12) appear only where a scientific question cites the minutes of the same talk or session; the clips themselves have not been checked against those statements. Thumbnails load from YouTube; the player connects only after you press Load.</div>
+  <div class="notice">Each clip is a one-minute derivative. It is not a full recording, a reviewed scientific summary, or workshop consensus. Scientific summaries remain pending. Thumbnails load from YouTube; the player connects only after you press Load.</div>
 
   {days.map((day) => {
     const dayItems = day.sessions.flatMap((session) => bySession.get(session.id) ?? []);
@@ -46,7 +44,6 @@ const total = catalogHighlights().length;
               <h3><a href={`/videos/${item.slug}`}>{item.title}</a></h3>
               {item.talkSpeaker && <p class="speaker">{item.talkSpeaker}</p>}
               {item.mapping === "provisional" && <span class="badge draft">Provisional mapping</span>}
-              {questionChips(item.slug).length > 0 && <p class="chips" aria-label="Related scientific questions">{questionChips(item.slug).map((id) => <a class="chip" href={`/questions/themes/${id}`}>{id.toUpperCase()}</a>)}</p>}
               <a href={`/videos/${item.slug}`}>Open highlight →</a>
             </article>
           ))}
@@ -65,7 +62,6 @@ const total = catalogHighlights().length;
             <p class="eyebrow">{item.mapping} · {formatDuration(item.durationSeconds)}</p>
             <h3><a href={`/videos/${item.slug}`}>{item.title}</a></h3>
             {item.mappingNote && <p class="small">{item.mappingNote}</p>}
-            {questionChips(item.slug).length > 0 && <p class="chips" aria-label="Related scientific questions">{questionChips(item.slug).map((id) => <a class="chip" href={`/questions/themes/${id}`}>{id.toUpperCase()}</a>)}</p>}
             <a href={`/videos/${item.slug}`}>Open highlight →</a>
           </article>
         ))}

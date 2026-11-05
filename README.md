@@ -38,7 +38,6 @@ Participants may fork this project and rearrange pages, styling, and personal sy
 2. Replace authorship in `src/data/portal.ts`.
 3. Start blank with `examples/personal-synthesis.empty.json`, or adapt `examples/personal-synthesis.qoosaku-moteki.json`.
 4. Create **your own** Cloudflare D1/R2 and `wrangler.site.jsonc` (gitignored). Never reuse another person’s database UUID or encryption key.
-5. Before your Worker gets a public URL, protect it with Cloudflare Access and finish the EmDash setup wizard yourself. On an empty database, the first visitor to finish setup becomes administrator (`docs/FORKING.md`).
 
 Committed `wrangler.jsonc` is a **template without production resource IDs**.
 
@@ -54,15 +53,12 @@ Committed `wrangler.jsonc` is a **template without production resource IDs**.
 ```sh
 npm run typecheck
 npm run test:science
-npm run test:security # public API request-body guard (src/security/public-request-guard.mjs)
-npm run test:phase8   # Phase 8 cross-reference, classification and roadmap integrity
 npm run science:check
 npm run verify:local  # Requires the local dev server
 node scripts/verify-phase4-http.mjs
 node scripts/verify-phase6.mjs dev
-npm run verify:phase8 # Phase 8 crawl: all pages, links, anchors, video↔question links (dev server)
-npm run build         # reads wrangler.site.jsonc in place when present; never rewrites wrangler.jsonc
-npm run deploy        # Cloudflare Worker; refuses unless the build came from your complete overlay
+npm run build         # prefers wrangler.site.jsonc when present
+npm run deploy        # Cloudflare Worker; needs your bindings overlay
 ```
 
 | Path | Purpose |
@@ -75,8 +71,6 @@ npm run deploy        # Cloudflare Worker; refuses unless the build came from yo
 | `examples/` | Empty starter + reference synthesis package |
 | `docs/SITE_CREATION_WORKFLOW.md` | End-to-end creation workflow with flowcharts |
 | `docs/FORKING.md` | Fork / redeploy checklist |
-| `docs/PHASE8_IMPLEMENTATION.md` | Phase 8 audit, architecture, validation |
-| `docs/PHASE8_EDITORIAL_LOG.md` | Every Phase 8 scientific-content change with its basis |
 | `docs/PHASE7_DEPLOYMENT_GUIDE.md` | Cloudflare procedure |
 | `LICENSE` | MIT + content notice |
 

@@ -148,21 +148,11 @@ const actions = issues
 		};
 	});
 
-function collectEvidenceIds(value, into) {
-	if (Array.isArray(value)) { for (const item of value) collectEvidenceIds(item, into); return; }
-	if (!value || typeof value !== "object") return;
-	for (const [key, child] of Object.entries(value)) {
-		if (key === "evidence_ids" && Array.isArray(child)) for (const id of child) into.add(id);
-		else collectEvidenceIds(child, into);
-	}
-}
 const neededEvidence = new Set();
 const neededSources = new Set();
 for (const issue of issues) {
 	for (const r of issue.records ?? []) for (const id of r.evidence_ids ?? []) neededEvidence.add(id);
 	for (const p of issue.positions ?? []) for (const id of p.evidence_ids ?? []) neededEvidence.add(id);
-	// Phase 8: comparison, limitation and proposal fields also cite evidence.
-	collectEvidenceIds(issue, neededEvidence);
 }
 for (const theme of phase6.themes) {
 	for (const section of theme.sections) {

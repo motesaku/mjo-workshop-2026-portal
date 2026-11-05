@@ -1,11 +1,8 @@
 ---
 import { featuredHighlight, formatDuration, youtubeThumb } from "../data/highlights";
-import { videoRecord, SUMMARY_STATUS_LABELS } from "../science/phase8";
 const item = featuredHighlight;
-const record = videoRecord(item);
 const duration = formatDuration(item.durationSeconds);
 const thumb = youtubeThumb(item.youtubeId);
-const status = SUMMARY_STATUS_LABELS[record.summaryStatus];
 ---
 <article class="highlight-card">
   <a class="highlight-cover" href={`/videos/${item.slug}`} aria-label={`Watch ${item.title}`} style={`background-image:linear-gradient(#0e2825aa,#0e2825d0),url(${thumb});background-size:cover;background-position:center`}>
@@ -16,9 +13,8 @@ const status = SUMMARY_STATUS_LABELS[record.summaryStatus];
   <div class="highlight-body">
     <span class="badge">Session mapping verified</span>
     <h2><a href={`/videos/${item.slug}`}>{item.title}</a></h2>
-    <p>{record.session ? `${record.session.day.label} 2026 · ${record.session.session.time} CET` : ""}<br />One-minute highlight · Playlist-linked</p>
-    {record.keyMessage && <p>{record.keyMessage.text}</p>}
-    {record.relatedIssues.length > 0 && <p class="chips" aria-label="Related scientific questions">{record.relatedIssues.map((l) => <a class="chip" href={`/questions/themes/${l.issue.id}`}>{l.issue.id.toUpperCase()}</a>)}</p>}
-    <span class="badge draft">{status.badge}</span>
+    <p>27 October 2026 · 16:30–18:00 CET<br />One-minute highlight · Playlist-linked</p>
+    <p>One example from the full highlight playlist. Browse all sessions for in-place thumbnails.</p>
+    <span class="badge draft">Scientific summary awaiting review</span>
   </div>
 </article>

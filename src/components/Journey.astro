@@ -1,7 +1,11 @@
 ---
-// Context path built from real relations; steps without a target render as text.
-interface Step { label: string; href?: string; current?: boolean }
-interface Props { steps: Step[]; label?: string }
-const { steps, label = "Explore this topic" } = Astro.props;
+interface Props { current: "program" | "video" | "question" | "action" }
+const { current } = Astro.props;
+const steps = [
+  { key: "program", href: "/program#tue-breakout-3-4", label: "Program" },
+  { key: "video", href: "/videos/breakout-themes-3-4", label: "Video Highlight" },
+  { key: "question", href: "/questions/themes/q01", label: "Scientific Question" },
+  { key: "action", href: "/actions/q01", label: "Research Action" },
+];
 ---
-<nav class="journey" aria-label={label}>{steps.map((step, i) => <>{i > 0 && <span aria-hidden="true">→</span>}{step.href && !step.current ? <a href={step.href}>{step.label}</a> : <span class:list={["journey-step", { current: step.current }]} aria-current={step.current ? "page" : undefined}>{step.label}</span>}</>)}</nav>
+<nav class="journey" aria-label="Explore this discussion">{steps.map((step, i) => <>{i > 0 && <span aria-hidden="true">→</span>}<a href={step.href} aria-current={current === step.key ? "page" : undefined}>{step.label}</a></>)}</nav>
