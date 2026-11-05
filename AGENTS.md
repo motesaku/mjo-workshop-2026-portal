@@ -9,13 +9,13 @@ These requirements override generic template suggestions below.
 - Videos are embedded from YouTube, never hosted locally by this website or in its R2 bucket. Verify each approved highlight video ID; do not confuse highlights with full recordings.
 - Unverified scientific claims must remain unpublished. Distinguish observations, interpretations, proposals and formal consensus. The CMS draft/publish controls alone do not enforce scientific review.
 - The website must not be publicly deployed without explicit authorization. Do not deploy previews, open tunnels, configure automatic deployment, or expose the dev server beyond loopback.
-- The intended GitHub repository is `motesaku/mjo-workshop-2026-portal`. Keep it private until the owner explicitly authorizes a visibility change. Do not create it, push to it, or change visibility without that authorization. Do not commit unless explicitly asked.
+- The GitHub repository `motesaku/mjo-workshop-2026-portal` is public; the owner confirmed on 2026-11-05 that it stays public. Treat everything committed and pushed as published worldwide: private review material, source passages, credentials and production identifiers must never enter Git. Do not push, force-push, rewrite history or change visibility without the owner's explicit authorization. Do not commit unless explicitly asked.
 - Committed `wrangler.jsonc` is a template only. Never commit production D1 UUIDs, encryption keys, or live site overlays (`wrangler.site.jsonc` is gitignored). Fork guidance: `docs/FORKING.md`.
 - Public synthesis packages must not include source or excerpt SHA-256 fingerprints of private minute files.
 
 ## Phase 1 editorial decisions
 
-- Audience: workshop participants who may later fork a public template; until visibility is changed, treat the remote as private and the live site as a personal public report with `noindex`.
+- Audience: workshop participants who may fork the public repository as a template; the live site is a personal public report with `noindex`.
 - Rework reviewed material into English site summaries; never directly link source files. State missing or partial coverage rather than reconstructing it.
 - Attribute named speakers only for individual talks listed in the official programme. Do not attach individual names to discussion sessions.
 - Action pages illustrate possible AI agent workflows derived from workshop context. They are not responsibility/owner/deadline/status trackers, formal commitments, or evidence of completed work.
@@ -27,7 +27,7 @@ These requirements override generic template suggestions below.
 - Use Node.js 24.15+ (24.x), npm and the committed lockfile. `npm run dev` binds only to localhost. Never install packages globally for this project.
 - Keep `.env`, secret keys, SQLite databases, media uploads, CMS exports, backups and local verification artifacts out of Git and public assets. Do not print secret values in logs.
 - Never place private files in `public/`: `.gitignore` only affects Git and does not prevent a local server or build from serving files already there.
-- Public deployment is a separate authorization from private repository creation and from local CMS publication.
+- Public deployment is a separate authorization from pushing to the public repository and from local CMS publication.
 - Preserve originals, other people's changes and local runtime data. Avoid deletion and forced dependency downgrades.
 - Verify with `npm run typecheck`, `npm run build`, homepage/admin HTTP checks and browser inspection after application changes. Document manual setup and any unresolved failures.
 - Future Cloudflare: Workers + D1 (`DB`) + R2 (`MEDIA`), following current official EmDash docs. Back up CMS data and the encryption key separately and verify restoration before authorized deployment.
