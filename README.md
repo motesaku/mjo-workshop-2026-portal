@@ -84,6 +84,7 @@ npm run deploy        # refuses unless release:check passed for this clean commi
 | `docs/PHASE8_IMPLEMENTATION.md` | Phase 8 audit, architecture, validation |
 | `docs/PHASE8_EDITORIAL_LOG.md` | Every Phase 8 scientific-content change with its basis |
 | `docs/PHASE7_DEPLOYMENT_GUIDE.md` | Cloudflare procedure |
+| `docs/PHASE10_IMPLEMENTATION.md` | 2026-11-05 recovery, release gate, review proposals, pilot dependencies |
 | `LICENSE` | MIT + content notice |
 
 ## GitHub status
