@@ -60,14 +60,16 @@ Always pass `--config wrangler.site.jsonc` to Wrangler commands that act on Clou
 Follow the official "build, migrate, deploy, check" order.
 
 ```sh
-npm run build    # reads wrangler.site.jsonc in place when present (nothing is copied)
+npm run release:check   # typecheck, all tests, build (reads wrangler.site.jsonc in place), local Worker checks
 export CLOUDFLARE_ACCOUNT_ID=…   # from the dashboard; shell only
 export CLOUDFLARE_API_TOKEN=…    # scoped token with D1 Edit; shell only, never committed
 npx emdash migrate --status --wrangler-config wrangler.site.jsonc
 npx emdash migrate --wrangler-config wrangler.site.jsonc
-npm run deploy   # stops unless the build was generated from a complete wrangler.site.jsonc
+npm run deploy   # stops unless the build came from a complete wrangler.site.jsonc AND passed release:check
 npx emdash migrate --check --wrangler-config wrangler.site.jsonc
 ```
+
+- Release gate (Phase 10): `npm run release:check` stops at the first failing step and writes `.verification/release-readiness.json` (gitignored) with the commit, whether the working tree was clean and a digest of `dist/`. `npm run deploy` refuses unless that stamp passed for the current clean commit and the unchanged build; `--dry-run` only warns. Rebuilding after the check (including a plain `npm run build`) blocks deployment until the check is run again. This gate exists because on 2026-11-05 a stale editor checkpoint replaced Phase 8/9 code while every unit test still passed.
 
 - How the configuration is chosen: `scripts/with-site-wrangler.mjs build` passes the absolute path of `wrangler.site.jsonc` to `astro.config.mjs` through `PORTAL_WRANGLER_CONFIG` (`cloudflare({ configPath })`). Astro writes `dist/server/wrangler.json` and the official redirect `.wrangler/deploy/config.json`, which `wrangler deploy` follows. `npm run deploy` checks that the generated config came from `wrangler.site.jsonc` and matches its Worker name, D1/R2 bindings and `EMDASH_SITE_URL`. It refuses `--config`/`--env` overrides. `npm run dev` and `astro check` always use the committed template. The template file is never rewritten, so concurrent or interrupted runs cannot leave production settings in a tracked file.
 - Record the printed target fingerprint in **offline** deployment notes (not in the public Git tree).

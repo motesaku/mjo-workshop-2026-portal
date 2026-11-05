@@ -21,10 +21,12 @@
     "cf:dev": "node scripts/with-site-wrangler.mjs local npx wrangler dev --ip 127.0.0.1 --port 8787",
     "typecheck": "astro check",
     "verify:local": "node scripts/verify-local.mjs",
+    "test": "node --test tests/science.test.mjs tests/public-request-guard.test.mjs tests/phase8-relations.test.mjs tests/phase9.test.mjs tests/phase10-regression.test.mjs",
     "test:science": "node --test tests/science.test.mjs",
     "test:security": "node --test tests/public-request-guard.test.mjs",
     "test:phase8": "node --test tests/phase8-relations.test.mjs",
     "test:phase9": "node --test tests/phase9.test.mjs",
+    "test:phase10": "node --test tests/phase10-regression.test.mjs",
     "science:validate": "node scripts/science.mjs validate",
     "science:plan": "node scripts/science.mjs plan",
     "science:check": "node scripts/science.mjs check-generated",
@@ -34,7 +36,9 @@
     "verify:phase4": "node scripts/verify-phase4-http.mjs",
     "verify:phase6": "node scripts/verify-phase6.mjs",
     "verify:phase8": "node scripts/verify-phase8.mjs",
-    "verify:phase9": "node scripts/verify-phase9.mjs"
+    "verify:phase9": "node scripts/verify-phase9.mjs",
+    "verify:phase10": "node scripts/verify-phase10.mjs",
+    "release:check": "node scripts/release-readiness.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.4.4",

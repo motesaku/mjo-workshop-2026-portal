@@ -33,6 +33,8 @@ export default defineConfig({
 					"**/*.db", "**/*.db-*", "**/*.sqlite", "**/*.sqlite3",
 					"**/*.sqlite-*", "**/*.sqlite3-*",
 					"**/backups/**", "**/exports/**", "**/uploads/**", "**/.verification/**",
+					// Phase 10: owner-local Japanese review notes and agent/CMS local state.
+					"**/*.ja.md", "**/.claude/**", "**/.codex/**", "**/.emdash/**",
 				],
 			},
 		},

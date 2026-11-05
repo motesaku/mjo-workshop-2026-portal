@@ -53,17 +53,23 @@ Committed `wrangler.jsonc` is a **template without production resource IDs**.
 
 ```sh
 npm run typecheck
+npm test              # every unit and regression suite (science, security, Phase 8, 9, 10)
 npm run test:science
 npm run test:security # public API request-body guard (src/security/public-request-guard.mjs)
 npm run test:phase8   # Phase 8 cross-reference, classification and roadmap integrity
+npm run test:phase10  # wiring of the Worker guard, build wrapper, npm scripts and pages (no server)
 npm run science:check
 npm run verify:local  # Requires the local dev server
 node scripts/verify-phase4-http.mjs
 node scripts/verify-phase6.mjs dev
 npm run verify:phase8 # Phase 8 crawl: all pages, links, anchors, video↔question links (dev server)
+npm run verify:phase10 # rendered navigation, insights, roadmap, classifications, clip relations, private paths
 npm run build         # reads wrangler.site.jsonc in place when present; never rewrites wrangler.jsonc
-npm run deploy        # Cloudflare Worker; refuses unless the build came from your complete overlay
+npm run release:check # all of the above + build + the built Worker in the local Workers runtime
+npm run deploy        # refuses unless release:check passed for this clean commit and this exact build
 ```
+
+`npm run release:check` writes `.verification/release-readiness.json` (gitignored). `npm run deploy` compares it with the current commit, a clean working tree and a digest of `dist/`; any rebuild or edit after the check blocks deployment until the check is run again. `npm run deploy -- --dry-run` only warns. The check never contacts Cloudflare.
 
 | Path | Purpose |
 | --- | --- |

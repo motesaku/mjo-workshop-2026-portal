@@ -10,8 +10,10 @@
  *           (-> cloudflare({ configPath })). Astro writes dist/server/wrangler.json and the
  *           official `.wrangler/deploy/config.json` redirect to it.
  *   deploy  Require `wrangler.site.jsonc` with real-looking bindings AND a build that was
- *           generated from it with the same Worker name, D1 IDs and EMDASH_SITE_URL.
- *           Wrangler then deploys that generated config through the redirect.
+ *           generated from it with the same Worker name, D1 IDs and EMDASH_SITE_URL,
+ *           AND a release-readiness stamp (`npm run release:check`) for the current
+ *           clean commit and this exact build (scripts/lib/release-stamp.mjs).
+ *           `--dry-run` only warns. Wrangler then deploys the generated config.
  *   local   Run a local-only Wrangler command (e.g. `wrangler dev`) against the last build.
  *           Refuses `--remote`, which would read and write real Cloudflare resources.
  *
@@ -22,6 +24,7 @@
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, realpathSync } from "node:fs";
 import { dirname, resolve } from "node:path";
+import { stampProblems } from "./lib/release-stamp.mjs";
 
 const root = process.cwd();
 const templatePath = resolve(root, "wrangler.jsonc");
@@ -163,6 +166,13 @@ if (mode === "deploy") {
 	}
 	if (target(built) !== target(site)) {
 		fail("refusing to deploy: dist/server/wrangler.json differs from wrangler.site.jsonc (name, D1, R2 or EMDASH_SITE_URL). Run `npm run build` again.");
+	}
+	// Phase 10: only a build that passed `npm run release:check` on this exact commit may go out.
+	const releaseProblems = stampProblems(root);
+	if (releaseProblems.length > 0) {
+		const list = `\n  - ${releaseProblems.join("\n  - ")}`;
+		if (command.includes("--dry-run")) console.warn(`with-site-wrangler: dry run only; a real deploy would be refused:${list}`);
+		else fail(`refusing to deploy: this build has not passed \`npm run release:check\` for the current commit:${list}`);
 	}
 	console.log("with-site-wrangler: build matches wrangler.site.jsonc; deploying the generated dist/server/wrangler.json");
 }
