@@ -52,3 +52,8 @@
 @media(max-width:640px){.form-row{grid-template-columns:1fr}.table-scroll table{font-size:.82rem}}
 .block{display:block;font-weight:400;margin-top:.3rem}.phase8-analysis{margin-top:1.5rem}.phase8-analysis>summary{font-weight:600}
 .dep-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}.dep-scroll .dep-graph{min-width:720px}
+/* Phase 10: typed research dependencies and pilot stages */
+.dep-legend{list-style:none;padding:0;margin:.4rem 0 1rem;font-size:.86rem;color:var(--muted)}.dep-legend li{margin:.35rem 0;display:flex;gap:.55rem;align-items:baseline}.dep-legend strong{color:var(--ink)}
+.dep-swatch{flex:0 0 2.2rem;height:0;border-top:2px solid #0b5048;transform:translateY(-.25rem)}.dep-start{border-top:2.5px solid #8c3b1f}.dep-interpretation{border-top:2px solid #0b5048}.dep-publication{border-top:2px dashed #5b4a8a}.dep-optional{border-top:2px dotted #8a9a95}
+.dep-state-start{color:#8c3b1f}.dep-state-interpretation{color:#0b5048}.dep-state-publication{color:#5b4a8a}.dep-state-optional{color:#59656b}
+.note-inline{border-left:3px solid #c79a3b;background:#faf5ea;padding:.7rem .9rem;font-size:.92rem}

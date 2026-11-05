@@ -21,6 +21,7 @@ import { PHASE9_EDITORIAL } from "../src/science/phase9/status.mjs";
 import { PRIORITY_AREAS } from "../src/science/phase8/editorial-roadmap.mjs";
 import { ISSUE_RELATIONSHIPS, RELATIONSHIP_TYPES } from "../src/science/phase8/editorial-classification.mjs";
 import { PROPOSALS } from "../src/science/phase10/proposals.mjs";
+import { DEPENDENCIES_V2, DEPENDENCY_TYPES } from "../src/science/phase10/roadmap.mjs";
 
 const origin = process.argv[2] ?? "http://127.0.0.1:4321";
 assert.ok(["127.0.0.1", "localhost", "[::1]"].includes(new URL(origin).hostname), "verify-phase10 only targets a loopback server");
@@ -95,12 +96,19 @@ for (const area of PRIORITY_AREAS) {
 }
 const graph = roadmap.match(/<svg class="dep-graph"[\s\S]*?<\/svg>/)?.[0] ?? "";
 check((graph.match(/marker-end="url\(#arrow-/g) ?? []).length === DEPENDENCIES.length, `roadmap: graph draws ${DEPENDENCIES.length} relations`);
+for (const t of Object.keys(DEPENDENCY_TYPES)) {
+	const n = DEPENDENCIES_V2.filter((d) => d.type === t).length;
+	check((graph.match(new RegExp(`marker-end="url\\(#arrow-${t}\\)"`, "g")) ?? []).length === n, `roadmap: ${n} arrows of type ${t}`);
+}
+check(/All twelve workflows can start now/.test(text(roadmap)), "roadmap: startable workflows stated");
 const depList = roadmap.match(/<ul class="dep-list">[\s\S]*?<\/ul>/)?.[0] ?? "";
 check((depList.match(/<li[\s>]/g) ?? []).length === DEPENDENCIES.length, "roadmap: text list of every relation");
 for (const pilot of PILOTS) {
 	check(roadmap.includes(`href="/actions/pilots/${pilot.slug}"`), `roadmap → pilot ${pilot.slug}`);
 	const h1 = (await page(`/actions/pilots/${pilot.slug}`)).match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? "";
 	check(text(h1).trim() === pilot.title, `pilot ${pilot.slug}: title`);
+	const pilotMain = main(await page(`/actions/pilots/${pilot.slug}`));
+	check(pilotMain.includes('id="stages"') && /Can start now/.test(text(pilotMain)) && /Needed before results are interpreted/.test(text(pilotMain)) && /At the 90-day review/.test(text(pilotMain)), `pilot ${pilot.slug}: stages and decision points`);
 }
 
 // 5. Question pages: classification from the data layer and statement-level provenance.

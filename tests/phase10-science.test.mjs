@@ -99,3 +99,45 @@ test("Phase 10 science files are English-only and free of private paths", () => 
 		assert.doesNotMatch(src, /\/Users\/|researcher_os|provenance\.private|sha256:[0-9a-f]{6}|exports\/phase/, `${f}: no private paths`);
 	}
 });
+
+import { DEPENDENCIES as PHASE9_DEPENDENCIES, PILOTS } from "../src/science/phase9/roadmap.mjs";
+import { DEPENDENCY_TYPES, DEPENDENCIES_V2, EXTERNAL_PREREQUISITES_V2, STARTABLE_NOW, PILOT_STAGES } from "../src/science/phase10/roadmap.mjs";
+
+test("every Phase 9 relation is typed by what it constrains, and none blocks a start without reason", () => {
+	assert.equal(DEPENDENCIES_V2.length, PHASE9_DEPENDENCIES.length);
+	for (const d of DEPENDENCIES_V2) {
+		assert.ok(DEPENDENCY_TYPES[d.type], `${d.from}→${d.to}: type`);
+		assert.ok(["required", "helpful"].includes(d.phase9Strength), "Phase 9 strength kept for lineage");
+		assert.ok(d.meanwhile.length > 40, `${d.from}→${d.to}: what can proceed meanwhile`);
+		if (d.phase9Strength === "helpful") assert.notEqual(d.type, "start", "a helpful relation cannot block a start");
+	}
+	const visit = (n, stack = new Set()) => { assert.ok(!stack.has(n), `cycle through ${n}`); stack.add(n); for (const d of DEPENDENCIES_V2.filter((x) => x.from === n)) visit(d.to, new Set(stack)); };
+	DEPENDENCIES_V2.forEach((d) => visit(d.from));
+	const actions = pkg.actions.map((a) => a.id).sort();
+	assert.deepEqual(STARTABLE_NOW, actions.filter((id) => !DEPENDENCIES_V2.some((d) => d.to === id && d.type === "start")));
+	for (const items of Object.values(EXTERNAL_PREREQUISITES_V2)) for (const i of items) assert.ok(DEPENDENCY_TYPES[i.type] && i.text);
+});
+
+test("each pilot separates startable work from interpretation and publication prerequisites", () => {
+	for (const p of PILOTS) {
+		const s = PILOT_STAGES[p.id];
+		assert.ok(s, `${p.id}: stages`);
+		for (const k of ["startable", "interpretation", "publication", "uncertainties"]) assert.ok(Array.isArray(s[k]) && s[k].length > 0, `${p.id}.${k}`);
+		assert.ok(s.mvo.length > 30);
+		for (const k of ["continue", "revise", "stop"]) assert.ok(s.decisions[k].length > 30, `${p.id}: ${k} criterion`);
+		for (const k of ["d30", "d60", "d90"]) assert.ok(s.plan[k].length > 0);
+		assert.match(s.plan.d90.join(" "), /Continue, revise or stop/);
+	}
+	const a = PILOT_STAGES["pilot-a"];
+	assert.deepEqual(a.stages.map((x) => x.id), ["descriptive", "process", "causal"]);
+	assert.match(a.caution, /not direct evidence for the causal role of convection parameterization/);
+	assert.deepEqual(a.controls.map((c) => c.title), ["Evaluation period", "Initialization", "Output availability", "Observational reference", "Training-data overlap"]);
+	const b = PILOT_STAGES["pilot-b"];
+	assert.match(b.definitionCheck, /Before any quantitative comparison/);
+	assert.deepEqual(b.documentation.map((d) => d.title), ["Temporal filtering", "Phase conventions", "Training climatology", "Endpoint effects", "Event definitions", "Regional and seasonal sensitivity", "Source datasets"]);
+	assert.match(b.independence, /needs nothing from the other pilots/);
+	const c = PILOT_STAGES["pilot-c"];
+	assert.equal(c.steps.length, 5);
+	assert.match(c.parallel, /does not have to be complete before process analyses begin/);
+	assert.ok(c.minimumDatasets.length >= 1);
+});

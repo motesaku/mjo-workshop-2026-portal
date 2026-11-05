@@ -7,7 +7,8 @@ import ClaimEntry from "../../components/ClaimEntry.astro";
 import RelationshipBadge from "../../components/RelationshipBadge.astro";
 import ThemeReferences from "../../components/ThemeReferences.astro";
 import DependencyGraph from "../../components/DependencyGraph.astro";
-import { PILOTS, PILOT_STATUS, DEPENDENCIES, EXTERNAL_PREREQUISITES, PARALLEL_START, PRIORITIZATION_CRITERIA_V2, PILOT_ASSESSMENTS, ASSESSMENT_LEVELS } from "../../science/phase9/roadmap.mjs";
+import { PILOTS, PILOT_STATUS, PRIORITIZATION_CRITERIA_V2, PILOT_ASSESSMENTS, ASSESSMENT_LEVELS } from "../../science/phase9/roadmap.mjs";
+import { DEPENDENCIES_V2, DEPENDENCY_TYPES, EXTERNAL_PREREQUISITES_V2, EXTERNAL_NOTE, STARTABLE_NOW, ROADMAP_DEPENDENCY_NOTE } from "../../science/phase10/roadmap.mjs";
 import { loadThemeReview } from "../../science/theme-review";
 import {
 	priorityAreas, areaIssueIds, getIssue, actionForIssue, actionChain, videosForIssues, getClaim,
@@ -113,17 +114,19 @@ const unresolvedOf = (issueId: string) => {
 
   <section id="dependencies">
     <h2>Research dependencies</h2>
-    <p class="lead-sm">Some workflows must come first: definitions before lifecycle statistics, agreed diagnostics before interpreting skill differences, independence checks before judging generalization, process budgets before mechanism claims, and a defined hazard or decision target before regional value is assessed. Others can proceed in parallel.</p>
+    <p class="lead-sm">{ROADMAP_DEPENDENCY_NOTE}</p>
     <div class="dep-scroll"><DependencyGraph /></div>
-    <h3>Can start in parallel</h3>
-    <p>{PARALLEL_START.map((id, i) => <>{i > 0 && " · "}<a href={actionHref(id)}>{actionTitle(id)}</a></>)}</p>
-    <details class="area-details" open><summary>All prerequisite relations ({DEPENDENCIES.length})</summary>
-      <ul class="dep-list">{DEPENDENCIES.map((d) => <li><a href={actionHref(d.from)}>{actionTitle(d.from)}</a> → <a href={actionHref(d.to)}>{actionTitle(d.to)}</a> <span class:list={["state", d.strength === "required" ? "state-recorded" : "state-partial"]}>{d.strength}</span><span class="small block">{d.reason}</span></li>)}</ul>
+    <h3>All twelve workflows can start now</h3>
+    <p>{STARTABLE_NOW.map((id, i) => <>{i > 0 && " · "}<a href={actionHref(id)}>{actionTitle(id)}</a></>)}</p>
+    <p class="small">Subject to the external prerequisites below. Starting does not mean that results can be interpreted or published before the prerequisites they need.</p>
+    <details class="area-details" open><summary>All relations among the workflows ({DEPENDENCIES_V2.length})</summary>
+      <ul class="dep-list">{DEPENDENCIES_V2.map((d) => <li><a href={actionHref(d.from)}>{actionTitle(d.from)}</a> → <a href={actionHref(d.to)}>{actionTitle(d.to)}</a> <span class:list={["state", `dep-state-${d.type}`]}>{DEPENDENCY_TYPES[d.type as keyof typeof DEPENDENCY_TYPES].label}</span><span class="small block">{d.reason}</span><span class="small block"><strong>Meanwhile:</strong> {d.meanwhile}</span></li>)}</ul>
     </details>
     <details class="area-details"><summary>Prerequisites outside the twelve workflows</summary>
-      <ul class="dep-list">{Object.entries(EXTERNAL_PREREQUISITES).map(([id, items]) => <li><a href={actionHref(id)}>{actionTitle(id)}</a><span class="small block">{items.join("; ")}. Not assumed to be available.</span></li>)}</ul>
+      <ul class="dep-list">{Object.entries(EXTERNAL_PREREQUISITES_V2).map(([id, items]) => <li><a href={actionHref(id)}>{actionTitle(id)}</a>{items.map((item) => <span class="small block">{item.text} <span class:list={["state", `dep-state-${item.type}`]}>{DEPENDENCY_TYPES[item.type as keyof typeof DEPENDENCY_TYPES].short}</span></span>)}<span class="small block">Not assumed to be available.</span></li>)}</ul>
+      <p class="small">{EXTERNAL_NOTE}</p>
     </details>
-    <p class="small"><span class="tag">Editorial synthesis</span> {draft9.short}. Dependencies are derived from each workflow's own steps and evaluation criteria.</p>
+    <p class="small"><span class="tag">Editorial synthesis</span> Phase 10 draft awaiting the author&apos;s review. Phase 9 marked seven relations &ldquo;required&rdquo; and eight &ldquo;helpful&rdquo;; Phase 10 types each by what it constrains. Dependencies are derived from each workflow's own steps and evaluation criteria.</p>
   </section>
 
   <section id="workflows">

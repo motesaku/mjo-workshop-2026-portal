@@ -7,7 +7,8 @@ import ClaimEntry from "../../../components/ClaimEntry.astro";
 import ThemeReferences from "../../../components/ThemeReferences.astro";
 import { loadThemeReview } from "../../../science/theme-review";
 import { priorityAreas, getIssue, getActionById, basisClaims, basisSourceLabels, phase9Label } from "../../../science/phase8";
-import { PILOTS, PILOT_STATUS, PILOT_ASSESSMENTS, PRIORITIZATION_CRITERIA_V2, ASSESSMENT_LEVELS, DEPENDENCIES } from "../../../science/phase9/roadmap.mjs";
+import { PILOTS, PILOT_STATUS, PILOT_ASSESSMENTS, PRIORITIZATION_CRITERIA_V2, ASSESSMENT_LEVELS } from "../../../science/phase9/roadmap.mjs";
+import { DEPENDENCIES_V2 as DEPENDENCIES, DEPENDENCY_TYPES, PILOT_STAGES, PILOT_STAGE_NOTE } from "../../../science/phase10/roadmap.mjs";
 const pilot = PILOTS.find((p) => p.slug === Astro.params.pilot);
 if (!pilot) return Astro.rewrite("/404");
 const review = loadThemeReview();
@@ -21,6 +22,8 @@ const internal = DEPENDENCIES.filter((d) => pilot.workflows.includes(d.to) && pi
 const assessment = (PILOT_ASSESSMENTS as Record<string, Record<string, { level: keyof typeof ASSESSMENT_LEVELS; text: string }>>)[pilot.id];
 const evidenceRows = basisClaims(pilot.evidence);
 const refIds = [...new Set([...evidenceRows.flatMap((r) => r.claim.evidence_ids ?? []), ...basisClaims(pilot.hypotheses.flatMap((h) => h.basis)).flatMap((r) => r.claim.evidence_ids ?? [])])];
+const stages = (PILOT_STAGES as Record<string, any>)[pilot.id];
+const typeLabel = (t: string) => DEPENDENCY_TYPES[t as keyof typeof DEPENDENCY_TYPES]?.label ?? t;
 const extra = pilot as unknown as { protocol?: { title: string; text: string }[]; components?: { title: string; text: string }[]; dimensions?: string[] };
 ---
 <Base title={`Pilot ${pilot.letter} · ${pilot.title}`} description={pilot.objective}>
@@ -60,9 +63,31 @@ const extra = pilot as unknown as { protocol?: { title: string; text: string }[]
           <dt>Main risks</dt><dd><ul>{pilot.risks.map((d) => <li>{d}</li>)}</ul></dd>
         </dl>
       </section>
+      <section id="stages">
+        <h2>Stages, prerequisites and decision points</h2>
+        <p class="small"><span class="tag">Phase 10 draft</span> {PILOT_STAGE_NOTE}</p>
+        {stages.stages && <dl class="method-list">{stages.stages.map((st: any) => <><dt id={`stage-${st.id}`}>{st.title}</dt><dd>{st.text}<span class="small block"><strong>Claims this stage can support:</strong> {st.allowed}</span></dd></>)}</dl>}
+        {stages.caution && <p class="note-inline"><strong>Caution.</strong> {stages.caution}</p>}
+        {stages.controls && <><h3>Controls for any AI–dynamical comparison</h3><dl class="method-list">{stages.controls.map((c: any) => <><dt>{c.title}</dt><dd>{c.text}</dd></>)}</dl></>}
+        {stages.definitionCheck && <><h3>Before any quantitative comparison</h3><p>{stages.definitionCheck}</p><p>{stages.realtime}</p><dl class="method-list">{stages.documentation.map((c: any) => <><dt>{c.title}</dt><dd>{c.text}</dd></>)}</dl><p>{stages.independence}</p></>}
+        {stages.steps && <><dl class="method-list">{stages.steps.map((c: any) => <><dt id={`step-${c.id}`}>{c.title}</dt><dd>{c.text}</dd></>)}</dl><p>{stages.parallel}</p><h3>Minimum datasets for first analyses</h3><dl class="method-list">{stages.minimumDatasets.map((m: any) => <><dt>{m.target}</dt><dd>{m.data}</dd></>)}</dl></>}
+        <dl class="method-list">
+          <dt>Can start now</dt><dd><ul>{stages.startable.map((d: string) => <li>{d}</li>)}</ul></dd>
+          <dt>Needed before results are interpreted</dt><dd><ul>{stages.interpretation.map((d: string) => <li>{d}</li>)}</ul></dd>
+          <dt>Needed before results are published</dt><dd><ul>{stages.publication.map((d: string) => <li>{d}</li>)}</ul></dd>
+          <dt>Minimum viable output</dt><dd>{stages.mvo}</dd>
+          <dt>Expected uncertainties</dt><dd><ul>{stages.uncertainties.map((d: string) => <li>{d}</li>)}</ul></dd>
+          <dt>At the 90-day review</dt><dd><ul><li><strong>Continue</strong> if {stages.decisions.continue.charAt(0).toLowerCase() + stages.decisions.continue.slice(1)}</li><li><strong>Revise</strong> if {stages.decisions.revise.charAt(0).toLowerCase() + stages.decisions.revise.slice(1)}</li><li><strong>Stop</strong> if {stages.decisions.stop.charAt(0).toLowerCase() + stages.decisions.stop.slice(1)}</li></ul></dd>
+        </dl>
+        <div class="plan-grid">
+          <article><h4>First 30 days</h4><ul>{stages.plan.d30.map((d: string) => <li>{d}</li>)}</ul></article>
+          <article><h4>Days 31–60</h4><ul>{stages.plan.d60.map((d: string) => <li>{d}</li>)}</ul></article>
+          <article><h4>Days 61–90</h4><ul>{stages.plan.d90.map((d: string) => <li>{d}</li>)}</ul></article>
+        </div>
+      </section>
       <section id="plan">
         <h2>Planning horizons</h2>
-        <p class="small">Planning horizons, not promised completion dates.</p>
+        <p class="small">Phase 9 task list, kept for reference. Planning horizons, not promised completion dates.</p>
         <div class="plan-grid">
           <article><h4>First 30 days</h4><ul>{pilot.plan.d30.map((d) => <li>{d}</li>)}</ul></article>
           <article><h4>Days 31–60</h4><ul>{pilot.plan.d60.map((d) => <li>{d}</li>)}</ul></article>
@@ -73,9 +98,10 @@ const extra = pilot as unknown as { protocol?: { title: string; text: string }[]
       <section id="dependencies">
         <h2>Dependencies on other work</h2>
         <ul class="dep-list">
-          {internal.map((d) => <li>Within this pilot: <a href={actionHref(d.from)}>{actionTitle(d.from)}</a> → <a href={actionHref(d.to)}>{actionTitle(d.to)}</a> ({d.strength})<span class="small block">{d.reason}</span></li>)}
-          {prerequisites.map((d) => <li>From outside: <a href={actionHref(d.from)}>{actionTitle(d.from)}</a> → <a href={actionHref(d.to)}>{actionTitle(d.to)}</a> ({d.strength})<span class="small block">{d.reason}</span></li>)}
+          {internal.map((d) => <li>Within this pilot: <a href={actionHref(d.from)}>{actionTitle(d.from)}</a> → <a href={actionHref(d.to)}>{actionTitle(d.to)}</a> ({typeLabel(d.type)})<span class="small block">{d.reason}</span><span class="small block"><strong>Meanwhile:</strong> {d.meanwhile}</span></li>)}
+          {prerequisites.map((d) => <li>From outside: <a href={actionHref(d.from)}>{actionTitle(d.from)}</a> → <a href={actionHref(d.to)}>{actionTitle(d.to)}</a> ({typeLabel(d.type)})<span class="small block">{d.reason}</span><span class="small block"><strong>Meanwhile:</strong> {d.meanwhile}</span></li>)}
         </ul>
+        <p class="small">None of these relations prevents the pilot from starting; they set what its results need before they are interpreted or published.</p>
         {internal.length + prerequisites.length === 0 && <p>No prerequisite among the twelve workflows; this pilot can start in parallel.</p>}
       </section>
       <section id="assessment">
