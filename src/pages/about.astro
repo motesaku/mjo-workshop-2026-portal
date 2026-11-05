@@ -6,6 +6,7 @@ import { INTERPRETATION_TYPES, REVIEW_STATUSES, PHASE8_EDITORIAL } from "../scie
 import { SOURCE_FIDELITY, INTERPRETATION_LEVELS, PUBLICATION_STATES, CHECK_METHOD, PHASE9_EDITORIAL } from "../science/phase9/status.mjs";
 import { SOURCE_QUALITY } from "../science/phase9/provenance.mjs";
 import { RELATIONSHIP_TYPES } from "../science/phase8/editorial-classification.mjs";
+import { APPROVAL_LABEL } from "../science/phase10/apply.mjs";
 ---
 <Base title="About & Methodology">
   <PageIntro title="About & Methodology" eyebrow="Authorship, access and method" description="Who maintains this site, who it is for, and how workshop records are used without claiming official consensus." />
@@ -77,6 +78,8 @@ import { RELATIONSHIP_TYPES } from "../science/phase8/editorial-classification.m
     <dl class="method-list">{Object.values(INTERPRETATION_LEVELS).map((t) => <><dt>{t.label}</dt><dd>{t.description}</dd></>)}</dl>
     <h4>Publication</h4>
     <dl class="method-list">{Object.values(PUBLICATION_STATES).map((t) => <><dt>{t.label}</dt><dd>{t.description}</dd></>)}</dl>
+    <h4 id="phase10-approval">Author approval (Phase 10)</h4>
+    <dl class="method-list"><dt>{APPROVAL_LABEL.short}</dt><dd>{APPROVAL_LABEL.long} On 5 November 2026 the author approved the executive synthesis, the eight insights, the classification of Q01, Q03, Q07, Q09 and Q11, and the regional-value framework. Statement-level corrections and secondary editorial material remain awaiting review.</dd></dl>
     <h4>Type of record behind a source</h4>
     <dl class="method-list">{Object.values(SOURCE_QUALITY).map((t) => <><dt>{t.label}</dt><dd>{t.description}</dd></>)}</dl>
     <h3>How positions relate</h3>

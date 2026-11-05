@@ -7,21 +7,26 @@ import RelationshipBadge from "../components/RelationshipBadge.astro";
 import ThemeReferences from "../components/ThemeReferences.astro";
 import { loadThemeReview } from "../science/theme-review";
 import {
-	SYNTHESIS_INTRO, EXECUTIVE_SYNTHESIS, EXECUTIVE_SYNTHESIS_V2, OVERARCHING_QUESTION, INTERPRETATION_TYPES, EVIDENCE_STRENGTH,
+	SYNTHESIS_INTRO, EXECUTIVE_SYNTHESIS, OVERARCHING_QUESTION, INTERPRETATION_TYPES, EVIDENCE_STRENGTH,
 	REGIONAL_VALUE_LEVELS, insights, phase8Insights, contestedTopics, priorityAreas, areaIssueIds,
 	basisClaims, basisSourceLabels, videosForClaims, videosForIssues, getIssue, actionForIssue, contributionGroups,
 	disagreementVerdict, VERDICT_LABELS, ROADMAP_STATUS, phase9Label,
 } from "../science/phase8";
 import { THEME_COVERAGE, CROSS_CUTTING_GAPS, COVERAGE_LEVELS, SYNTHESIS_PRESENCE } from "../science/phase9/coverage.mjs";
 import { SOURCE_LIMITS, COVERAGE_PRINCIPLE } from "../science/phase10/coverage.mjs";
+import { effectiveExecutive, researchObjectives, regionalTransitions, APPROVAL_LABEL } from "../science/phase10/apply.mjs";
 import { PILOTS } from "../science/phase9/roadmap.mjs";
 const draft = phase9Label();
+const exec = effectiveExecutive();
+const objectives = researchObjectives();
+const transitions = regionalTransitions();
+const levelTitle = (id: string) => REGIONAL_VALUE_LEVELS.find((l) => l.id === id)?.title ?? id;
 const areas = priorityAreas();
 const previousById = new Map(phase8Insights().map((i) => [i.id, i]));
 const sourceList = (ids: string[]) => basisSourceLabels(ids).map((s) => s.label).join("; ");
 const review = loadThemeReview();
 const coverageBasis = THEME_COVERAGE.flatMap((t) => [...t.findings.basis, ...t.debates.basis, ...t.unresolved.basis]);
-const allBasis = [...EXECUTIVE_SYNTHESIS_V2.basis, ...insights().flatMap((i) => i.basis), ...contestedTopics().flatMap((t) => t.basis), ...REGIONAL_VALUE_LEVELS.flatMap((l) => l.records.basis), ...coverageBasis];
+const allBasis = [...exec.basis, ...transitions.flatMap((t) => t.basis), ...insights().flatMap((i) => i.basis), ...contestedTopics().flatMap((t) => t.basis), ...REGIONAL_VALUE_LEVELS.flatMap((l) => l.records.basis), ...coverageBasis];
 const refIds = [...new Set([...allBasis.filter((id) => id.startsWith("e-")), ...basisClaims(allBasis).flatMap((row) => row.claim.evidence_ids ?? [])])];
 const CHANGE_LABELS = { merged: "Merged in Phase 9", revised: "Revised in Phase 9", new: "New in Phase 9", retained: "Retained (minor wording)" } as const;
 ---
@@ -43,8 +48,9 @@ const CHANGE_LABELS = { merged: "Merged in Phase 9", revised: "Revised in Phase 
   <section id="executive" class="executive">
     <h2>In brief</h2>
     <p class="overarching"><span class="tag">Guiding question</span> {OVERARCHING_QUESTION}</p>
-    <p class="executive-text">{EXECUTIVE_SYNTHESIS_V2.text}</p>
-    <p class="small"><span class="tag">Editorial synthesis</span> {draft.long} Draws on {basisSourceLabels(EXECUTIVE_SYNTHESIS_V2.basis).length} workshop records across the twelve <a href="/questions">scientific questions</a>.</p>
+    <p class="executive-text">{exec.text}</p>
+    <p class="small"><span class="tag">Editorial synthesis</span> {exec.approval ? <><span class="tag tag-approved">{APPROVAL_LABEL.short}</span> {APPROVAL_LABEL.long}</> : draft.long} Draws on {basisSourceLabels(exec.basis).length} workshop records across the twelve <a href="/questions">scientific questions</a>.</p>
+    {exec.phase9Text && <details class="nested"><summary>Previous wording (Phase 9 draft)</summary><p class="small">{exec.phase9Text}</p></details>}
     <details class="nested"><summary>Previous wording (Phase 8)</summary><p class="small">{EXECUTIVE_SYNTHESIS.text}</p></details>
   </section>
 
@@ -60,14 +66,14 @@ const CHANGE_LABELS = { merged: "Merged in Phase 9", revised: "Revised in Phase 
         return (
           <li id={insight.id} class="insight">
             {insight.aliases.map((alias) => <span id={alias} class="anchor-alias"></span>)}
-            <p class="insight-change"><span class="tag tag-muted">{CHANGE_LABELS[insight.change]}</span></p>
+            <p class="insight-change"><span class="tag tag-muted">{CHANGE_LABELS[insight.change]}</span>{insight.approval && <> <span class="tag tag-approved">{insight.approval.changed ? "Revised and author-approved in Phase 10" : "Author-approved wording"}</span></>}</p>
             <h3>{insight.title}</h3>
             <p>{insight.text}</p>
             <dl class="provenance">
               <dt>Evidence basis</dt><dd>{sourceList(insight.basis)}</dd>
               <dt>Independent support</dt><dd>{EVIDENCE_STRENGTH[insight.strength]} ({groups.length} contribution group{groups.length === 1 ? "" : "s"}; overlapping records counted once — not a measure of agreement)</dd>
               <dt>Interpretation type</dt><dd>{INTERPRETATION_TYPES[insight.type].label}{insight.type === "workshop_record" ? " (paraphrased and condensed)" : " built on workshop records"}</dd>
-              <dt>Review status</dt><dd>Underlying statements checked against the cited minutes (AI-assisted). This wording: {draft.short}.</dd>
+              <dt>Review status</dt><dd>Underlying statements checked against the cited minutes (AI-assisted). This wording: {insight.approval ? `approved by the author on 5 November 2026 (editorial approval, not independent verification)` : draft.short}.</dd>
               <dt>Programme themes</dt><dd>{insight.themes.map((n) => THEME_COVERAGE.find((t) => t.number === n)?.title).join(" · ")}</dd>
               <dt>Questions</dt><dd>{insight.issues.map((id, i) => <>{i > 0 && " · "}<a href={`/questions/themes/${id}`}>{id.toUpperCase()} · {getIssue(id)?.title}</a></>)}</dd>
             </dl>
@@ -84,10 +90,25 @@ const CHANGE_LABELS = { merged: "Merged in Phase 9", revised: "Revised in Phase 
                   ))}
                 </ol>
                 <p class="small">Skill at one level does not imply skill at the next. The records support the distinction; they contain no demonstration of realized societal benefit.</p>
+                {transitions.length > 0 && (
+                  <div class="value-transitions" id="value-transitions">
+                    <h4>Where each link can fail</h4>
+                    <ul>
+                      {transitions.map((t) => (
+                        <li id={`transition-${t.from}-${t.to}`}>
+                          <strong>{levelTitle(t.from)} → {levelTitle(t.to)}.</strong> {t.failure}
+                          <p class="small"><span class:list={["tag", t.kind === "empirical" ? "" : "tag-muted"]}>{t.kind === "empirical" ? "Reported in the records" : "Follows from the definitions"}</span> {t.records}</p>
+                        </li>
+                      ))}
+                    </ul>
+                    <p class="small"><span class="tag tag-approved">{APPROVAL_LABEL.short}</span> Empirical support for each failure point is a case study or a keynote statement; the other links are conceptual. No user benefit is claimed.</p>
+                  </div>
+                )}
               </div>
             )}
             {videos.length > 0 && <RelatedVideos links={videos} context="this insight" limit={3} />}
             <details class="nested"><summary>Underlying statements ({basisClaims(insight.basis).length})</summary>{basisClaims(insight.basis).map((row) => <ClaimEntry claim={row.claim} context={row.issueId.toUpperCase()} />)}</details>
+            {insight.phase9 && <details class="nested"><summary>Phase 9 wording (before the author's revision)</summary>{insight.phase9.title !== insight.title && <p class="small"><strong>{insight.phase9.title}</strong></p>}<p class="small">{insight.phase9.text}</p></details>}
             <details class="nested"><summary>Change from Phase 8</summary><p class="small">{insight.reason}</p>{previous.length > 0 ? previous.map((p) => <p class="small"><strong>Previous: {p!.title}.</strong> {p!.text}</p>) : <p class="small">No Phase 8 counterpart.</p>}</details>
           </li>
         );
@@ -172,6 +193,7 @@ const CHANGE_LABELS = { merged: "Merged in Phase 9", revised: "Revised in Phase 
   <section id="method">
     <h2>How this synthesis was made</h2>
     <p>Statements come from the author's English paraphrases of ASR-derived minutes for the talks and discussions listed in the <a href="/program">programme</a>. In Phase 9 every statement was compared with the passage it cites (an AI-assisted check, not the author's sign-off), and sections of the minutes not used before were added where they bear on representativeness. Overlapping breakout, plenary and closing records are not counted as independent support. Video highlights are linked only where a statement cites the minutes of the same talk or session; the clips themselves were not checked against the statements.</p>
+    {objectives && <><h3 id="research-objectives">Different communities, different objectives</h3><ul>{objectives.items.map((o) => <li><strong>{o.community}:</strong> {o.optimizes}</li>)}</ul><p class="small">{objectives.note} <span class="tag">Editorial synthesis</span> An editorial framing, not a workshop record.</p></>}
     <p><a href="/about#reading-labels">How to read the labels →</a> · <a href="/questions">All scientific questions →</a> · <a href="/actions">Research Action Roadmap →</a></p>
   </section>
   {review && <ThemeReferences review={review} ids={refIds} />}

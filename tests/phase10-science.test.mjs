@@ -155,3 +155,38 @@ test("known limits name the incomplete records without adding conclusions", () =
 	assert.doesNotMatch(mappings, /src-/, "reader-facing labels, not internal identifiers");
 	assert.match(SOURCE_LIMITS.find((l) => l.id === "bsiso").text, /Northward-propagating/);
 });
+
+import { isApproved, effectiveInsights, effectiveExecutive, CLASSIFICATION_OVERRIDES, applyPackage, regionalTransitions, q03View, q07Layer2 } from "../src/science/phase10/apply.mjs";
+
+test("only author-approved proposals change what pages render", () => {
+	const by = (value, decidedBy = "author") => ({ decision: { value, decidedBy, decidedOn: "2026-11-05" } });
+	assert.equal(isApproved({ decision: null }), false);
+	assert.equal(isApproved(by("withhold")), false);
+	assert.equal(isApproved(by("verify_source")), false);
+	assert.equal(isApproved(by("reject")), false);
+	assert.equal(isApproved(by("approve", "assistant")), false, "only the author can approve");
+	assert.equal(isApproved(by("approve")), true);
+	assert.equal(isApproved(by("approve_with_revisions")), true);
+	const shown = effectiveInsights();
+	assert.equal(shown.length, INSIGHTS_V2.length);
+	for (const i of shown) {
+		const p = PROPOSALS.find((x) => x.target.kind === "insight" && x.target.id === i.id);
+		if (isApproved(p)) {
+			assert.ok(i.approval, i.id);
+			if (p.proposed?.text) assert.equal(i.text, p.proposed.text);
+			if (p.proposed?.title) assert.equal(i.title, p.proposed.title);
+			if (p.proposed?.basis) assert.deepEqual(i.basis, p.proposed.basis);
+		} else assert.equal(i.text, INSIGHTS_V2.find((x) => x.id === i.id).text, `${i.id}: pending keeps Phase 9 wording`);
+	}
+	const exec = effectiveExecutive();
+	assert.ok(exec.basis.every(isClaim));
+	const patched = applyPackage(pkg);
+	for (const [q, cls] of Object.entries(CLASSIFICATION_OVERRIDES)) {
+		assert.equal(patched.issues.find((i) => i.id === q).classification, cls);
+		assert.notEqual(pkg.issues.find((i) => i.id === q).classification, cls, "the bundled package itself is unchanged");
+	}
+	if (q03View()) assert.equal(CLASSIFICATION_OVERRIDES.q03, "open questions");
+	if (q07Layer2()) assert.match(q07Layer2().verdict, /Genuine disagreement/);
+	assert.ok(regionalTransitions().every((t) => t.basis.every(isClaim)));
+	for (const f of PHASE10_FINDINGS) assert.equal(f.decision, null, `${f.id}: Tier 4 stays pending`);
+});

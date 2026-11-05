@@ -21,6 +21,8 @@ import { PHASE9_EDITORIAL } from "../src/science/phase9/status.mjs";
 import { PRIORITY_AREAS } from "../src/science/phase8/editorial-roadmap.mjs";
 import { ISSUE_RELATIONSHIPS, RELATIONSHIP_TYPES } from "../src/science/phase8/editorial-classification.mjs";
 import { PROPOSALS } from "../src/science/phase10/proposals.mjs";
+import { effectiveInsights, approvedSentences, CLASSIFICATION_OVERRIDES } from "../src/science/phase10/apply.mjs";
+const SHOWN_INSIGHTS = effectiveInsights();
 import { DEPENDENCIES_V2, DEPENDENCY_TYPES } from "../src/science/phase10/roadmap.mjs";
 import { SOURCE_LIMITS } from "../src/science/phase10/coverage.mjs";
 
@@ -64,7 +66,7 @@ for (const path of ["/", "/questions/themes/q03", `/videos/${highlights[0].slug}
 const home = await page("/");
 const homeMain = main(home);
 check(/<a class="button" href="\/workshop-synthesis"/.test(homeMain), "home: primary call to action opens the Workshop Synthesis");
-for (const insight of INSIGHTS_V2) {
+for (const insight of SHOWN_INSIGHTS) {
 	const link = homeMain.match(new RegExp(`<a href="/workshop-synthesis#${insight.id}"[^>]*>([\\s\\S]*?)</a>`));
 	check(link && text(link[1]).trim() === insight.title, `home: insight ${insight.id} listed with its current title`);
 }
@@ -74,7 +76,7 @@ for (const fact of [`${pkg.issues.length} scientific questions`, `${highlights.l
 
 // 3. Workshop Synthesis: each insight with its title and its evidence/provenance block.
 const synthesis = main(await page("/workshop-synthesis"));
-for (const insight of INSIGHTS_V2) {
+for (const insight of SHOWN_INSIGHTS) {
 	const item = synthesis.match(new RegExp(`<li id="${insight.id}" class="insight"[\\s\\S]*?</li>\\s*(?=<li id="|</ol>)`))?.[0] ?? "";
 	check(item !== "", `synthesis: ${insight.id} present`);
 	check(text(item.match(/<h3[^>]*>[\s\S]*?<\/h3>/)?.[0] ?? "").trim() === insight.title, `synthesis: ${insight.id} title`);
@@ -83,6 +85,16 @@ for (const insight of INSIGHTS_V2) {
 if (PHASE9_EDITORIAL.status !== "author_reviewed") check(!/Author-reviewed \(Phase 9\)/.test(text(synthesis)), "synthesis must not claim author review");
 for (const l of SOURCE_LIMITS) check(synthesis.includes(`id="limit-${l.id}"`), `synthesis: known limit ${l.id}`);
 check(/not an absence of scientific discussion/.test(text(synthesis)), "synthesis: coverage principle stated");
+for (const a of approvedSentences()) check(text(synthesis).includes(a.sentence), `approved proposal ${a.id} is served`);
+for (const insight of SHOWN_INSIGHTS.filter((i) => i.approval)) {
+	const item = synthesis.match(new RegExp(`<li id="${insight.id}" class="insight"[\\s\\S]*?</li>\\s*(?=<li id="|</ol>)`))?.[0] ?? "";
+	check(/Author-approved wording|author-approved in Phase 10/.test(text(item)) && /not independent verification/.test(text(item)), `${insight.id}: approval label states it is not independent verification`);
+}
+for (const [q, cls] of Object.entries(CLASSIFICATION_OVERRIDES)) {
+	const route = { "open questions": "/open-challenges", "diverging perspectives": "/diverging-perspectives", "emerging alignment": "/emerging-alignment" }[cls];
+	check((await page(route)).includes(`href="/questions/themes/${q}"`), `${q} listed under ${cls}`);
+	for (const other of ["/open-challenges", "/diverging-perspectives", "/emerging-alignment"].filter((r) => r !== route)) check(!main(await page(other)).includes(`href="/questions/themes/${q}"`), `${q} not listed on ${other}`);
+}
 // Phase 10 proposals awaiting the author's decision must not be served.
 for (const p of PROPOSALS.filter((x) => x.decision === null && x.proposed?.text)) {
 	const current = p.target.kind === "insight" ? INSIGHTS_V2.find((i) => i.id === p.target.id)?.text ?? "" : "";

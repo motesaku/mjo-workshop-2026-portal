@@ -4,6 +4,7 @@ import HighlightCard from "../components/HighlightCard.astro";
 import { SITE_TITLE, SUBTITLE, SITE_STANCE } from "../data/portal";
 import { highlights } from "../data/highlights";
 import { insights, allIssues, allActions, priorityAreas, issuesForVideo } from "../science/phase8";
+const allApproved = insights().every((i) => i.approval);
 const linkedClips = highlights.filter((h) => issuesForVideo(h.slug).length > 0).length;
 ---
 <Base title={SITE_TITLE} description={SUBTITLE}>
@@ -30,7 +31,7 @@ const linkedClips = highlights.filter((h) => issuesForVideo(h.slug).length > 0).
 
   <section aria-labelledby="learned"><div class="section-head"><h2 id="learned">What we learned — at a glance</h2><a href="/workshop-synthesis#learned">Read the synthesis →</a></div>
     <ol class="glance">{insights().map((insight) => <li><a href={`/workshop-synthesis#${insight.id}`}>{insight.title}</a></li>)}</ol>
-    <p class="small">Editorial synthesis of converted, ASR-derived minutes (Phase 9 draft, awaiting the author&apos;s review); not a workshop consensus.</p>
+    <p class="small">{allApproved ? "Editorial synthesis of converted, ASR-derived minutes. Wording approved by the author on 5 November 2026 (editorial approval, not independent verification); not a workshop consensus." : "Editorial synthesis of converted, ASR-derived minutes (Phase 9 draft, awaiting the author's review); not a workshop consensus."}</p>
   </section>
 
   <section><div class="section-head"><h2>A moment from the discussion</h2><a href="/videos">All highlights →</a></div><HighlightCard /></section>

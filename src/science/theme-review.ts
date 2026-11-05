@@ -1,5 +1,6 @@
 // Bundled personal synthesis only. Raw workshop sources are never a runtime input.
 import synthesis from "../data/personal-synthesis.json";
+import { applyPackage } from "./phase10/apply.mjs";
 
 export interface ThemeItem { title: string; text: string; refs: string[]; origin: string }
 export interface ThemeSection { id: string; title: string; intro: string; items: ThemeItem[] }
@@ -53,7 +54,7 @@ export interface ThemeReview {
 const ALLOWED_FORMATS = new Set(["personal-workshop-synthesis", "phase6-local-theme-review"]);
 
 export function loadThemeReview(): ThemeReview | null {
-	const data = synthesis as ThemeReview;
+	const data = applyPackage(synthesis) as ThemeReview;
 	if (!ALLOWED_FORMATS.has(data.format)) return null;
 	if (data.formal_consensus && data.formal_consensus !== "not_established") return null;
 	return data;

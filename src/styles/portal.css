@@ -57,3 +57,12 @@
 .dep-swatch{flex:0 0 2.2rem;height:0;border-top:2px solid #0b5048;transform:translateY(-.25rem)}.dep-start{border-top:2.5px solid #8c3b1f}.dep-interpretation{border-top:2px solid #0b5048}.dep-publication{border-top:2px dashed #5b4a8a}.dep-optional{border-top:2px dotted #8a9a95}
 .dep-state-start{color:#8c3b1f}.dep-state-interpretation{color:#0b5048}.dep-state-publication{color:#5b4a8a}.dep-state-optional{color:#59656b}
 .note-inline{border-left:3px solid #c79a3b;background:#faf5ea;padding:.7rem .9rem;font-size:.92rem}
+
+/* Phase 10: author-approved wording, Q03 budget conventions, Q07 conditional table, regional transitions */
+.tag-approved{color:#ffffff;background:#1f5a47}
+.value-transitions{margin-top:1rem;border-top:1px solid var(--line);padding-top:.8rem}.value-transitions h4{margin:0 0 .5rem;font-size:1rem}.value-transitions ul{padding-left:1.1rem;margin:0}.value-transitions li{margin:.5rem 0}.value-transitions li p{margin:.25rem 0 0}
+.budget-note,.recorded-contrast{background:#fff;border:1px solid var(--line);border-left:4px solid var(--teal);padding:1rem 1.2rem;margin:1rem 0;max-width:80ch}.budget-note h3,.recorded-contrast h3{margin-top:0}
+.equation{font-family:"STIX Two Math","Cambria Math","Times New Roman",serif;font-size:1.15rem;text-align:center;margin:.8rem 0;overflow-x:auto;white-space:nowrap}
+.conditional-table{width:100%;border-collapse:collapse;font-size:.88rem;margin:.6rem 0}.conditional-table caption{text-align:left;font-weight:650;padding-bottom:.4rem}.conditional-table th,.conditional-table td{border-top:1px solid var(--line);padding:.5rem .6rem;vertical-align:top;text-align:left}.conditional-table thead th{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){.conditional-table thead{display:none}.conditional-table tr,.conditional-table th,.conditional-table td{display:block}.conditional-table tr{border-top:1px solid var(--line);padding:.4rem 0}.conditional-table th,.conditional-table td{border-top:0;padding:.25rem 0}.conditional-table td:before{content:attr(data-label);display:block;font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}}
+@media(max-width:640px){.table-scroll table.conditional-table{min-width:0}.table-scroll .conditional-table tbody th{min-width:0;border-bottom:0}.table-scroll .conditional-table td{border-bottom:0}.table-scroll .conditional-table tr{padding:.5rem .8rem}}

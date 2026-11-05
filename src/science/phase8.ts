@@ -9,6 +9,9 @@ import { VIDEO_KEY_MESSAGES, ISSUE_SIGNIFICANCE } from "./phase8/editorial-video
 import { phase8Label, interpretationOf } from "./phase8/status.mjs";
 import { relationContext, SOURCE_RULES as SOURCE_VIDEO_RULES } from "./phase9/context.mjs";
 import { PHASE9_KEY_MESSAGES } from "./phase9/videos.mjs";
+import { applyPackage, effectiveInsights, q03View } from "./phase10/apply.mjs";
+/** The bundled package with author-approved Phase 10 classification changes applied. */
+const pkg = applyPackage(synthesis) as typeof synthesis;
 
 export { FIELD_LABELS, phase8Label, interpretationOf };
 
@@ -24,12 +27,12 @@ export interface IssueActionLink { issue: ReviewIssue; relation: "primary" | "cr
 export interface ContributionGroup { key: string; label: string; overlapReason: string | null; sourceIds: string[] }
 export interface Basis { text: string; basis: string[] }
 
-export const relations = createRelationIndex(relationContext({ pkg: synthesis, highlights }));
+export const relations = createRelationIndex(relationContext({ pkg, highlights }));
 /** Phase 9 workshop-record statements attached to one question. */
 export const supplementalClaimsFor = (issueId: string) => relations.supplementalRows(issueId) as ClaimRow[];
 
-const issueList = synthesis.issues as unknown as ReviewIssue[];
-const actionList = (synthesis.actions ?? []) as ReviewAction[];
+const issueList = pkg.issues as unknown as ReviewIssue[];
+const actionList = (pkg.actions ?? []) as ReviewAction[];
 
 export const getIssue = (id: string) => issueList.find((i) => i.id === id);
 export const getActionById = (id: string) => actionList.find((a) => a.id === id);
@@ -212,7 +215,8 @@ export const divergenceAnalysis = (issueId: string) => (DIVERGENCE_ANALYSES as R
 export const alignmentAnalysis = (issueId: string) => (ALIGNMENT_ANALYSES as Record<string, AlignmentAnalysis>)[issueId];
 
 /** Plain-language verdict: is this a genuine disagreement? */
-export function disagreementVerdict(issueId: string): "genuine" | "partial" | "complementary" | "undetermined" {
+export function disagreementVerdict(issueId: string): "genuine" | "partial" | "complementary" | "undetermined" | "open_contrast" {
+	if (issueId === "q03" && q03View()) return "open_contrast";
 	const rel = issueRelationship(issueId);
 	if (!rel) return "undetermined";
 	const primary = relationshipType(rel.primary).genuineDisagreement;
@@ -226,6 +230,7 @@ export const VERDICT_LABELS = {
 	partial: "Mostly complementary, with a residual disagreement",
 	complementary: "Complementary approaches, not disagreement",
 	undetermined: "Relationship not yet determinable",
+	open_contrast: "Open question with one recorded contrast",
 } as const;
 
 // ---- 8D: strategic roadmap ------------------------------------------------
@@ -276,20 +281,21 @@ export function actionChain(actionId: string): ActionChain | undefined {
 // ---- 8E: workshop synthesis -------------------------------------------------
 import { SYNTHESIS_INTRO, EXECUTIVE_SYNTHESIS, INSIGHTS, CONTESTED_TOPICS } from "./phase8/editorial-synthesis.mjs";
 import { INTERPRETATION_TYPES } from "./phase8/status.mjs";
-import { OVERARCHING_QUESTION, EXECUTIVE_SYNTHESIS_V2, INSIGHTS_V2, EVIDENCE_STRENGTH, REGIONAL_VALUE_LEVELS, INSIGHT_ASSESSMENTS, CONTESTED_REVISIONS } from "./phase9/synthesis.mjs";
+import { OVERARCHING_QUESTION, EXECUTIVE_SYNTHESIS_V2, EVIDENCE_STRENGTH, REGIONAL_VALUE_LEVELS, INSIGHT_ASSESSMENTS, CONTESTED_REVISIONS } from "./phase9/synthesis.mjs";
 export { SYNTHESIS_INTRO, EXECUTIVE_SYNTHESIS, INTERPRETATION_TYPES, OVERARCHING_QUESTION, EXECUTIVE_SYNTHESIS_V2, EVIDENCE_STRENGTH, REGIONAL_VALUE_LEVELS, INSIGHT_ASSESSMENTS };
 
 export interface Insight { id: string; title: string; text: string; type: keyof typeof INTERPRETATION_TYPES; basis: string[]; issues: string[] }
 export interface ContestedTopic { id: string; title: string; text: string; basis: string[]; issues: string[]; revisedInPhase9?: boolean; previousText?: string }
 /** Phase 8 insights, kept for side-by-side review. */
 export const phase8Insights = () => INSIGHTS as Insight[];
-/** Insights shown on the site: the Phase 9 revision (draft awaiting author review). */
-export const insights = () => INSIGHTS_V2 as InsightV2[];
+/** Insights shown on the site: Phase 9 wording, replaced by author-approved Phase 10 wording where decided. */
+export const insights = () => effectiveInsights() as InsightV2[];
 export const contestedTopics = () => (CONTESTED_TOPICS as ContestedTopic[]).map((t) => {
 	const revision = (CONTESTED_REVISIONS as Record<string, { text: string; basis: string[] }>)[t.id];
 	return revision ? { ...t, text: revision.text, basis: revision.basis, revisedInPhase9: true, previousText: t.text } : t;
 });
-export interface InsightV2 extends Insight { aliases: string[]; themes: number[]; previous: string[]; change: "merged" | "revised" | "new" | "retained"; reason: string; strength: keyof typeof EVIDENCE_STRENGTH }
+export interface InsightApproval { proposalId: string; value: string; decidedOn: string; changed: boolean }
+export interface InsightV2 extends Insight { aliases: string[]; themes: number[]; previous: string[]; change: "merged" | "revised" | "new" | "retained"; reason: string; strength: keyof typeof EVIDENCE_STRENGTH; approval: InsightApproval | null; phase9: { title: string; text: string } | null }
 
 /** Claims behind a list of basis IDs (evidence/reference IDs are skipped). */
 export const basisClaims = (ids: string[]) => ids.map((id) => getClaim(id)).filter((row): row is ClaimRow => !!row);

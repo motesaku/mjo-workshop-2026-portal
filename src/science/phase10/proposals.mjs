@@ -15,7 +15,12 @@ export const PHASE10_REVIEW = {
 	id: "phase10-2026-11-05",
 	status: "author_review_required",
 	basedOn: "phase9-2026-11-04",
+	/** Tier 1 and 2 decided by the author on 2026-11-05; Tiers 3 and 4 remain pending. */
+	decidedTiers: [1, 2],
 };
+
+/** How the 2026-11-05 decisions were given (recorded, not inferred). */
+export const AUTHOR_INSTRUCTION_2026_11_05 = "The author instructed on 2026-11-05 to approve every Tier 1 and Tier 2 recommendation as proposed and to apply it to the site (Claude Code session). Editorial approval, not independent verification.";
 
 export const AUTHOR_DECISIONS = {
 	approve: "Approve wording",
@@ -72,7 +77,7 @@ export const PROPOSALS = [
 		support: "consistent_framing_editorial",
 		uncertainty: "The community-objectives sentence is an editorial framing, not a record. Several strands rest on short compiled minutes without Q&A.",
 		suggestedDecision: "approve_with_revisions",
-		decision: null,
+		decision: { value: "approve_with_revisions", decidedBy: "author", decidedOn: "2026-11-05", record: AUTHOR_INSTRUCTION_2026_11_05 },
 	},
 	{
 		id: "p10-insight-1",
@@ -86,7 +91,7 @@ export const PROPOSALS = [
 		support: "consistent",
 		uncertainty: "The extended theory minutes have an estimated date and a withheld clip mapping.",
 		suggestedDecision: "approve_with_revisions",
-		decision: null,
+		decision: { value: "approve_with_revisions", decidedBy: "author", decidedOn: "2026-11-05", record: AUTHOR_INSTRUCTION_2026_11_05 },
 	},
 	{
 		id: "p10-insight-3",
@@ -101,7 +106,7 @@ export const PROPOSALS = [
 		support: "consistent",
 		uncertainty: "Boreal-summer termination was raised by participants, not analysed.",
 		suggestedDecision: "approve_with_revisions",
-		decision: null,
+		decision: { value: "approve_with_revisions", decidedBy: "author", decidedOn: "2026-11-05", record: AUTHOR_INSTRUCTION_2026_11_05 },
 	},
 	{
 		id: "p10-insight-multiscale",
@@ -116,7 +121,7 @@ export const PROPOSALS = [
 		support: "consistent_framing_editorial",
 		uncertainty: "Two keynotes and one final-day contribution share the framing; supporting cases are single events or single models.",
 		suggestedDecision: "approve_with_revisions",
-		decision: null,
+		decision: { value: "approve_with_revisions", decidedBy: "author", decidedOn: "2026-11-05", record: AUTHOR_INSTRUCTION_2026_11_05 },
 	},
 	{
 		id: "p10-insight-4",
@@ -128,7 +133,7 @@ export const PROPOSALS = [
 		support: "consistent",
 		uncertainty: "Candidate causes are not ranked; the reported non-passage ratio is withheld pending the original study.",
 		suggestedDecision: "approve",
-		decision: null,
+		decision: { value: "approve", decidedBy: "author", decidedOn: "2026-11-05", record: AUTHOR_INSTRUCTION_2026_11_05 },
 	},
 	{
 		id: "p10-insight-5",
@@ -143,7 +148,7 @@ export const PROPOSALS = [
 		support: "consistent_framing_editorial",
 		uncertainty: "Final-day and closing records may overlap; the theory plenary, breakout and extended minutes are the second group. How much explanation scientific use requires remained disputed.",
 		suggestedDecision: "approve_with_revisions",
-		decision: null,
+		decision: { value: "approve_with_revisions", decidedBy: "author", decidedOn: "2026-11-05", record: AUTHOR_INSTRUCTION_2026_11_05 },
 	},
 	{
 		id: "p10-insight-6",
@@ -155,7 +160,7 @@ export const PROPOSALS = [
 		support: "consistent",
 		uncertainty: "Which supplementary descriptors add value for which target was not settled.",
 		suggestedDecision: "approve",
-		decision: null,
+		decision: { value: "approve", decidedBy: "author", decidedOn: "2026-11-05", record: AUTHOR_INSTRUCTION_2026_11_05 },
 	},
 	{
 		id: "p10-insight-regional",
@@ -167,7 +172,7 @@ export const PROPOSALS = [
 		support: "consistent",
 		uncertainty: "Several Theme 5–6 talks have short compiled minutes without Q&A; the Themes 5+6 breakout was not converted.",
 		suggestedDecision: "approve",
-		decision: null,
+		decision: { value: "approve", decidedBy: "author", decidedOn: "2026-11-05", record: AUTHOR_INSTRUCTION_2026_11_05 },
 	},
 	{
 		id: "p10-insight-7",
@@ -179,7 +184,7 @@ export const PROPOSALS = [
 		support: "consistent",
 		uncertainty: "The observation extended minutes (src-obs) have an unresolved session mapping.",
 		suggestedDecision: "approve",
-		decision: null,
+		decision: { value: "approve", decidedBy: "author", decidedOn: "2026-11-05", record: AUTHOR_INSTRUCTION_2026_11_05 },
 	},
 
 	// Tier 2 — scientific interpretation.
@@ -193,7 +198,7 @@ export const PROPOSALS = [
 		support: "consistent",
 		uncertainty: "The extended theory minutes have an estimated date.",
 		suggestedDecision: "approve",
-		decision: null,
+		decision: { value: "approve", decidedBy: "author", decidedOn: "2026-11-05", record: AUTHOR_INSTRUCTION_2026_11_05 },
 	},
 	{
 		id: "p10-q03",
@@ -205,7 +210,7 @@ export const PROPOSALS = [
 		support: "consistent_framing_editorial",
 		uncertainty: "The budget notation is editorial and must match whatever conventions the author would use in a publication.",
 		suggestedDecision: "approve_with_revisions",
-		decision: null,
+		decision: { value: "approve_with_revisions", decidedBy: "author", decidedOn: "2026-11-05", record: AUTHOR_INSTRUCTION_2026_11_05 },
 	},
 	{
 		id: "p10-q07",
@@ -217,7 +222,7 @@ export const PROPOSALS = [
 		support: "consistent_framing_editorial",
 		uncertainty: "Overlap between final-day and closing records; the extended theory minutes have a withheld clip mapping.",
 		suggestedDecision: "approve_with_revisions",
-		decision: null,
+		decision: { value: "approve_with_revisions", decidedBy: "author", decidedOn: "2026-11-05", record: AUTHOR_INSTRUCTION_2026_11_05 },
 	},
 	{
 		id: "p10-q09",
@@ -229,7 +234,7 @@ export const PROPOSALS = [
 		support: "consistent",
 		uncertainty: "Case-specific experiments; mixed resolutions and periods.",
 		suggestedDecision: "approve",
-		decision: null,
+		decision: { value: "approve", decidedBy: "author", decidedOn: "2026-11-05", record: AUTHOR_INSTRUCTION_2026_11_05 },
 	},
 	{
 		id: "p10-q11",
@@ -241,7 +246,7 @@ export const PROPOSALS = [
 		support: "consistent_framing_editorial",
 		uncertainty: "Empirical support for each failure point is one case study or a keynote statement; most links are conceptual.",
 		suggestedDecision: "approve_with_revisions",
-		decision: null,
+		decision: { value: "approve_with_revisions", decidedBy: "author", decidedOn: "2026-11-05", record: AUTHOR_INSTRUCTION_2026_11_05 },
 	},
 ];
 
@@ -253,6 +258,9 @@ export const Q03_PROPOSAL = {
 		{ id: "hybrid", label: "Hybrid: open question with a narrowly defined recorded contrast (recommended)", for: "Primary class Open Questions; the recorded contrast is kept, attributed to one exchange, and the hypotheses are stated as testable and not mutually exclusive.", against: "Requires moving Q03 from the Diverging Perspectives page to Open Challenges, which changes a published classification." },
 	],
 	recommended: "hybrid",
+	/** Reassessment shown on the Q03 page once the hybrid is approved; composed from the hybrid option and the recorded contrast above. */
+	reassessment: "Classified as an open scientific question with one narrowly defined recorded contrast (moved from Diverging Perspectives in Phase 10). The question concerns the relative roles, temporal ordering and necessity of the pathways under stated conditions, not whether each process exists. The only explicit contrast in the records is one comment in the prediction keynote's question-and-answer session, which the minutes label as the discussant's view; it is shown as a recorded contrast, not as a community-wide dispute. Observational and model contributions are consistent with several pathways, which are coupled and testable rather than mutually exclusive.",
+	verdict: "Open question with one recorded contrast",
 	recordedContrast: "One comment in the prediction keynote's Q&A urged distinguishing a realistic mean state and pre-moistening from an advective moisture-mode explanation, emphasizing low-level convergence and shallow-convective moistening. The minutes label it the discussant's theoretical view. It is not a recorded community-wide dispute.",
 	budgetNote: {
 		notation: "q: specific humidity; v_h: horizontal wind on a pressure surface; ∇_h: horizontal gradient on that surface; ω: pressure velocity; ⟨·⟩: mass-weighted vertical integral over a stated layer; overbars and primes: a stated time filter or reference state and departures from it.",

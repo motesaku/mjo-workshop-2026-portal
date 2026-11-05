@@ -3,31 +3,51 @@
 import RelationshipBadge from "./RelationshipBadge.astro";
 import { basisSourceLabels, disagreementVerdict, VERDICT_LABELS, phase9Label, phase8Relationship, relationshipType } from "../science/phase8";
 import { Q07_LAYERS, Q03_ANALYSIS, RELATIONSHIP_REVISIONS } from "../science/phase9/classification.mjs";
+import { q03View, q07Layer2, APPROVAL_LABEL } from "../science/phase10/apply.mjs";
 interface Props { issueId: "q03" | "q07" }
 const { issueId } = Astro.props;
 const draft = phase9Label();
 const from = (ids: string[]) => basisSourceLabels(ids).map((s) => s.label).join("; ");
 const revision = (RELATIONSHIP_REVISIONS as Record<string, { previous: string }>)[issueId];
 const before = phase8Relationship(issueId);
+const q03 = issueId === "q03" ? q03View() : null;
+const layer2 = issueId === "q07" ? q07Layer2() : null;
+const reassessment = issueId === "q07" ? Q07_LAYERS.reassessment.text : q03 ? q03.reassessment : Q03_ANALYSIS.reassessment.text;
+const approved = Boolean(q03 || layer2);
+/** Render "v_h", "c_p" and "∇_h" with subscripts. */
+const segs = (text: string) => text.split(/(_[a-z])/).filter(Boolean).map((part) => (part.startsWith("_") ? { t: part.slice(1), sub: true } : { t: part, sub: false }));
 ---
 <section id="analysis" class="analysis">
-  <h2>Structure of the difference</h2>
+  <h2>{q03 ? "Structure of the question" : "Structure of the difference"}</h2>
   <div class="analysis-head">
     <p class="eyebrow">{VERDICT_LABELS[disagreementVerdict(issueId)]}</p>
     <RelationshipBadge issueId={issueId} />
-    <p class="small"><span class="tag">Editorial synthesis</span> {(issueId === "q07" ? Q07_LAYERS : Q03_ANALYSIS).reassessment.text} {draft.short}.</p>
+    <p class="small"><span class="tag">Editorial synthesis</span> {reassessment} {approved ? <><span class="tag tag-approved">{APPROVAL_LABEL.short}</span> {APPROVAL_LABEL.long}</> : <>{draft.short}.</>}</p>
     {revision && before && <p class="small">Changed from Phase 8: primary relationship was {relationshipType(before.primary).code} · {relationshipType(before.primary).label}.</p>}
   </div>
 
   {issueId === "q07" && (
     <>
       {Q07_LAYERS.layers.map((layer) => (
+        layer.id === "standards" && layer2 ? (
+          <div class:list={["layer", `layer-${layer.id}`]} id={`layer-${layer.id}`}>
+            <h3>{layer2.title}</h3>
+            <p class="eyebrow">{layer2.verdict}</p>
+            <p>{layer2.text}</p>
+            <p class="small">From: {from(layer2.basis)}</p>
+            <p class="small"><strong>Where it was recorded.</strong> {layer2.recordedWhere}</p>
+            <div class="table-scroll"><table class="conditional-table"><caption>What the conclusion depends on</caption><thead><tr><th scope="col">Intended use</th><th scope="col">Evidence needed</th><th scope="col">Is a physical explanation required?</th></tr></thead><tbody>{layer2.conditional.map((r) => <tr><th scope="row">{r.use}</th><td data-label="Evidence needed">{r.evidence}</td><td data-label="Is a physical explanation required?">{r.explanation}</td></tr>)}</tbody></table></div>
+            <p class="small"><span class="tag">Editorial synthesis</span> {layer2.conditionalNote}</p>
+            <details class="nested"><summary>Phase 9 wording of this layer</summary><p class="small">{layer.verdict}. {layer.summary}</p>{layer.items.map((item) => <p class="small"><strong>{item.label}</strong> {item.text}</p>)}</details>
+          </div>
+        ) : (
         <div class:list={["layer", `layer-${layer.id}`]} id={`layer-${layer.id}`}>
           <h3>{layer.title}</h3>
           <p class="eyebrow">{layer.verdict}</p>
           <p>{layer.summary}</p>
           <dl>{layer.items.map((item) => <><dt>{item.label}</dt><dd>{item.text}<span class="small block">From: {from(item.basis)}</span></dd></>)}</dl>
         </div>
+        )
       ))}
       <h3>Evidence that the disagreement was recorded</h3>
       <p>{Q07_LAYERS.evidenceOfDisagreement.text}</p>
@@ -40,13 +60,37 @@ const before = phase8Relationship(issueId);
 
   {issueId === "q03" && (
     <>
+      {q03 && (
+        <div class="recorded-contrast" id="recorded-contrast">
+          <h3>The recorded contrast</h3>
+          <p>{q03.recordedContrast}</p>
+        </div>
+      )}
       <h3>Five process families</h3>
       <div class="process-grid">{Q03_ANALYSIS.processes.map((p) => <article id={`process-${p.id}`}><h4>{p.title}</h4><p class="small">{p.text}</p><p class="small">From: {from(p.basis)}</p></article>)}</div>
       <p class="small"><span class="tag">Editorial framing</span> {Q03_ANALYSIS.interactions}</p>
-      <h3>Competing hypotheses</h3>
+      {q03 && (
+        <div class="budget-note" id="budget-conventions">
+          <h3>Budget conventions: decompositions are not mechanisms</h3>
+          <p class="small"><strong>Notation.</strong> {segs(q03.budgetNote.notation).map((p) => (p.sub ? <sub>{p.t}</sub> : p.t))}</p>
+          <p class="equation" aria-label="Horizontal moisture flux divergence identity">{segs(q03.budgetNote.identity).map((p) => (p.sub ? <sub>{p.t}</sub> : p.t))}</p>
+          <p>{segs(q03.budgetNote.decomposition).map((p) => (p.sub ? <sub>{p.t}</sub> : p.t))}</p>
+          <p>{segs(q03.budgetNote.columnVersusLayer).map((p) => (p.sub ? <sub>{p.t}</sub> : p.t))}</p>
+          <p>{segs(q03.budgetNote.shallowConvection).map((p) => (p.sub ? <sub>{p.t}</sub> : p.t))}</p>
+          <p>{segs(q03.budgetNote.temperature).map((p) => (p.sub ? <sub>{p.t}</sub> : p.t))}</p>
+          <p class="small"><span class="tag">Editorial framing</span> Standard budget relations stated to make claims comparable; not a workshop record.</p>
+        </div>
+      )}
+      <h3>{q03 ? "Testable alternative hypotheses" : "Competing hypotheses"}</h3>
       <p class="small">Stated as claims about relative roles, temporal ordering and necessity under specified conditions. They are not mutually exclusive.</p>
       <dl class="method-list">{Q03_ANALYSIS.hypotheses.map((h) => <><dt id={`hypothesis-${h.id.toLowerCase()}`}>{h.id} · {h.title}</dt><dd>{h.text}<span class="small block">From: {from(h.basis)}</span></dd></>)}</dl>
       <p>{Q03_ANALYSIS.conditions.text}</p>
+      {q03 && (
+        <>
+          <h3 id="testable-questions">Testable questions</h3>
+          <dl class="method-list">{q03.testableQuestions.map((q) => <><dt id={`question-${q.id}`}>{q.title}</dt><dd>{q.text}</dd></>)}</dl>
+        </>
+      )}
       <h3>What would distinguish the interpretations?</h3>
       <ol>{Q03_ANALYSIS.tests.map((t) => <li><strong>{t.title}.</strong> {t.text}</li>)}</ol>
       <p class="small"><span class="tag">New research proposal</span> Builds on the Q03 workflow (transition-phase budgets).</p>
