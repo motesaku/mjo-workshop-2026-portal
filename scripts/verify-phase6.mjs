@@ -3,7 +3,8 @@ import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 const mode = process.argv[2] ?? 'dev';
 assert.ok(['dev', 'production'].includes(mode));
-const origin = mode === 'dev' ? 'http://127.0.0.1:4321' : 'http://127.0.0.1:4322';
+const origin = process.env.VERIFY_ORIGIN ?? (mode === 'dev' ? 'http://127.0.0.1:4321' : 'http://127.0.0.1:4322');
+if (!['127.0.0.1', 'localhost', '[::1]'].includes(new URL(origin).hostname)) throw new Error('verification only targets a loopback server');
 const themePaths = ['/ai-for-mjo-research', '/mjo-indices-and-diagnostics'];
 const pkg = JSON.parse(await readFile('src/data/personal-synthesis.json', 'utf8'));
 const evidence = new Map(pkg.evidence.map(e => [e.evidence_id, e]));
@@ -43,7 +44,9 @@ for (const path of ['/', ...themePaths]) {
     assert.doesNotMatch(html, /href="[^"<>]*\.(?:pdf|docx?|pptx?|mp4)(?:"|\?)/i);
     assert.match(html, /data-theme-review="personal-report"/);
     assert.match(html, /New research proposal|personal synthesis|Personal workshop report/);
-    assert.match(html, /href="\/videos\/breakout-themes-3-4"/);
+    // Phase 8: highlights are derived from cited minutes, not hard-coded.
+    assert.match(html, /href="\/videos\/[a-z0-9-]+"/);
+    if (path === '/ai-for-mjo-research') assert.match(html, /href="\/videos\/breakout-themes-3-4"/);
     const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]));
     for (const match of html.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.has(match[1]), `${path}: anchor ${match[1]}`);
   }

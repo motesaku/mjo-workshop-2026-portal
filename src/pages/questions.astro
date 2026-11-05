@@ -2,27 +2,43 @@
 import Base from "../layouts/Base.astro";
 import PageIntro from "../components/PageIntro.astro";
 import ScienceNavigation from "../components/ScienceNavigation.astro";
+import ContextNote from "../components/ContextNote.astro";
+import RelationshipBadge from "../components/RelationshipBadge.astro";
+import DisagreementMatrix from "../components/DisagreementMatrix.astro";
 import { CLASSIFICATIONS } from "../science/contract.mjs";
 import { loadThemeReview, CLASSIFICATION_ROUTES } from "../science/theme-review";
-import { SITE_STANCE } from "../data/portal";
+import { RELATIONSHIP_TYPES, videosForIssue, priorityAreaForIssue } from "../science/phase8";
 const review = loadThemeReview();
 const issues = review?.issues ?? [];
 ---
-<Base title="Scientific Questions">
-  <PageIntro title="Scientific Questions" eyebrow="Follow the ideas across sessions" description="Twelve cross-session questions from a personal reading of converted workshop minutes, linked to evidence locators and illustrative research actions." />
+<Base title="Scientific Questions" description="Twelve cross-session scientific questions from a personal reading of the MJO Workshop 2026 minutes.">
+  <PageIntro title="Scientific Questions" eyebrow="Follow the ideas across sessions" description="Twelve cross-session questions from a personal reading of converted workshop minutes, each linked to its evidence, related video highlights and illustrative research actions." />
   <ScienceNavigation />
-  <div class="notice" data-theme-review="personal-report"><strong>{SITE_STANCE.shortLabel}.</strong> These questions are a personal synthesis. Classifications are provisional editorial labels, not workshop votes. Formal consensus is not established.</div>
+  <ContextNote>Classifications are provisional editorial labels, not workshop votes. Formal consensus is not established.</ContextNote>
   <div class="card-grid">
-    {issues.map(issue => (
-      <article class="card">
-        <p class="eyebrow">{issue.id} · {issue.classification}</p>
-        <span class="badge draft">Personal synthesis</span>
-        <h2 style="margin-top:1rem"><a href={`/questions/themes/${issue.id}`}>{issue.title}</a></h2>
-        <p>{issue.question}</p>
-        <p class="small"><a href={CLASSIFICATION_ROUTES[issue.classification] ?? '/questions'}>{issue.classification}</a> · Coverage: {issue.coverage}</p>
-        <a href={`/questions/themes/${issue.id}`}>Open the issue →</a>
-      </article>
-    ))}
+    {issues.map(issue => {
+      const clips = videosForIssue(issue.id).length;
+      const area = priorityAreaForIssue(issue.id);
+      return (
+        <article class="card">
+          <p class="eyebrow">{issue.id.toUpperCase()} · <a href={CLASSIFICATION_ROUTES[issue.classification] ?? '/questions'}>{issue.classification}</a></p>
+          <h2 style="margin-top:.4rem"><a href={`/questions/themes/${issue.id}`}>{issue.title}</a></h2>
+          <p>{issue.question}</p>
+          <RelationshipBadge issueId={issue.id} />
+          <p class="small">{clips > 0 ? `${clips} related highlight${clips === 1 ? "" : "s"}` : "No highlight linked yet"}{area && <> · <a href={`/actions#${area.id}`}>{area.shortTitle}</a></>}</p>
+          <a href={`/questions/themes/${issue.id}`}>Open the question →</a>
+        </article>
+      );
+    })}
   </div>
-  <section><h2>How these questions are classified</h2><p>These are editorial definitions used in this personal report.</p><dl class="method-list">{Object.values(CLASSIFICATIONS).map(({label, description}) => <><dt>{label}</dt><dd>{description}</dd></>)}</dl></section>
+  <DisagreementMatrix />
+  <section id="classification">
+    <h2>How these questions are classified</h2>
+    <p>Two layers of editorial labels are used in this personal report. Neither is a workshop decision.</p>
+    <h3>Primary class</h3>
+    <dl class="method-list">{Object.values(CLASSIFICATIONS).map(({label, description}) => <><dt>{label}</dt><dd>{description}{label === "Documented Agreements" && " No question currently meets this standard."}</dd></>)}</dl>
+    <h3>How the positions relate (added in Phase 8, revised for Q07 in Phase 9)</h3>
+    <p class="small">Distinguishes genuine scientific disagreement from approaches that serve different purposes. A question can carry a primary and a secondary relationship.</p>
+    <dl class="method-list">{Object.values(RELATIONSHIP_TYPES).map(({label, code, description, genuineDisagreement}) => <><dt>{code !== "–" && `${code} · `}{label}</dt><dd>{description} {genuineDisagreement === true ? "Counted as genuine disagreement." : genuineDisagreement === false ? "Not counted as disagreement." : ""}</dd></>)}</dl>
+  </section>
 </Base>

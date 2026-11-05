@@ -2,16 +2,23 @@
 import Base from "../layouts/Base.astro";
 import PageIntro from "./PageIntro.astro";
 import ScienceNavigation from "./ScienceNavigation.astro";
-import { editorialPages, SITE_STANCE } from "../data/portal";
+import ContextNote from "./ContextNote.astro";
+import RelationshipBadge from "./RelationshipBadge.astro";
+import { editorialPages } from "../data/portal";
 import { issuesByClassification } from "../science/theme-review";
+import { issueRelationship, disagreementVerdict, VERDICT_LABELS, INDEPENDENCE_NOTE } from "../science/phase8";
 interface Props { page: keyof typeof editorialPages; classification: string }
 const page = editorialPages[Astro.props.page];
 const issues = issuesByClassification(Astro.props.classification);
+const isDiverging = Astro.props.classification === "diverging perspectives";
+const isAlignment = Astro.props.classification === "emerging alignment";
 ---
 <Base title={page.title} description={page.description}>
   <PageIntro title={page.title} eyebrow={page.eyebrow} description={page.description} />
   <ScienceNavigation />
-  <div class="notice" data-theme-review="personal-report"><strong>{SITE_STANCE.shortLabel}.</strong><p>Issues listed here are a provisional personal classification from converted minutes. They are not a workshop vote or formal consensus.</p></div>
+  <ContextNote>A provisional personal classification of converted minutes. Not a workshop vote or formal consensus.</ContextNote>
+  {isDiverging && <p class="lead-sm">Each question is analysed for the kind of difference involved: competing hypotheses, different evaluation standards, or complementary perspectives that only appear to conflict. <a href="/questions#classification">Definitions →</a></p>}
+  {isAlignment && <p class="lead-sm">Alignment means a direction that recurs across records, not agreement on a result. Each question page groups overlapping records so that the same discussion reported in breakout, plenary and closing sessions is counted once.</p>}
   {issues.length === 0 ? (
     <section class="empty-state"><span class="badge draft">No items in this class yet</span><h2 style="margin-top:1rem">{page.emptyTitle}</h2><p>{page.emptyText}</p></section>
   ) : (
@@ -19,16 +26,17 @@ const issues = issuesByClassification(Astro.props.classification);
       <div class="card-grid">
         {issues.map(issue => (
           <article class="card">
-            <p class="eyebrow">{issue.id} · {issue.classification}</p>
-            <span class="badge draft">Personal synthesis</span>
-            <h2 style="margin-top:1rem"><a href={`/questions/themes/${issue.id}`}>{issue.title}</a></h2>
+            <p class="eyebrow">{issue.id.toUpperCase()} · {VERDICT_LABELS[disagreementVerdict(issue.id)]}</p>
+            <h2 style="margin-top:.4rem"><a href={`/questions/themes/${issue.id}`}>{issue.title}</a></h2>
             <p>{issue.question}</p>
-            <p class="small">Coverage: {issue.coverage}</p>
-            <a href={`/questions/themes/${issue.id}`}>Read the issue →</a>
+            <RelationshipBadge issueId={issue.id} />
+            <p class="small">{issueRelationship(issue.id)?.note}</p>
+            <a href={`/questions/themes/${issue.id}${isDiverging ? "#analysis" : isAlignment ? "#alignment" : ""}`}>{isDiverging ? "See the structure of the difference →" : isAlignment ? "Assess the alignment →" : "Read the question →"}</a>
           </article>
         ))}
       </div>
+      {isAlignment && <p class="small" style="margin-top:1.2rem">{INDEPENDENCE_NOTE}</p>}
     </section>
   )}
-  <section><h2>Keep exploring</h2><div class="card-grid"><article class="card"><p class="eyebrow">By date</p><h3><a href="/program">Return to the workshop program</a></h3><p>Browse the verified session schedule across all five days.</p></article><article class="card"><p class="eyebrow">By discussion</p><h3><a href="/videos">Explore video highlights</a></h3><p>One-minute playlist clips mapped to the program where titles allow.</p></article><article class="card"><p class="eyebrow">From questions to methods</p><h3><a href="/actions">Research Action Roadmap</a></h3><p>Illustrative workflows linked to these questions.</p></article></div></section>
+  <section><h2>Keep exploring</h2><div class="card-grid"><article class="card"><p class="eyebrow">Overview</p><h3><a href="/workshop-synthesis">Workshop Synthesis</a></h3><p>What was learned, what remains contested, and what to investigate next.</p></article><article class="card"><p class="eyebrow">By discussion</p><h3><a href="/videos">Explore video highlights</a></h3><p>One-minute clips, linked to questions where the cited minutes come from the same talk or session.</p></article><article class="card"><p class="eyebrow">From questions to methods</p><h3><a href="/actions">Research Action Roadmap</a></h3><p>Four strategic research areas and twelve illustrative workflows.</p></article></div></section>
 </Base>

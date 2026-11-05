@@ -4,7 +4,9 @@ import PageIntro from './PageIntro.astro';
 import ScienceNavigation from './ScienceNavigation.astro';
 import ThemeReferences from './ThemeReferences.astro';
 import { loadThemeReview, themeRoutes } from '../science/theme-review';
-import { SITE_STANCE } from '../data/portal';
+import ContextNote from './ContextNote.astro';
+import HighlightThumb from './HighlightThumb.astro';
+import { getEvidence, sourceLabel, videosForEvidenceIds } from '../science/phase8';
 interface Props { theme: 'ai' | 'indices' }
 const { theme: key } = Astro.props;
 const review = loadThemeReview();
@@ -13,17 +15,29 @@ const title = key === 'ai' ? 'AI for MJO Research' : 'MJO Indices and Diagnostic
 const peer = key === 'ai' ? 'indices' : 'ai';
 const peerTitle = peer === 'ai' ? 'AI for MJO Research' : 'MJO Indices and Diagnostics';
 const ids = [...new Set(theme?.sections.flatMap(s => s.items.flatMap(i => i.refs)) ?? [])];
+const relatedVideos = videosForEvidenceIds(ids);
+/** Readable reference labels: one link per source record or external reference. */
+function refLinks(refs: string[]) {
+  const seen = new Map<string, string>();
+  for (const ref of refs) {
+    const e = getEvidence(ref);
+    if (e) { if (!seen.has(e.source_id)) seen.set(e.source_id, sourceLabel(e.source_id)); continue; }
+    const ext = review?.references.find(r => r.id === ref);
+    if (!seen.has(ref)) seen.set(ref, ext ? ext.title.split(' · ')[0] : ref);
+  }
+  return [...seen.entries()];
+}
 Astro.response.headers.set('Cache-Control', 'no-store');
 ---
 <Base title={title} description={theme?.description ?? 'Personal scientific synthesis from workshop minutes.'}>
   <PageIntro title={title} eyebrow={`Dedicated scientific theme / ${key === 'ai' ? '01' : '02'}`} description={theme?.description ?? 'Personal synthesis in preparation.'} />
   <ScienceNavigation />
   {theme && review ? <>
-    <div class="notice" data-theme-review="personal-report"><strong>{SITE_STANCE.shortLabel}.</strong><p>Workshop records below are paraphrases of converted minutes selected for this personal report. They are not a multi-author consensus. External definitions, editorial comparisons and new research proposals are labelled separately. Formal workshop agreement is not claimed.</p></div>
-    <nav class="theme-toc" aria-label="On this page">{theme.sections.map(s => <a href={`#${s.id}`}>{s.title}</a>)}<a href="#related">Related issues &amp; video</a><a href="#references">Sources &amp; review</a></nav>
-    {theme.sections.map(section => <section id={section.id} class="theme-section"><h2>{section.title}</h2><p class="lead">{section.intro}</p><div class="theme-items">{section.items.map(item => <article><span class="badge draft">{item.origin} · personal synthesis</span><h3>{item.title}</h3><p>{item.text}</p><p class="theme-citations">References: {item.refs.map(ref => <a href={`#${ref}`}>{review.references.find(r => r.id === ref)?.title.split(' · ')[0] ?? ref}</a>)}</p></article>)}</div></section>)}
-    <section id="related"><h2>Related issues &amp; video</h2><div class="card-grid">{theme.issues.map(id => { const issue = review.issues.find(q => q.id === id); return issue && <article class="card"><p class="eyebrow">{id} · Personal synthesis</p><h3><a href={`/questions/themes/${id}`}>{issue.title}</a></h3><p>{issue.question}</p></article>; })}</div>
-      <article class="video-context"><p class="eyebrow">Related highlight · contextual excerpt</p><h3><a href="/videos/breakout-themes-3-4">Breakout Discussion — Themes 3 + 4 · 1 minute</a></h3><p>{theme.video_context}</p><p class="small">27 October 2026 breakout; not the 28 October plenary. Mapping checked {review.highlight.verification_date}. Embed permission and representative version recorded by the owner on 3 November 2026 (YouTube Unlisted). A highlight is not independent scientific evidence.</p><p class="notice">Coverage gap: {theme.video_gap}</p></article>
+    <ContextNote>Workshop records are paraphrases of converted minutes; external definitions, editorial comparisons and new research proposals are labelled separately. Formal workshop agreement is not claimed.</ContextNote>
+    <nav class="theme-toc" aria-label="On this page">{theme.sections.map(s => <a href={`#${s.id}`}>{s.title}</a>)}<a href="#related">Related questions &amp; highlights</a><a href="#references">Sources &amp; review</a></nav>
+    {theme.sections.map(section => <section id={section.id} class="theme-section"><h2>{section.title}</h2><p class="lead">{section.intro}</p><div class="theme-items">{section.items.map(item => <article><span class="badge draft">{item.origin} · personal synthesis</span><h3>{item.title}</h3><p>{item.text}</p><p class="theme-citations">Sources: {refLinks(item.refs).map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</p></article>)}</div></section>)}
+    <section id="related"><h2>Related questions &amp; highlights</h2><div class="card-grid">{theme.issues.map(id => { const issue = review.issues.find(q => q.id === id); return issue && <article class="card"><p class="eyebrow">{id} · Personal synthesis</p><h3><a href={`/questions/themes/${id}`}>{issue.title}</a></h3><p>{issue.question}</p></article>; })}</div>
+      <div class="video-context"><h3>Highlights from talks and sessions cited on this page</h3><p class="small">A clip is listed when this page cites the minutes of the same talk or session. The one-minute clips were not checked against these statements and are not independent scientific evidence.</p><div class="theme-videos">{relatedVideos.map(h => <div><HighlightThumb highlight={h} /><p class="small">{h.talkSpeaker ?? 'Discussion session'}</p></div>)}</div></div>
       <p class="peer-link">Continue to the independent section: <a href={themeRoutes[peer]}>{peerTitle} →</a></p>
       <nav class="subnav" aria-label="Related scientific issue areas"><a href="/diverging-perspectives">Diverging Perspectives</a><a href="/emerging-alignment">Emerging Alignment</a><a href="/open-challenges">Open Challenges</a><a href="/actions">Research Action Roadmap</a></nav>
     </section>
@@ -31,5 +45,5 @@ Astro.response.headers.set('Cache-Control', 'no-store');
   </> : <section class="empty-state" data-theme-withheld><span class="badge draft">Synthesis unavailable</span><h2>Scientific synthesis could not be loaded</h2><p>The bundled personal-synthesis package is missing or invalid.</p><a href={themeRoutes[peer]}>Explore {peerTitle} →</a></section>}
 </Base>
 <style>
-.theme-toc{display:flex;flex-wrap:wrap;gap:.6rem 1.1rem;padding:1rem 0;border-block:1px solid var(--line);font-size:.85rem}.theme-section{scroll-margin-top:1.5rem}.theme-items{display:grid;gap:1rem}.theme-items h3{margin:1rem 0 .7rem;font-size:1.2rem}.theme-items p{max-width:90ch}.theme-citations{display:flex;flex-wrap:wrap;gap:.3rem .7rem;font-size:.75rem;margin-bottom:0}.theme-citations a{overflow-wrap:anywhere}.video-context{margin-top:1.4rem}.peer-link{margin:1.5rem 0}.theme-section .lead{font-size:1rem}
+.theme-toc{display:flex;flex-wrap:wrap;gap:.6rem 1.1rem;padding:1rem 0;border-block:1px solid var(--line);font-size:.85rem}.theme-section{scroll-margin-top:1.5rem}.theme-items{display:grid;gap:1rem}.theme-items h3{margin:1rem 0 .7rem;font-size:1.2rem}.theme-items p{max-width:90ch}.theme-citations{display:flex;flex-wrap:wrap;gap:.3rem .7rem;font-size:.75rem;margin-bottom:0}.theme-citations a{overflow-wrap:anywhere}.video-context{margin-top:2rem}.theme-videos{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,11rem),1fr));gap:1rem;margin-top:1rem}.theme-videos p{margin:.2rem 0 0}.peer-link{margin:1.5rem 0}.theme-section .lead{font-size:1rem}
 </style>

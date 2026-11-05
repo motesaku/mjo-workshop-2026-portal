@@ -22,17 +22,26 @@ For the full creation story (recordings → ASR → minutes → highlights → E
    - Blank start: `cp examples/personal-synthesis.empty.json src/data/personal-synthesis.json`
    - Or adapt the reference example: `examples/personal-synthesis.qoosaku-moteki.json` (rewrite authorship in `src/data/portal.ts` as well).
 5. Update `src/data/portal.ts` (`SITE_STANCE`) so the site names **you**, not the previous author.
-6. `npm run dev` → open `http://localhost:4321/_emdash/admin/` → **Empty site** → register **your** passkey.
+6. `npm run dev` → open `http://localhost:4321/_emdash/admin/` → **Empty site** → register **your** passkey. This local passkey only works on `localhost`; production needs its own setup (see below).
 
 ## Cloudflare deploy (your account only)
 
-1. Copy the template: `cp wrangler.jsonc wrangler.site.jsonc` (this file is gitignored).
-2. Create D1 and R2 in **your** account; put **your** `database_id` and `EMDASH_SITE_URL` into `wrangler.site.jsonc`.
-3. Generate a production encryption key and store it with `npx wrangler secret put EMDASH_ENCRYPTION_KEY` (never commit it).
-4. `npm run build` then `npm run deploy` (both prefer `wrangler.site.jsonc` when present).
-5. Run EmDash core migrations against **your** D1, then complete the setup wizard on **your** origin.
+> **Protect the empty CMS before anyone can reach it.** On a new database, the first visitor who completes the EmDash setup wizard becomes the administrator. `noindex` does not prevent this. Keep the Worker unreachable, or behind Cloudflare Access, until **you** have finished setup on the production hostname.
 
-Do not paste another person’s D1 UUID, workers.dev hostname, or encryption key into your config. Details: `docs/PHASE7_DEPLOYMENT_GUIDE.md`.
+1. Copy the template: `cp wrangler.jsonc wrangler.site.jsonc` (this file is gitignored). Keep `"workers_dev": false` and `"preview_urls": false` from the template, and add no `routes` yet.
+2. Create D1 and R2 in **your** account. Put **your** `database_id` and the final `EMDASH_SITE_URL` (for example `https://<worker-name>.<your-subdomain>.workers.dev`) into `wrangler.site.jsonc`.
+3. Generate a production encryption key and store it with `npx wrangler secret put EMDASH_ENCRYPTION_KEY --config wrangler.site.jsonc` (never commit it). `--config` makes the secret go to the Worker named in your overlay.
+4. `npm run build`. The build reads `wrangler.site.jsonc` in place; no file is copied over the committed template.
+5. Run EmDash core migrations against **your** D1: `npx emdash migrate --wrangler-config wrangler.site.jsonc`.
+6. `npm run deploy`. It stops unless `wrangler.site.jsonc` has a real D1 ID and an https `EMDASH_SITE_URL`, and unless the current build was generated from that overlay. With `workers_dev: false` and no routes, the Worker has no public URL yet.
+7. In the Cloudflare dashboard, open **Workers & Pages → your Worker → Access → Protect this Worker behind Access → All traffic**. Use a policy that admits only you, for example a single email address. Worker-level Access covers `workers.dev`, preview URLs, routes and custom domains ([Cloudflare docs](https://developers.cloudflare.com/workers/configuration/cloudflare-access/)). Dashboard labels can change; check the current docs.
+8. Set `"workers_dev": true` in `wrangler.site.jsonc`, then `npm run build` and `npm run deploy` again.
+9. From a private browser window (not signed in to Access), confirm that `/`, `/_emdash/admin/` and `/_emdash/api/setup/status` show the Cloudflare Access login rather than your site.
+10. Sign in through Access and complete the setup wizard on the **production hostname**. A passkey registered on `localhost` does not work there. Sign out, then sign in again with the new passkey.
+11. While still signed in, open `/_emdash/api/setup/status` and confirm that it reports `"needsSetup": false`. From then on, EmDash refuses another setup or a second first administrator.
+12. Only after step 11, and only if public access is approved, change the Access protection (for example to **Previews only**) or remove it. Check that no account-level Access rule unexpectedly takes over.
+
+Until both setup and its check are done, do not share the URL, open preview URLs or attach a custom domain. Do not paste another person’s D1 UUID, workers.dev hostname or encryption key into your config. Details: `docs/PHASE7_DEPLOYMENT_GUIDE.md`.
 
 ## Content and ethics
 

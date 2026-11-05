@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 
 // Local interface checks. Video playback is a separate manual browser check.
-const origin = "http://127.0.0.1:4321";
+const origin = process.env.VERIFY_ORIGIN ?? "http://127.0.0.1:4321";
+if (!["127.0.0.1", "localhost", "[::1]"].includes(new URL(origin).hostname)) throw new Error("verification only targets a loopback server");
 const routes = ["/", "/program", "/videos", "/questions", "/diverging-perspectives", "/emerging-alignment", "/open-challenges", "/actions", "/ai-for-mjo-research", "/mjo-indices-and-diagnostics", "/about", "/videos/breakout-themes-3-4", "/questions/theory-and-modelling", "/actions/theory-and-modelling"];
 const pages = new Map();
 for (const path of routes) {
@@ -30,7 +31,7 @@ assert.match(video, /27 October 2026/);
 assert.match(video, /16:30–18:00/);
 assert.match(video, /61 seconds|60 seconds|1:01|1:00/);
 assert.match(video, /Owner approved 2026-11-03|Owner playlist approval/);
-assert.match(video, /Scientific summary pending|Scientific review pending|Awaiting review/);
+assert.match(video, /Scientific summary pending|Scientific review pending|Awaiting review|not checked against the clip/);
 assert.match(video, /Load YouTube player/);
 assert.ok(!video.includes("<iframe"), "No YouTube connection before user request");
 assert.match(video, /href="\/questions\/themes\/q01"/);
