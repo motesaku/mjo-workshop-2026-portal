@@ -13,6 +13,7 @@ import {
 	disagreementVerdict, VERDICT_LABELS, ROADMAP_STATUS, phase9Label,
 } from "../science/phase8";
 import { THEME_COVERAGE, CROSS_CUTTING_GAPS, COVERAGE_LEVELS, SYNTHESIS_PRESENCE } from "../science/phase9/coverage.mjs";
+import { SOURCE_LIMITS, COVERAGE_PRINCIPLE } from "../science/phase10/coverage.mjs";
 import { PILOTS } from "../science/phase9/roadmap.mjs";
 const draft = phase9Label();
 const areas = priorityAreas();
@@ -162,7 +163,10 @@ const CHANGE_LABELS = { merged: "Merged in Phase 9", revised: "Revised in Phase 
     </div>
     <h3>Cross-cutting gaps</h3>
     <ul>{CROSS_CUTTING_GAPS.map((g) => <li><strong>{g.title}.</strong> {g.text}</li>)}</ul>
-    <p class="small"><span class="tag">Editorial synthesis</span> {draft.short}.</p>
+    <h3 id="source-limits">Known limits of the source record</h3>
+    <p>{COVERAGE_PRINCIPLE}</p>
+    <ul class="source-limits">{SOURCE_LIMITS.map((l) => <li id={`limit-${l.id}`}><strong>{l.title}.</strong> {l.text}</li>)}</ul>
+    <p class="small"><span class="tag">Editorial synthesis</span> {draft.short}. Known limits updated in Phase 10 (draft awaiting the author&apos;s review); they describe the record and add no scientific conclusion.</p>
   </section>
 
   <section id="method">

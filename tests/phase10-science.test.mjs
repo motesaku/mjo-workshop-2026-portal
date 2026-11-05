@@ -141,3 +141,17 @@ test("each pilot separates startable work from interpretation and publication pr
 	assert.match(c.parallel, /does not have to be complete before process analyses begin/);
 	assert.ok(c.minimumDatasets.length >= 1);
 });
+
+import { SOURCE_LIMITS, COVERAGE_PRINCIPLE } from "../src/science/phase10/coverage.mjs";
+import { MAPPING_REVIEW } from "../src/science/phase9/videos.mjs";
+
+test("known limits name the incomplete records without adding conclusions", () => {
+	assert.match(COVERAGE_PRINCIPLE, /not an absence of scientific discussion/);
+	const ids = SOURCE_LIMITS.map((l) => l.id);
+	for (const id of ["breakout-56", "short-minutes", "mappings", "bsiso", "ocean"]) assert.ok(ids.includes(id), id);
+	const mappings = SOURCE_LIMITS.find((l) => l.id === "mappings").text;
+	assert.equal(MAPPING_REVIEW.length, 5);
+	for (const phrase of ["Chang Xu", "final-day record", "closing record", "extended observation and AI minutes", "extended theory minutes", "isotopes"]) assert.ok(mappings.includes(phrase), `unresolved mapping listed: ${phrase}`);
+	assert.doesNotMatch(mappings, /src-/, "reader-facing labels, not internal identifiers");
+	assert.match(SOURCE_LIMITS.find((l) => l.id === "bsiso").text, /Northward-propagating/);
+});
