@@ -77,15 +77,19 @@ The synthesis coverage section lists the known limits of the record (Themes 5+6 
 | Headless Chrome, 390 and 1280 px | no horizontal overflow on 10 key pages; mobile menu and header navigation as intended |
 | Published site (read-only GET) | all `/_astro/` assets referenced by 13 pages are in the `62daf4b` build; main text of 9 pages unchanged by Phase 10 is identical to the local source; private paths 404; `noindex` kept |
 
-Not run: any remote write, deployment, or authenticated Cloudflare query. The deployed Worker version was not queried; the deployed commit is identified from the owner's deployment notes and the asset and content comparison above.
+Before the authorized deployment (below), no remote write or authenticated Cloudflare query was made; the deployed commit was identified from the owner's deployment notes and the asset and content comparison above.
 
-### State of the branches
+### State of the branches (before the deployment below)
 
 | Ref | Commit | Content |
 | --- | --- | --- |
 | Production | `62daf4b` (by notes and comparison) | Phase 9 |
 | `origin/main` (GitHub) | `0d13cdb` | Regressed tree |
 | Local `main` (not pushed) | Phase 10 commits on top of `0d13cdb` | Phase 9 restored + Phase 10 |
+
+### Authorized deployment (2026-11-05)
+
+The owner authorized pushing local `main` and deploying. `main` was pushed to GitHub (fast-forward, no history rewrite; tags not pushed), and commit `628a380` was deployed at 11:46 JST with `npm run deploy` after `npm run release:check` passed on the clean commit and `npm run deploy -- --dry-run` showed the expected bindings and 73 public files. A D1 Time Travel bookmark and the previous Worker version were recorded offline before deploying; no D1 schema change or migration was involved. Read-only checks afterwards: all 77 public routes return 200 with `noindex, nofollow` and `lang="en"`, and their main content is identical to the verified local source; private paths and unknown routes return 404; the admin redirects to its login. Production, GitHub `main` and local `main` are now the same commit.
 
 ## Deployment-readiness checklist (owner)
 
